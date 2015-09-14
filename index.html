@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css"/>
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css"/>
+    <script src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="PushNotification.js"></script>
+    <script src="lib/onsen/js/angular/angular.min.js"></script>
+    <script src="scripts/libs/jquery-1.11.2.min.js"></script>
+    <script src="scripts/libs/moment.min.js"></script>
+    <script src="lib/onsen/js/onsenui.min.js"></script>
+    <script src="scripts/libs/async.js"></script>
+    <script src="scripts/libs/persistencejs/persistence.js"></script>
+    <script src="scripts/libs/persistencejs/persistence.store.sql.js"></script>
+    <script src="scripts/libs/persistencejs/persistence.store.websql.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/models.js"></script>
+    <script src="scripts/services/db.js"></script>
+    <script src="scripts/services/db.sync.js"></script>
+    <script src="scripts/services/authentication.js"></script>
+    <script src="scripts/init.js"></script>
+    
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css" />
+<!-- 
+    <script src="http://192.168.191.1:8080/target/target-script-min.js#anonymous"></script>
+     -->
+</head>
+    <body ng-controller="AppController" ng-init="busy=true">
+        <div class="loading" ng-show="busy"> 
+            <p><i class="fa fa-spin fa-spinner fa-lg"></i><br />
+                <span ng-show="!waitNetwork">loading ...</span>
+                <span ng-show="waitNetwork">waiting for network connection...</span>
+            </p>
+        </div>
+        <ons-navigator hide-toolbar="true" var="myNavigator"  > 
+            <ons-page ng-controller="SlidingMenuController" >
+                <ons-sliding-menu var="app.slidingMenu" 
+                    hide-toolbar="true" 
+                    menu-page="pages/menu.html"  
+                    main-page="pages/login.html" 
+                    side="left" 
+                    type="overlay" 
+                    swipeable="false"
+                    max-slide-distance="200px">
+                </ons-sliding-menu> 
+            </ons-page>
+        </ons-navigator>
+    </body>
+</html>
+ 
