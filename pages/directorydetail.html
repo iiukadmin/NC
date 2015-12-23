@@ -1,0 +1,30 @@
+<ons-page ng-controller="DirectoryDetailController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">{{directory.title}}</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header ng-show="directory.description">{{directory.title}}</ons-list-header>
+        <ons-list-item ng-show="directory.description">
+            <p>{{directory.description}}</p>
+        </ons-list-item>
+        <ons-list-header ng-repeat-start="member in directory.members">{{member.role}}</ons-list-header>
+        <ons-list-item ng-repeat-end ng-repeat="name in member.names" ng-click="openIndividual(name)">
+        <p>
+        {{name.title}} {{name.forename}} {{name.Surname}}
+        </p>
+        </ons-list-item>
+    </ons-list>
+</ons-page>
+
+<!-- 
+
+testing webSQL
+update navigations set status=0,parent_id=6,type=2 where server_id in (9,10);
+update navigations set status=0,type=1 where server_id =6; 
+
+-->
