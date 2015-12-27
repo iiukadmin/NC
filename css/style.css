@@ -98,6 +98,7 @@ iframe,.article-iframe{
 	 box-pack: center;
 	 box-align: center;
 	  font-family:"Times New Roman",Georgia,Serif;
+	      padding-top: 10px;
 }
 .loading i{
 	font-size: 3em;
@@ -270,4 +271,17 @@ ons-list-item p{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+ons-list-header,.item-name{
+	overflow: hidden;
+    word-wrap: break-word;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.item-description{
+	line-height: 160%;
+    padding: 10px;
+}
+#list-message{
+	transition: transform 0.4s linear 0s; 
 }

@@ -1,6 +1,6 @@
 
 // persistence.store.websql.config(persistence, 'AKHB', 'AKHB db', 10 * 1024 * 1024);
-// persistence.store.memory.config(persistence);
+
 persistence.store.cordovasql.config(
   persistence,
   'myIIUK',
@@ -12,6 +12,8 @@ persistence.store.cordovasql.config(
                           //   0: iTunes + iCloud, 1: NO iTunes + iCloud, 2: NO iTunes + NO iCloud
                           //   More information at https://github.com/litehelpers/Cordova-sqlite-storage#opening-a-database
 );
+
+//persistence.store.memory.config(persistence);
 persistence.debug = false;
 
 
@@ -21,12 +23,13 @@ var sync = persistence.define('sync', {
 });
 
 var article = persistence.define('articles', {
-	server_id:"INT",
+    server_id:"INT",
   	title: "TEXT",
   	content: "TEXT",
   	last_modified: "DATE",
   	type:"INT",
-  	status:"INT"
+  	status:"INT",
+    is_read:"INT"
 });
 
 var navigation = persistence.define('navigations', {
@@ -54,9 +57,17 @@ var message = persistence.define('messages', {
 });
 
 var usage = persistence.define('usages', {
-    content_id: "TEXT",
+    content_id: "INT",
     status:"INT",
+    type:"INT",
     date_time:"DATE",
+});
+
+var syncTask = persistence.define('tasks', {
+    committe_id: "INT",
+    status:"INT",
+    last_modified:"DATE",
+    inst_type:"INT"
 });
 
 // var directory =  persistence.define('directories', {
@@ -71,11 +82,15 @@ var usage = persistence.define('usages', {
 //     category_id : "TEXT"
 // });
 var persons = persistence.define('persons', {
-    committe_id: "INT",
+    committees: "TEXT",
+    title:"TEXT",
     name:"TEXT",
-    content:"JSON"
+    home_number:"TEXT",
+    mobile:"TEXT",
+    email:"TEXT",
 });
-var committees =  persistence.define('committees', {
+
+var committees = persistence.define('committees', {
     server_id:"INT",
     inst_type :"INT",
     category :"TEXT",
@@ -84,8 +99,11 @@ var committees =  persistence.define('committees', {
     email :"TEXT",
     status :"INT",
     last_modified:"DATE",
-    content:"TEXT",
     is_show:"INT"
+});
+var committeeContents = persistence.define('committeeContent', {
+    server_id:"INT",
+    content:"TEXT",
 });
 
 //directory.index(['title','category_id']);

@@ -21,7 +21,7 @@
 
                             <ons-col width="68%" class="plan-right list-message" >
                                 <strong>{{msg.title}}</strong>
-                                <p ng-bind-html="msg.content | trustHtml"></p>
+                                <p ng-bind-html="msg.content | trustHtmlA"></p>
                             </ons-col>
                             <ons-col width="30%" class="col-delete" ng-click="deleteMessage(msg,$event)">
                             <i class="fa fa-times"></i>&nbsp;Delete

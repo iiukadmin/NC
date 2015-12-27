@@ -8,7 +8,7 @@ var pushNotification;
 var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
 AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
 
-var DB = null;
+window.DB = null;
 
 AKHB.openContentPage =  function(navigation,$templateCache){
     if(navigation.type == 1){
@@ -107,7 +107,6 @@ module.controller('LandingPageController',['$scope','$sce','$templateCache',func
 
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
-        console.log('navigation',nav.title);
         if(nav.type==2){
             AKHB.openContentPage(nav,$templateCache);
         }else if(nav.type==3){
@@ -133,12 +132,16 @@ module.controller('LandingPageController',['$scope','$sce','$templateCache',func
     DB.getHomeArticle(function(err,result){
         DB.getHomepageIcons(function(err,navigations){
             DB.getUnreadMessageCount(function(err,count){
-                scope.$apply( function() {
-                    $scope.messageCount = count;
-                    $scope.hasMessage = count > 0;
-                    $scope.navigations = navigations;
-                    $scope.title = $sce.trustAsHtml(result.title);
-                    $scope.article = $sce.trustAsHtml(result.content);
+                scope.$apply(function(){
+                    if(!result.is_read){
+                        result.is_read=1;
+                        DB.setUsage(result.server_id,1,1,0);
+                    }
+                    scope.messageCount = count;
+                    scope.hasMessage = count > 0;
+                    scope.navigations = navigations;
+                    scope.title = $sce.trustAsHtml(result.title);
+                    scope.article = $sce.trustAsHtml(result.content);
                 });
             });
         })  
@@ -169,7 +172,6 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
     };
     var loadMessage = function(){
        DB.getMessages(function(err,messages){
-        console.log(messages);
             scope.$apply( function() {
                 scope.messages = messages;
             });
@@ -181,6 +183,8 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
         console.log('emit Refresh');
     });
     $scope.swipeLeft = function($event){
+        $event.stopPropagation();
+        $event.preventDefault();
         var target = $($event.target);
         if(!$($event.target).hasClass('swipe')){
             target = $($event.target).parents('.swipe:eq(0)').get(0);
@@ -188,7 +192,9 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
         $(target).addClass('show-del-btn');
     };
     $scope.swipeRight = function($event){
-         var target = $($event.target);
+        var target = $($event.target);
+        $event.stopPropagation();
+        $event.preventDefault();
          if($event.target.tagName.toLowerCase() != 'ons-list-item'){
             if($(target.parents('ons-list-item:eq(0)').get(0)).offset().left == 0){
                 app.slidingMenu.openMenu();
@@ -221,8 +227,13 @@ module.controller('MessageDetailController',['$scope','$rootScope','$http','$tem
         var scope = $scope;
         var message = $templateCache.get('message');
         $scope.message = message;
+    
+        if(message.status != 1)    {
+            DB.setUsage(message.server_id,2,1,0);
+            console.log(message.server_id,2,1,0);
+        }
+
         message.status = 1;
-        DB.setUsage(message.server_id,1);
         persistence.flush();
         
         $scope.deleteMessage = function(){
@@ -231,7 +242,7 @@ module.controller('MessageDetailController',['$scope','$rootScope','$http','$tem
                 callback: function(answer) {
                   if(answer){
                     DB.deleteMessage(message.server_id,function(){
-                        DB.setUsage(message.server_id,2);
+                        DB.setUsage(message.server_id,2,2);
                         $rootScope.$broadcast("Refresh");
                         myNavigator.popPage();
                     });
@@ -263,7 +274,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
         ons.ready(function(){
             if(typeof device == 'undefined'){
                 AKHB.user.deviceid = '00000000000000031';
-                AKHB.user.os = 'test';
+                AKHB.user.os = 'ios';
                 AKHB.user.deviceName = 'browser test';
             }else{
                 AKHB.user.deviceid = device.uuid;
@@ -276,16 +287,13 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     });
                 }
             };
-            scope.$apply(function(){
-                scope.isready = true;         
-            })
+            scope.isready = true;  
+            console.log("AKHB.services.db init Outer.");
+              
             setTimeout(function(){
-                DB =  new AKHB.services.db(function(){
-                    DBSync = new AKHB.services.db.DBSync(AKHB.config,$http);
-                    initLogin();
-                });  
-
-            },100);           
+                DBSync = new AKHB.services.db.DBSync(AKHB.config,$http);
+                initLogin();
+            },1000);           
         });
         
         function initLogin(){
@@ -312,10 +320,11 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                                     
                                     DBSync.runInBackGround(function(err){
                                         rootScope.$emit("NOTBUSY");
+                                        $rootScope.$broadcast("MenuReady");
                                         app.slidingMenu.setSwipeable(true);
                                         app.slidingMenu.setMainPage('pages/landingpage.html');
-                                        syncBackGround();
-                                    });
+                                        setTimeout(syncBackGround,window.AKHB.config.timeout);
+                                    },true);
                                 }
                                 
                             });
@@ -332,16 +341,12 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     syncTimes ++;
                     if(Auth.checkNetworkConnected()){
                         DBSync.runInBackGround(function(){
-                            setTimeout(function(){
-                                console.log('sync times:'+syncTimes);
-                                syncBackGround();
-                            },10*60*1000);
-                        });
-                    }else{
-                        setTimeout(function(){
                             console.log('sync times:'+syncTimes);
                             syncBackGround();
-                        },60000);
+                        });
+                    }else{
+                            console.log('sync times:'+syncTimes);
+                            syncBackGround();
                     }
                 }
                 if(Auth.isCachedAuthentication()){
@@ -375,11 +380,10 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 }]);
 
 
-module.controller('MenuController',['$scope','$http','$templateCache',
-    function($scope, $http, $templateCache) {
+module.controller('MenuController',['$scope','$rootScope','$http','$templateCache',
+    function($scope, $rootScope, $http, $templateCache) {
         $scope.openPage = function(nav){
             $templateCache.put('navigation',nav);
-            console.log('MenuController',nav.title);
             if(nav.type==2){
                 AKHB.openContentPage(nav,$templateCache);
             }else if(nav.type==3){
@@ -410,7 +414,11 @@ module.controller('MenuController',['$scope','$http','$templateCache',
                 });
             });
         }
-
+        $rootScope.$on("MenuReady", function(){ 
+            loadMenu($scope);
+            console.log('emit MenuReady');
+        });
+        
         app.slidingMenu.on('preopen',function(){
             loadMenu($scope);
         });
@@ -470,7 +478,11 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
         if(article == null) return;
         $scope.article = article;
         $scope.nav = $templateCache.get('navigation');
-        DB.setUsage(article.server_id,1);
+
+        if(!article.is_read){
+            article.is_read = 1;
+            DB.setUsage(article.server_id,1,1,0);
+        }  
         if(article.type==2){
             if(!Auth.isNetworkConnected()){
                 $scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
@@ -532,34 +544,16 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
     function($scope,$rootScope,$http, $templateCache,$sce) {
         
         $scope.nav = $templateCache.get('navigation');
-        console.log('DirectoryController',$scope.nav.title );
 
         $scope.OpenDirectoryPage = function($event,type){
             var dict = {
                 title : $($event.target).text(),
                 type:type.id
             };
-            DB.getDirectoriesCount(type.id,function(err,data){
-                dict.count = data;
-                if(dict.count > 0){
-                    $templateCache.put('dict',dict);
-                    myNavigator.pushPage('pages/directorylist.html');    
-                }else{
-                    AKHB.notification.alert("No directory data.",function(){
-                        //AKHB.utils.exitApp();
-                    });
-                }
-                
-            });
-
+            $templateCache.put('dict',dict);
+            myNavigator.pushPage('pages/directorylist.html'); 
         }
-        console.log("getDirectoryCategories");
-        DB.getDirectoryCategories(function(err,data){
-            $scope.$apply(function(){
-                $scope.categories = data;
-            });
-        })
-
+        $scope.categories = JSON.parse(localStorage.getItem("category")).items;
 
         var timer = null;
         var sec = 500;
@@ -571,23 +565,17 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
         $scope.noPersonsData  = false;
 
         $scope.OpenDirectoryDetail = function(directory){
-            $templateCache.put('directory',directory);
-            myNavigator.pushPage('pages/directorydetail.html');
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = JSON.parse(data.content); 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
         };
 
         $scope.openIndividual = function(individual){
-
-            DB.getCommitteById(individual.id,function(err,data){
-                if(!err && data){
-                    $templateCache.put('directory',data);
-                    myNavigator.pushPage('pages/directorydetail.html');
-                }else{
-                    
-                    $templateCache.put('individual',individual.content);
-                    myNavigator.pushPage('pages/directoryindividual.html');
-                }
-            })
-            
+            $templateCache.put('individual',individual);
+            myNavigator.pushPage('pages/directoryindividual.html');
         };
 
         $scope.clearInput = function(){
@@ -661,39 +649,67 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
 module.controller('DirectoryListController',['$scope','$rootScope','$http','$templateCache','$sce',
     function($scope,$rootScope,$http, $templateCache,$sce) {
         $scope.dict = $templateCache.get('dict');
-        $scope.dict.data = [];
+        $scope.dict.count = 50;
+        $rootScope.$emit("BUSY");
+        var busy = true;
+
+        DB.getDirectoriesCount($scope.dict.type,function(err,data){
+            $scope.$apply(function(){
+                $scope.dict.count = data;
+                $('ons-list').css('height',45*$scope.dict.count);
+                $scope.MyDelegate.countItems = function() {
+                    return $scope.dict.count;
+                }
+            })
+            
+        });
         $scope.OpenDirectoryDetail = function(directory){
-            $templateCache.put('directory',directory);
-            myNavigator.pushPage('pages/directorydetail.html');
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = data.content; 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
         };
+        var pageIndex = 0;
+        var pageSize = 20;
+
         $scope.MyDelegate  = {
           configureItemScope: function(index, itemScope) {
- 
-            DB.getDirectoriesPagnation($scope.dict.type,index,function(err,data){
-                $scope.$apply(function(){
-                    if(data.length > 0) itemScope.item = data[0];
-                })
-                
-             });
+
+            if(!itemScope.item){
+                itemScope.item = {};
+                DB.getDirectoriesPagnation($scope.dict.type,index,function(err,data){
+                    $scope.$apply(function(){
+                        if(busy) {
+                            busy = false;
+
+                            $rootScope.$emit("NOTBUSY");
+                        } 
+                        itemScope.item = data[0];
+                    })
+                });
+            }
+            //itemScope.item = $scope.dict.items[index];
           },
           calculateItemHeight: function(index) {
             return 45;
           },
           countItems: function() {
-            return $scope.dict.count;
+            return 5;
           },
-          destroyItemScope: function(index, scope) {
-            //console.log("Destroyed item #" + index);
-          }
+          destroyItemScope: null
         };
 }]);
 
 module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$templateCache','$sce',
     function($scope,$rootScope,$http, $templateCache,$sce) {
         $scope.directory = $templateCache.get('directory');
-        if(typeof $scope.directory.members == "undefined")
+        
+        // if(typeof $scope.directory.members == "undefined")
+        //     $scope.directory.members = JSON.parse($scope.directory.content);
+        if(typeof $scope.directory.members == "undefined" && $scope.directory.content)
             $scope.directory.members = JSON.parse($scope.directory.content);
-
         $scope.openIndividual = function(individual){
             $templateCache.put('individual',individual);
             myNavigator.pushPage('pages/directoryindividual.html');
@@ -702,6 +718,12 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
 module.controller('DirectoryIndividualController',['$scope','$rootScope','$http','$templateCache','$sce',
     function($scope,$rootScope,$http, $templateCache,$sce) {
         $scope.individual = $templateCache.get('individual');
+        if(!$scope.individual.name){
+            $scope.individual.name = $scope.individual.forename + ' '+$scope.individual.Surname;
+        }
+        if(typeof $scope.individual.committees == 'string'){
+            $scope.individual.committees = JSON.parse($scope.individual.committees);
+        }
         $scope.openIndividual = function(individual){
 
             DB.getCommitteById(individual.id,function(err,data){
@@ -728,8 +750,12 @@ module.controller('DirectorySearchController',['$scope','$rootScope','$http','$t
         $scope.directories = [];
         
         $scope.OpenDirectoryDetail = function(directory){
-            $templateCache.put('directory',directory);
-            myNavigator.pushPage('pages/directorydetail.html');
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = JSON.parse(data.content); 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
         };
 
         var search = function(){
@@ -772,17 +798,39 @@ module.controller('DirectorySearchController',['$scope','$rootScope','$http','$t
 
 
 $(document).on('touchstart touchend','#list-message',function(e){
+    var list = $('#list-message');
+    var currentTouche = e.originalEvent.changedTouches[0];
+    var maxOffset  = list.height() - list.parent().height();
+   
+    if(e.type == 'touchend'){
+        var offset = currentTouche.pageY - window.prevTouche.pageY;
+        offset = offset *2;
+        var currentOffset = list.attr('data-offset') ? parseInt(list.attr('data-offset')) + offset : offset;
+        if(Math.abs(currentOffset) > maxOffset){
+            currentOffset = -maxOffset;
+        }
+        if(currentOffset > 0){
+            currentOffset = 0;
+        } 
+        list.attr('data-offset',currentOffset,offset);
+        if(Math.abs(offset) > 10 ){
+           list.css('transform','translate3d(0, '+currentOffset+'px, 0)' );
+        }
+    }
 
+    window.prevTouche = currentTouche;
     app.slidingMenu.setSwipeable(false); 
-    e.stopPropagation();
-    e.preventDefault();
+    
     if(window.swipTimer) clearTimeout(window.swipTimer);
     window.swipTimer = setTimeout(function(){
         app.slidingMenu.setSwipeable(true); 
     },2000);
 })
-
-$(document).on('click','a',function(e){
+.on('touchmove','#list-message',function(e){
+    e.stopPropagation();
+    e.preventDefault();
+})
+.on('click','a',function(e){
 
         var $this = $(this);
         var $href = $this.attr('href');
@@ -822,6 +870,11 @@ module.filter('trustHtml', function ($sce) {
         return $sce.trustAsHtml(input);
     }
 });
+module.filter('trustHtmlA', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input.replace(/<[^>]+>/g,""));
+    }
+});
 module.filter('formatTime', function ($sce) {
     return function (input) {
         if(input)
@@ -839,7 +892,6 @@ function tokenHandler (result) {
 }
 // result contains any message sent from the plugin call
 function successHandler (result) {
-   console.log('result = ' + result);
    //sendRegistionId(result);
 }
 // result contains any error description text returned from the plugin call
@@ -847,10 +899,8 @@ function errorHandler (error) {
     alert('error = ' + error);
 }
 function sendRegistionId(id){
-    console.log("sendRegistionId",id);
     var url = window.AKHB.config.remoteAddress+'/webservice.php?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
     $.get(url,function(data){
-        console.log('sendRegistionId',id,data);
     })
 }
 // iOS

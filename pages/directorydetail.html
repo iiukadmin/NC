@@ -9,14 +9,12 @@
     </ons-toolbar>
     <ons-list>
         <ons-list-header ng-show="directory.description">{{directory.title}}</ons-list-header>
-        <ons-list-item ng-show="directory.description">
-            <p>{{directory.description}}</p>
+        <ons-list-item ng-show="directory.description" class="item-description">
+            {{directory.description}}
         </ons-list-item>
         <ons-list-header ng-repeat-start="member in directory.members">{{member.role}}</ons-list-header>
-        <ons-list-item ng-repeat-end ng-repeat="name in member.names" ng-click="openIndividual(name)">
-        <p>
+        <ons-list-item class="item-name" ng-repeat-end ng-repeat="name in member.names" ng-click="openIndividual(name)">
         {{name.title}} {{name.forename}} {{name.Surname}}
-        </p>
         </ons-list-item>
     </ons-list>
 </ons-page>

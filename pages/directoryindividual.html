@@ -3,7 +3,7 @@
         <div class="left">
             <ons-back-button>Back</ons-back-button>
         </div>
-        <div class="center">{{individual.title}} {{individual.forename}} {{individual.Surname}}</div>
+        <div class="center">{{individual.title}} {{individual.name}} </div>
         <div class="right">
         </div>
     </ons-toolbar>
@@ -20,8 +20,8 @@
         <ons-list-header ng-show="individual.committees">
         Committees
         </ons-list-header>
-        <ons-list-item ng-show="individual.committees" ng-repeat="item in individual.committees" ng-click="openIndividual(item)">
-        <p>{{item.title}}</p>
+        <ons-list-item class="item-name" ng-show="individual.committees" ng-repeat="item in individual.committees" ng-click="openIndividual(item)">
+        {{item.title}}
         </ons-list-item>
 
         <ons-list-item ng-show="!individual.committees && !individual.email && !individual.mobile && !individual.home_number">
