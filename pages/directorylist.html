@@ -7,12 +7,17 @@
         <div class="right">
         </div>
     </ons-toolbar>
-    <ons-list>
-       
-        <ons-list-item ons-lazy-repeat="MyDelegate" modifier="chevron" ng-click="OpenDirectoryDetail(item)" ng-show="item">
-           <ons-col><span  style="display:block;word-break:keep-all; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{item.title}}</span>
-            </ons-col>
-        </ons-list-item>
-    </ons-list>
+    <div id="wrapper">
+        <ons-list>
+            <ons-list-item modifier="chevron" ng-click="OpenDirectoryDetail(item)"  ng-repeat="item in dicts track by $index" >
+               <ons-col><span style="display:block;word-break:keep-all; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{item.title}}</span>
+                </ons-col>
+            </ons-list-item>
+            <ons-list-item style="text-align:center;" ng-show="!loadCompleted">
+               <ons-col>
+                    <i class="fa fa-spin fa-spinner fa-lg"></i> Loading...
+                </ons-col>
+            </ons-list-item>
+        </ons-list>
+    </div>
 </ons-page>
-

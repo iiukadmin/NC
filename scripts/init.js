@@ -6,9 +6,11 @@ var MSG_SYSTEMERROR = {title:'System Error',content:'There has been an error,Ple
 
 var pushNotification;
 var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
-AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
-
+var Auth = new AKHB.services.authentication(AKHB.config);
+var DBSync = null;
 window.DB = null;
+
+AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
 
 AKHB.openContentPage =  function(navigation,$templateCache){
     if(navigation.type == 1){
@@ -46,7 +48,14 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
         console.log('emit WAITINGNETWORK',$scope.busy,$scope.$id);
     });
 
-    
+    $rootScope.signOut = function(){
+        var Auth = new AKHB.services.authentication(AKHB.config);
+        Auth.cleanAuthentication(function(){
+            app.slidingMenu.setSwipeable(false); 
+            app.slidingMenu.closeMenu();
+            app.slidingMenu.setMainPage('pages/login.html');    
+        });
+    }
     document.addEventListener('deviceready', function(){
     
 
@@ -102,7 +111,7 @@ module.controller('SlidingMenuController',['$scope',function($scope){
         $scope.isready = data;
     });
 }]);
-module.controller('LandingPageController',['$scope','$sce','$templateCache',function($scope,$sce,$templateCache){
+module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
 
      $scope.openPage = function(nav){
@@ -114,21 +123,14 @@ module.controller('LandingPageController',['$scope','$sce','$templateCache',func
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==4){
-            signOut();
+            $scope.signOut();
         }else{
             myNavigator.pushPage('pages/childmenu.html');
         }
         
     }
-    var signOut = function(){
-        var Auth = new AKHB.services.authentication(AKHB.config);
-        Auth.cleanAuthentication(function(){
-            app.slidingMenu.setSwipeable(false); 
-            app.slidingMenu.closeMenu();
-            app.slidingMenu.setMainPage('pages/login.html');    
-        });
-    }
-    $scope.signOut = signOut;
+
+    $scope.signOut = $rootScope.signOut;
     DB.getHomeArticle(function(err,result){
         DB.getHomepageIcons(function(err,navigations){
             DB.getUnreadMessageCount(function(err,count){
@@ -152,22 +154,13 @@ module.controller('LandingPageController',['$scope','$sce','$templateCache',func
 module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
     var scope = $scope;
     scope.nav =  $templateCache.get('navigation');
+    scope.messages = [];
     scope.menuClick = function(){
-        // app.slidingMenu.setSwipeable(true);
         app.slidingMenu.toggleMenu();
-        // app.slidingMenu.once('postclose',function(){
-        //      app.slidingMenu.setSwipeable(false);
-        // });
     };
-    scope.openMessageDetail = function(msg){
-        // if(msg.type == 1){
-        //     DB.setMessageUsed(msg.server_id,function(err,result){
-        //         msg.type = 2;
-        //         console.log(err,result);
-        //     });
-        // }
-        // AKHB.notification.alert(msg.content,null,msg.title);
-        $templateCache.put('message', msg);
+    scope.openMessageDetail = function(msg,$event){
+        if($event.type != "touchend") return;
+        $templateCache.put('message',msg);
         myNavigator.pushPage('pages/messagedetail.html');
     };
     var loadMessage = function(){
@@ -177,36 +170,17 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
             });
         }) 
     }
-    loadMessage();
+
+    if(Auth.isNetworkConnected()){
+        DBSync.runMessageSync(loadMessage,true);
+    }else{
+        loadMessage();
+    }
+    
     $scope.$on("Refresh", function(){ 
         loadMessage();
         console.log('emit Refresh');
     });
-    $scope.swipeLeft = function($event){
-        $event.stopPropagation();
-        $event.preventDefault();
-        var target = $($event.target);
-        if(!$($event.target).hasClass('swipe')){
-            target = $($event.target).parents('.swipe:eq(0)').get(0);
-        }
-        $(target).addClass('show-del-btn');
-    };
-    $scope.swipeRight = function($event){
-        var target = $($event.target);
-        $event.stopPropagation();
-        $event.preventDefault();
-         if($event.target.tagName.toLowerCase() != 'ons-list-item'){
-            if($(target.parents('ons-list-item:eq(0)').get(0)).offset().left == 0){
-                app.slidingMenu.openMenu();
-                app.slidingMenu.setSwipeable(true);
-                return;
-            }
-         }
-        if(!$($event.target).hasClass('swipe')){
-            target = $($event.target).parents('.swipe:eq(0)').get(0);
-        }
-        $(target).removeClass('show-del-btn');
-    };
     $scope.deleteMessage = function(msg,$event){
         $event.stopPropagation();
         ons.notification.confirm({
@@ -214,7 +188,12 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
             callback: function(answer) {
               if(answer){
                 DB.deleteMessage(msg.server_id,function(){
+                    DB.setUsage(msg.server_id,2,2);
                     $rootScope.$broadcast("Refresh");
+
+                    if(Auth.isNetworkConnected()){
+                        DBSync.runMessageSync();
+                    }
                 });
               }
             }
@@ -244,6 +223,9 @@ module.controller('MessageDetailController',['$scope','$rootScope','$http','$tem
                     DB.deleteMessage(message.server_id,function(){
                         DB.setUsage(message.server_id,2,2);
                         $rootScope.$broadcast("Refresh");
+                        if(Auth.isNetworkConnected()){
+                            DBSync.runMessageSync();
+                        }
                         myNavigator.popPage();
                     });
                   }
@@ -263,9 +245,6 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
     function($scope, $http, $templateCache,$rootScope) {
 
         app.slidingMenu.setSwipeable(false); 
-
-        var Auth = new AKHB.services.authentication(AKHB.config);
-        var DBSync = null;
         var scope = $scope;
         var rootScope = $rootScope;
 
@@ -288,7 +267,6 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 }
             };
             scope.isready = true;  
-            console.log("AKHB.services.db init Outer.");
               
             setTimeout(function(){
                 DBSync = new AKHB.services.db.DBSync(AKHB.config,$http);
@@ -297,6 +275,13 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
         });
         
         function initLogin(){
+            var runMessageSync = function(){
+                if(Auth.isNetworkConnected()){
+                    DBSync.runMessageSync(runMessageSync);
+                }else{
+                    setTimeout(runMessageSync,30000);
+                }
+            }
             var onlineLogin = function(){
                 Auth.isWebserviceWorking($http,function(err,result){
                     rootScope.$emit("NOTBUSY");
@@ -325,6 +310,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                                         app.slidingMenu.setMainPage('pages/landingpage.html');
                                         setTimeout(syncBackGround,window.AKHB.config.timeout);
                                     },true);
+                                    runMessageSync();
                                 }
                                 
                             });
@@ -339,7 +325,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 var syncTimes = 0;
                 var syncBackGround = function(){
                     syncTimes ++;
-                    if(Auth.checkNetworkConnected()){
+                    if(Auth.isNetworkConnected()){
                         DBSync.runInBackGround(function(){
                             console.log('sync times:'+syncTimes);
                             syncBackGround();
@@ -359,6 +345,8 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                         //$rootScope.$emit("BUSY");
                         syncBackGround();
                     });
+                   runMessageSync();
+
                 }else{
                     //Auth.checkNetworkConnected();
                     onlineLogin();
@@ -372,7 +360,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     },MSG_RETUIREDNETWORK.title);
                 document.addEventListener("online", function(){
                     rootScope.$emit("NOTBUSY");
-                    onlineLogin();
+                    initLogin();
                 }, false);
             }
         }
@@ -391,21 +379,14 @@ module.controller('MenuController',['$scope','$rootScope','$http','$templateCach
             }else if(nav.type==5){
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
             }else if(nav.type==4){
-                signOut();
+                $scope.signOut();
             }else{
                 myNavigator.pushPage('pages/childmenu.html');
             }
             
         }
-        var signOut = function(){
-            var Auth = new AKHB.services.authentication(AKHB.config);
-            Auth.cleanAuthentication(function(){
-                app.slidingMenu.setSwipeable(false); 
-                app.slidingMenu.closeMenu();
-                app.slidingMenu.setMainPage('pages/login.html');    
-            });
-        }
-        $scope.signOut = signOut;
+        
+        $scope.signOut = $rootScope.signOut;
         $scope.navigations = [];
         var loadMenu = function(scope){
             DB.getNavigationsByParentId(0,function(err,navigations){
@@ -652,17 +633,16 @@ module.controller('DirectoryListController',['$scope','$rootScope','$http','$tem
         $scope.dict.count = 50;
         $rootScope.$emit("BUSY");
         var busy = true;
-
-        DB.getDirectoriesCount($scope.dict.type,function(err,data){
-            $scope.$apply(function(){
-                $scope.dict.count = data;
-                $('ons-list').css('height',45*$scope.dict.count);
-                $scope.MyDelegate.countItems = function() {
-                    return $scope.dict.count;
-                }
-            })
+        // DB.getDirectoriesCount($scope.dict.type,function(err,data){
+        //     $scope.$apply(function(){
+        //         $scope.dict.count = data;
+        //         $('ons-list').css('height',45*$scope.dict.count);
+        //         $scope.MyDelegate.countItems = function() {
+        //             return $scope.dict.count;
+        //         }
+        //     })
             
-        });
+        // });
         $scope.OpenDirectoryDetail = function(directory){
             DB.getCommitteContentById(directory.server_id,function(err,data){
                 if(data) directory.content = data.content; 
@@ -671,35 +651,75 @@ module.controller('DirectoryListController',['$scope','$rootScope','$http','$tem
             })
             
         };
-        var pageIndex = 0;
-        var pageSize = 20;
-
-        $scope.MyDelegate  = {
-          configureItemScope: function(index, itemScope) {
-
-            if(!itemScope.item){
-                itemScope.item = {};
-                DB.getDirectoriesPagnation($scope.dict.type,index,function(err,data){
-                    $scope.$apply(function(){
-                        if(busy) {
-                            busy = false;
-
-                            $rootScope.$emit("NOTBUSY");
-                        } 
-                        itemScope.item = data[0];
-                    })
-                });
-            }
-            //itemScope.item = $scope.dict.items[index];
-          },
-          calculateItemHeight: function(index) {
-            return 45;
-          },
-          countItems: function() {
-            return 5;
-          },
-          destroyItemScope: null
+        $scope.dicts = [];
+        $scope.loadCompleted = false;
+        $scope.pageIndex = 1;
+        $scope.pageSize = 20;
+        $scope.myScroll = null;
+        $scope.isLoading = true;
+        $scope.myScrollOptions = {
+            probeType: 3, 
+            mouseWheel: true 
         };
+        $scope.myScroll = new IScroll('#wrapper',{ probeType: 2, mouseWheel: true });
+        $scope.getDirectoryDataCallback = function(err,data){
+            $scope.isLoading = false;
+            $scope.$apply(function(){
+                if(data.length < $scope.pageSize){
+                    $scope.loadCompleted = true;
+                }
+                if(busy) {
+                    busy = false;
+                    $rootScope.$emit("NOTBUSY");
+                } 
+                $scope.dicts = $scope.dicts.concat(data);
+                $scope.pageIndex ++;
+
+                setTimeout(function(){
+                    $scope.myScroll.refresh();
+                },500);
+                
+            });
+        }
+
+        $scope.myScroll.on('scrollEnd', function (){
+            if($scope.loadCompleted || $scope.isLoading) return;
+            if(Math.abs(this.maxScrollY - this.y) < 40){
+                $scope.isLoading = true;
+                DB.getDirectoriesPagnation($scope.dict.type,$scope.pageIndex,$scope.pageSize,$scope.getDirectoryDataCallback);
+            }
+        });
+        
+        DB.getDirectoriesPagnation($scope.dict.type,$scope.pageIndex,$scope.pageSize,$scope.getDirectoryDataCallback);
+
+        
+
+        // $scope.MyDelegate  = {
+        //   configureItemScope: function(index, itemScope) {
+
+        //     if(!itemScope.item){
+        //         itemScope.item = {};
+        //         DB.getDirectoriesPagnation($scope.dict.type,index,function(err,data){
+        //             $scope.$apply(function(){
+        //                 if(busy) {
+        //                     busy = false;
+
+        //                     $rootScope.$emit("NOTBUSY");
+        //                 } 
+        //                 itemScope.item = data[0];
+        //             })
+        //         });
+        //     }
+        //     //itemScope.item = $scope.dict.items[index];
+        //   },
+        //   calculateItemHeight: function(index) {
+        //     return 45;
+        //   },
+        //   countItems: function() {
+        //     return 5;
+        //   },
+        //   destroyItemScope: null
+        // };
 }]);
 
 module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$templateCache','$sce',
@@ -797,40 +817,7 @@ module.controller('DirectorySearchController',['$scope','$rootScope','$http','$t
 }]);
 
 
-$(document).on('touchstart touchend','#list-message',function(e){
-    var list = $('#list-message');
-    var currentTouche = e.originalEvent.changedTouches[0];
-    var maxOffset  = list.height() - list.parent().height();
-   
-    if(e.type == 'touchend'){
-        var offset = currentTouche.pageY - window.prevTouche.pageY;
-        offset = offset *2;
-        var currentOffset = list.attr('data-offset') ? parseInt(list.attr('data-offset')) + offset : offset;
-        if(Math.abs(currentOffset) > maxOffset){
-            currentOffset = -maxOffset;
-        }
-        if(currentOffset > 0){
-            currentOffset = 0;
-        } 
-        list.attr('data-offset',currentOffset,offset);
-        if(Math.abs(offset) > 10 ){
-           list.css('transform','translate3d(0, '+currentOffset+'px, 0)' );
-        }
-    }
-
-    window.prevTouche = currentTouche;
-    app.slidingMenu.setSwipeable(false); 
-    
-    if(window.swipTimer) clearTimeout(window.swipTimer);
-    window.swipTimer = setTimeout(function(){
-        app.slidingMenu.setSwipeable(true); 
-    },2000);
-})
-.on('touchmove','#list-message',function(e){
-    e.stopPropagation();
-    e.preventDefault();
-})
-.on('click','a',function(e){
+$(document).on('click','a',function(e){
 
         var $this = $(this);
         var $href = $this.attr('href');
@@ -960,89 +947,3 @@ function onNotificationGCM(e) {
     break;
   }
 }
-
-
-/*
-
-function ClickOpen() {
-    var dom = $('#childMenu');
-    if (dom.hasClass('visibleMenu')) {
-        dom.addClass('hiddenMenu');
-        dom.removeClass('visibleMenu');
-    }
-    else if (dom.hasClass('hiddenMenu')) {
-        dom.removeClass('hiddenMenu');
-        dom.addClass('visibleMenu');            
-    }
-} 
-
-angular.module('AKHB',[])
-.controller('LoginController',['$scope','$http','$templateCache',
-    function($scope, $http, $templateCache) {
-        var Auth = new AKHB.services.authentication(AKHB.config);
-
-        try{
-            // check network and server.
-            Auth.checkNetworkConnected();
-            Auth.isWebserviceWorking($http,function(err,result){
-                if(err){
-                    AKHB.notification.alert(result,function(){
-                        AKHB.utils.exitApp();
-                    });
-                }else{
-                    doLogin();
-                }
-            });
-        }catch(ex){
-            console.log(ex);
-            AKHB.notification.alert(ex.message,function(){
-                AKHB.utils.exitApp();
-            });
-        }
-        function doLogin(){
-            if(Auth.isCachedAuthentication()){
-                myNavigator.pushPage('main.html');
-            }else{
-                $(document).on('click','#btn_login',function(){
-                    var pwd = $('#loginpwd').val();
-                    var authData = Auth.AuthenticationRequest(AKHB.user.deviceid,pwd);
-
-                    Auth.checkRemoteAuthentication($http,authData,function(err,result){
-                        if(err) 
-                            AKHB.notification.alert(result);
-                        else
-                            myNavigator.pushPage('main.html');
-                    });
-                });
-            };
-        };
-}]);
-
-ons.ready(function() {
-      // Init code here
-      // init longin button
-    AKHB.user = {
-        deviceid:null,
-        id:null,
-        authcode:null,
-        os:null,
-        deviceName:null
-    };
-    if(AKHB.config.debug){
-        AKHB.user.deviceid = '00000000000000006';
-        AKHB.user.os = 'test';
-        AKHB.user.deviceName = 'browser test';
-    }else{
-        AKHB.user.deviceid = device.uuid;
-        AKHB.user.os = device.version;
-        AKHB.user.deviceName = device.model;
-    }
-    ;
-
-   
-
-    
-})
-
-
-*/

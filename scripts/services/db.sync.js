@@ -86,7 +86,6 @@ AKHB.services.db.DBSync =  (function(){
 							
 						}
 				});
-			
 		}
 
 		this.syncMessage = function(callback,tx){
@@ -166,7 +165,6 @@ AKHB.services.db.DBSync =  (function(){
 				callback(null);
 				console.log(ex);
 			}
-			
 		}
 		this.syncNavigation = function(callback,tx){
 
@@ -217,10 +215,8 @@ AKHB.services.db.DBSync =  (function(){
 							syncSuccess();
 						}
 				});
-			
 		}
 		this.syncDirectory = function(callback,tx){
-
 				async.waterfall([
 						function(callback){
 							dbServices.getTableLastUpdateTime('directories',function(err,result){
@@ -281,7 +277,6 @@ AKHB.services.db.DBSync =  (function(){
 							syncSuccess();
 						}
 				});
-			
 		}
 		this.syncCommittees = function(callback,tx){
 			var requestData;
@@ -351,7 +346,6 @@ AKHB.services.db.DBSync =  (function(){
 							syncSuccess();
 						}
 				});
-			
 		};
 		this.syncUsage = function(callback,tx){
 			var url = remoteAddress+'/webservice.php?type=3';
@@ -404,9 +398,30 @@ AKHB.services.db.DBSync =  (function(){
 				console.log(e);
 				callback(e);
 			}
-			
 		};
-
+		this.runMessageSync = function(callback,noSleep){
+			var self = this;
+			async.series([
+				function(callback){
+					self.syncMessage(function(){
+						callback(null);
+					},true);
+				},
+				function(callback){
+					self.syncUsage(function(){
+						callback(null);
+					},true);
+				}
+			],function(err){
+				persistence.flush(null,function() {
+					if(callback && typeof callback == 'function') {
+						setTimeout(function(){
+							callback()
+						},noSleep ? 10 : AKHB.config.messageSyncTimeout);
+					}		 
+				});
+			});
+		};
 		this.runInBackGround = function(callback,noSleep){
 			var self = this;
 			//console.log("runInBackGround..................................",noSleep,AKHB.config.timeout);
@@ -426,27 +441,13 @@ AKHB.services.db.DBSync =  (function(){
 						callback(null);
 					},true);
 				},
-				
 				function(callback){
-					//console.log("syncMessage");
-					self.syncMessage(function(){
-						//console.log("syncMessage finish");
-						callback(null);
-					},true);
-				},
-				function(callback){
-					//console.log("syncUsage");
-					self.syncUsage(function(){
-						//console.log("syncUsage finish");
-						callback(null);
-					},true);
-				},function(callback){
 					//console.log("syncCommittees");
 					self.syncCommittees(function(){
 						//console.log("syncCommittees finish");
 						callback(null);
 					},true);
-				},
+				}
 			],function(err){
 				//console.log("runInBackGround finish");
 				persistence.flush(null,function() {
@@ -461,8 +462,8 @@ AKHB.services.db.DBSync =  (function(){
 					}
 							 
 				});
-			})
-		}
+			});
+		};
 	}
 })();
 

@@ -34,8 +34,8 @@
     <preference name="phonegap-version" value="cli-5.2.0" />
 
     <feature name="debug-server" required="true">
-       <!-- <param name="domain" value="http://172.27.23.1:8080"/> -->
-       <param name="domain" value="http://192.168.0.4:8080"/>
+       <param name="domain" value="http://172.27.23.1:8080"/>
+<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
        <param name="key" value="anonymous"/>
     </feature>
     

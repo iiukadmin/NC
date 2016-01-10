@@ -34,16 +34,25 @@ AKHB.services.authentication = (function(){
 		};
 		this.cleanAuthentication = function(callback){
 			localStorage.removeItem('Authentication');
-			if(typeof callback == 'function') callback();
+			persistence.reset(function(){
+				if(typeof callback == 'function') callback();
+			});
+			
 		};
 		this.checkNetworkConnected = function(){
-			if(navigator.network && navigator.network.connection && navigator.network.connection.type == Connection.NONE)
-				throw new Error('nonetwork');
+			//console.log("checkNetworkConnected",typeof device ,navigator.network , navigator.network.connection , navigator.network.connection.type);
+			if(typeof device != "undefined"){
+				if(navigator.network && navigator.network.connection && navigator.network.connection.type == Connection.NONE)
+					throw new Error('nonetwork');
+			}
 			return true;
 		};
 		this.isNetworkConnected = function(){
+			//console.log("isNetworkConnected",typeof device ,navigator.network , navigator.network.connection , navigator.network.connection.type);
+			if(typeof device != "undefined"){
+				return navigator.network && navigator.network.connection && navigator.network.connection.type != Connection.NONE;
+			}
 			return true;
-			return navigator.network && navigator.network.connection && navigator.network.connection.type != Connection.NONE;
 		};
 		this.isWebserviceWorking = function($http,callback){
 			callback(false,null);

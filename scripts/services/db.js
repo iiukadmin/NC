@@ -409,72 +409,82 @@ AKHB.services.db.prototype.syncLatestTask =function(){
 			var url = AKHB.config.remoteAddress+'/webservice.php?type=2&table=directory';
 			url+='&id='+item.committe_id;
 			url+='&inst_type='+item.inst_type;
+			url+='&uuid='+AKHB.user.id;
+			url+='&os='+AKHB.user.os;
+			url+='&version='+AKHB.user.appVersion;
 			url+='&last_content_synced='+moment(item.last_modified).format("YYYY-MM-DD");
 
 			var directories = committees.all()
 			.filter('server_id','=',item.committe_id)				
-			$.get(url,function(data){
-				try{
-					data = JSON.parse(data);
-				}catch(ex){
-					console.log(ex);
-					callback(null);
-					return;
-				}
-				if(data.content) {
-					var content = JSON.stringify(data.content);
-					var _committeeContent = committeeContents.all().filter('server_id','=',item.committe_id);
-					_committeeContent.one(function(committeeContent){
-						if(committeeContent){
-							committeeContent.content = content;
-						}else{
-							persistence.add(new committeeContents({
-								server_id:item.committe_id,
-								content:content
-							}));
-						}
-						
-					});
-					async.each(data.content,function(role,contentCallback){
-						async.each(role.names,function(name,nameCallback){
-							name.committees = JSON.stringify(name.committees);
-							name.name = name.forename + ' '+name.Surname;
-							var result = persons.all();
-
-							if(name.title && name.title != ''){
-								result = result.and(new persistence.PropertyFilter('title','=',name.title));
+			$.ajax({
+				url:url,
+				type:'GET',
+				success: function(data){
+					try{
+						data = JSON.parse(data);
+					}catch(ex){
+						console.log(ex);
+						callback(null);
+						return;
+					}
+					if(data.content) {
+						var content = JSON.stringify(data.content);
+						var _committeeContent = committeeContents.all().filter('server_id','=',item.committe_id);
+						_committeeContent.one(function(committeeContent){
+							if(committeeContent){
+								committeeContent.content = content;
+							}else{
+								persistence.add(new committeeContents({
+									server_id:item.committe_id,
+									content:content
+								}));
 							}
-							if(name.name && name.name != ''){
-								result = result.and(new persistence.PropertyFilter('name','=',name.name));
-							}
-							if(name.home_number && name.home_number != ''){
-								result = result.and(new persistence.PropertyFilter('home_number','=',name.home_number));
-							}
-							if(name.mobile && name.mobile != ''){
-								result = result.and(new persistence.PropertyFilter('mobile','=',name.mobile));
-							}
-							if(name.email && name.email != ''){
-								result = result.and(new persistence.PropertyFilter('email','=',name.email));
-							}
-							if(name.committees && name.committees != ''){
-								result = result.and(new persistence.PropertyFilter('committees','=',name.committees));
-							}
-							result.one(function(dbPerson){
-								if(!dbPerson){
-									persistence.add(new persons(name));
-								}
-								nameCallback(null);
-							})
 							
+						});
+						async.each(data.content,function(role,contentCallback){
+							async.each(role.names,function(name,nameCallback){
+								name.committees = JSON.stringify(name.committees);
+								name.name = name.forename + ' '+name.Surname;
+								var result = persons.all();
+
+								if(name.title && name.title != ''){
+									result = result.and(new persistence.PropertyFilter('title','=',name.title));
+								}
+								if(name.name && name.name != ''){
+									result = result.and(new persistence.PropertyFilter('name','=',name.name));
+								}
+								if(name.home_number && name.home_number != ''){
+									result = result.and(new persistence.PropertyFilter('home_number','=',name.home_number));
+								}
+								if(name.mobile && name.mobile != ''){
+									result = result.and(new persistence.PropertyFilter('mobile','=',name.mobile));
+								}
+								if(name.email && name.email != ''){
+									result = result.and(new persistence.PropertyFilter('email','=',name.email));
+								}
+								if(name.committees && name.committees != ''){
+									result = result.and(new persistence.PropertyFilter('committees','=',name.committees));
+								}
+								result.one(function(dbPerson){
+									if(!dbPerson){
+										persistence.add(new persons(name));
+									}
+									nameCallback(null);
+								})
+								
+							},function(err){
+								contentCallback(null);
+							})
 						},function(err){
-							contentCallback(null);
-						})
-					},function(err){
+							persistence.remove(item);
+							callback(null);
+						});
+					}else{
 						persistence.remove(item);
 						callback(null);
-					});
-				}else{
-					persistence.remove(item);
+					}
+				},
+				error:function(){
 					callback(null);
 				}
 			})
@@ -575,12 +585,20 @@ AKHB.services.db.prototype.getDirectories = function(type,callback){
 		callback(null,data);
 	})
 };
-
-AKHB.services.db.prototype.getDirectoriesPagnation = function(category,index,callback){
+AKHB.services.db.prototype.getOneDirectory = function(category,index,callback){
 	var directories = committees.all()
 	.filter('inst_type','=',category)
 	.and(new persistence.PropertyFilter('is_show','=','1'))
 	.order('title',true).limit(1).skip((index-1)*1);
+	directories.list(function(data){
+		callback(null,data);
+	})
+};
+AKHB.services.db.prototype.getDirectoriesPagnation = function(category,index,pageSize,callback){
+	var directories = committees.all()
+	.filter('inst_type','=',category)
+	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.order('title',true).limit(pageSize).skip((index-1)*pageSize);
 	directories.list(function(data){
 		callback(null,data);
 	})

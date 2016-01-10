@@ -192,6 +192,9 @@ ons-list-item.swipe{
    	transition:0.2s all ease;
 }
 .col-delete{
+	width:100px !important;
+	height:100%;
+	float: right;
 	color:#fff;display:-webkit-box;-webkit-box-pack:center; background:#394295; text-align: center;-webkit-box-pack: center; text-align: center; -webkit-box-flex: 0; -webkit-box-align: center; -webkit-box-direction: inherit;
 }
 span.Editeve{
@@ -284,4 +287,12 @@ ons-list-header,.item-name{
 }
 #list-message{
 	transition: transform 0.4s linear 0s; 
+}
+
+#wrapper {
+    position:absolute; 
+    z-index:1;
+    top:2px; 
+    bottom:2px;
+    width:100%;
 }

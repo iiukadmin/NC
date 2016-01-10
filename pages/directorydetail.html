@@ -12,6 +12,10 @@
         <ons-list-item ng-show="directory.description" class="item-description">
             {{directory.description}}
         </ons-list-item>
+        <ons-list-header ng-show="directory.email">Email</ons-list-header>
+        <ons-list-item ng-show="directory.email">
+            <a href="mailto:{{directory.email}}">{{directory.email}}</a>
+        </ons-list-item>
         <ons-list-header ng-repeat-start="member in directory.members">{{member.role}}</ons-list-header>
         <ons-list-item class="item-name" ng-repeat-end ng-repeat="name in member.names" ng-click="openIndividual(name)">
         {{name.title}} {{name.forename}} {{name.Surname}}
