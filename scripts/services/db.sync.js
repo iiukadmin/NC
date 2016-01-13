@@ -7,6 +7,10 @@ if(typeof(AKHB.services) == 'undefined'){
 if(typeof(AKHB.services.db) == 'undefined'){
 	AKHB.services.db = {};
 }
+if(!AKHB.services.timer){
+	AKHB.services.timer = {};
+}
+
 
 
 AKHB.services.db.DBSync =  (function(){
@@ -415,7 +419,7 @@ AKHB.services.db.DBSync =  (function(){
 			],function(err){
 				persistence.flush(null,function() {
 					if(callback && typeof callback == 'function') {
-						setTimeout(function(){
+						AKHB.services.timer.messsage = setTimeout(function(){
 							callback()
 						},noSleep ? 10 : AKHB.config.messageSyncTimeout);
 					}		 
@@ -449,16 +453,25 @@ AKHB.services.db.DBSync =  (function(){
 					},true);
 				}
 			],function(err){
+				
 				//console.log("runInBackGround finish");
 				persistence.flush(null,function() {
+
 					if(callback && typeof callback == 'function') {
-						setTimeout(function(){
+						AKHB.services.timer.process1 = setTimeout(function(){
 							callback()
-						},noSleep ? 10 : AKHB.config.timeout);
+						},noSleep && AKHB.config.firstRun ? 10 : AKHB.config.timeout);
+						
 					}
 					if(noSleep && AKHB.config.firstRun){
+						
 						AKHB.config.firstRun = false;
-						setTimeout(DB.syncLatestTask,10000);
+						var syncTask = function(){
+							DB.syncLatestTask(function(){
+								AKHB.services.timer.latestTask = setTimeout(syncTask,10000);
+							});
+						}
+						syncTask();
 					}
 							 
 				});

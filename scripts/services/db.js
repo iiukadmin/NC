@@ -397,12 +397,16 @@ AKHB.services.db.prototype.setDirectoryCategories = function(model,remoteAddress
 		}
 	})
 }
-AKHB.services.db.prototype.syncLatestTask =function(){
+AKHB.services.db.prototype.syncLatestTask =function(callback){
 	var that = this;
 	var tasks = syncTask.all()
 	.filter('status','=',0)
+	.order('last_modified',true)
+	.order('committe_id',true)
 	.limit(5);
-
+	if(!AKHB.services.xhr){
+		AKHB.services.xhr = [];
+	}
 	tasks.list(function(data){
 		// callback(null,data);
 		async.each(data,function(item,callback){
@@ -416,7 +420,7 @@ AKHB.services.db.prototype.syncLatestTask =function(){
 
 			var directories = committees.all()
 			.filter('server_id','=',item.committe_id)				
-			$.ajax({
+			var xhr = $.ajax({
 				url:url,
 				type:'GET',
 				success: function(data){
@@ -488,12 +492,11 @@ AKHB.services.db.prototype.syncLatestTask =function(){
 					callback(null);
 				}
 			})
+			AKHB.services.xhr.push(xhr);
 
 		},function(err){
 			persistence.flush(function(){
-				setTimeout(function(){
-					window.DB.syncLatestTask();
-				},5000);
+				callback();
 			})
 			
 		})
