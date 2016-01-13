@@ -98,6 +98,7 @@ var committees = persistence.define('committees', {
     description :"TEXT",
     email :"TEXT",
     status :"INT",
+    last_changed:"DATE",
     last_modified:"DATE",
     is_show:"INT"
 });

@@ -196,8 +196,10 @@ AKHB.services.db.prototype.getCommitteById = function(id,callback){
 AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,callback){
 	var that = this;
 	var dbCommitte = null;
+	var isPullData = false;
 	this.getCommitteById(_committe.id,function(err,resultCommitte){
 		if(!resultCommitte){
+			isPullData = true;
 			dbCommitte = new committees({
 				server_id:_committe.id,
 			    inst_type :_committe.inst_type,
@@ -207,14 +209,17 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			    email :_committe.email,
 			    status :_committe.status,
 			    is_show : 1,
-			    last_modified:moment(_committe.last_modified).toDate()
+			    last_modified:moment(_committe.last_modified).toDate(),
+			    last_changed:moment(_committe.last_changed).toDate()
 			});
 			persistence.add(dbCommitte);
 		}else{
 			if(_committe.status == 1){
 				persistence.remove(resultCommitte);
 			}else{
+				
 				dbCommitte = resultCommitte;
+				isPullData = moment(_committe.last_changed) > dbCommitte.last_modified;
 				dbCommitte.title = _committe.title;
 				dbCommitte.last_modified = moment(_committe.last_modified).toDate();
 				dbCommitte.inst_type = _committe.inst_type;
@@ -222,10 +227,11 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 				dbCommitte.category = _committe.category;
 				dbCommitte.description = _committe.description;
 				dbCommitte.email = _committe.email;
+				dbCommitte.last_changed = moment(_committe.last_changed);
 			}
 		}
 		persistence.flush(function(){
-			that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
+			if(isPullData) that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
 			callback(err);
 		});
 		

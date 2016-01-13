@@ -568,6 +568,7 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
         $scope.noPersonsData  = false;
 
         $scope.OpenDirectoryDetail = function(directory){
+            $rootScope.$emit("BUSY");
             DB.getCommitteContentById(directory.server_id,function(err,data){
                 if(data) directory.content = JSON.parse(data.content); 
                 $templateCache.put('directory',directory);
@@ -577,6 +578,7 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
         };
 
         $scope.openIndividual = function(individual){
+            $rootScope.$emit("BUSY");
             $templateCache.put('individual',individual);
             myNavigator.pushPage('pages/directoryindividual.html');
         };
@@ -666,6 +668,7 @@ module.controller('DirectoryListController',['$scope','$rootScope','$http','$tem
             
         // });
         $scope.OpenDirectoryDetail = function(directory){
+            $rootScope.$emit("BUSY");
             DB.getCommitteContentById(directory.server_id,function(err,data){
                 if(data) directory.content = data.content; 
                 $templateCache.put('directory',directory);
@@ -747,18 +750,24 @@ module.controller('DirectoryListController',['$scope','$rootScope','$http','$tem
 module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$templateCache','$sce',
     function($scope,$rootScope,$http, $templateCache,$sce) {
         $scope.directory = $templateCache.get('directory');
-        
+        $rootScope.$emit("NOTBUSY");
         // if(typeof $scope.directory.members == "undefined")
         //     $scope.directory.members = JSON.parse($scope.directory.content);
-        if(typeof $scope.directory.members == "undefined" && $scope.directory.content)
+        if(typeof $scope.directory.members == "undefined" && $scope.directory.content){
             $scope.directory.members = JSON.parse($scope.directory.content);
+        }
+        if(!$scope.directory.content){
+            $scope.isSync = true;
+        }
         $scope.openIndividual = function(individual){
+            $rootScope.$emit("BUSY");
             $templateCache.put('individual',individual);
             myNavigator.pushPage('pages/directoryindividual.html');
         };
 }]);
 module.controller('DirectoryIndividualController',['$scope','$rootScope','$http','$templateCache','$sce',
     function($scope,$rootScope,$http, $templateCache,$sce) {
+        $rootScope.$emit("NOTBUSY");
         $scope.individual = $templateCache.get('individual');
         if(!$scope.individual.name){
             $scope.individual.name = $scope.individual.forename + ' '+$scope.individual.Surname;
@@ -767,7 +776,7 @@ module.controller('DirectoryIndividualController',['$scope','$rootScope','$http'
             $scope.individual.committees = JSON.parse($scope.individual.committees);
         }
         $scope.openIndividual = function(individual){
-
+            $rootScope.$emit("BUSY");
             DB.getCommitteById(individual.id,function(err,data){
                 if(!err && data){
                     $templateCache.put('directory',data);
@@ -905,7 +914,7 @@ function successHandler (result) {
 }
 // result contains any error description text returned from the plugin call
 function errorHandler (error) {
-    alert('error = ' + error);
+    navigator.notification.alert('error = ' + error,'Error');
 }
 function sendRegistionId(id){
     var url = window.AKHB.config.remoteAddress+'/webservice.php?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
@@ -916,7 +925,7 @@ function sendRegistionId(id){
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-        navigator.notification.alert(event.alert);
+        navigator.notification.alert(event.alert,'New Notification');
     }
 
     if ( event.sound )
@@ -956,16 +965,16 @@ function onNotificationGCM(e) {
             var my_media = new Media("/android_asset/www/"+ soundfile);
             my_media.play();
         }
-        alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,'New Notification');
 
     break;
 
     case 'error':
-       alert('GCM error = '+e.msg);
+       navigator.notification.alert('GCM error = '+e.msg,'Error');
     break;
 
     default:
-        alert('An unknown GCM event has occurred');
+        navigator.notification.alert('An unknown GCM event has occurred','Error');
     break;
   }
 }
