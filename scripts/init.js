@@ -914,7 +914,7 @@ function successHandler (result) {
 }
 // result contains any error description text returned from the plugin call
 function errorHandler (error) {
-    navigator.notification.alert('error = ' + error,'Error');
+    navigator.notification.alert('error = ' + error,null,'Error');
 }
 function sendRegistionId(id){
     var url = window.AKHB.config.remoteAddress+'/webservice.php?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
@@ -925,7 +925,7 @@ function sendRegistionId(id){
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-        navigator.notification.alert(event.alert,'New Notification');
+        navigator.notification.alert(event.alert,null,'New Notification');
     }
 
     if ( event.sound )
@@ -965,16 +965,16 @@ function onNotificationGCM(e) {
             var my_media = new Media("/android_asset/www/"+ soundfile);
             my_media.play();
         }
-        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,'New Notification');
+        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
 
     break;
 
     case 'error':
-       navigator.notification.alert('GCM error = '+e.msg,'Error');
+       navigator.notification.alert('GCM error = '+e.msg,null,'Error');
     break;
 
     default:
-        navigator.notification.alert('An unknown GCM event has occurred','Error');
+        navigator.notification.alert('An unknown GCM event has occurred',null,'Error');
     break;
   }
 }
