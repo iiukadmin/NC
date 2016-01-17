@@ -1,6 +1,7 @@
 window.AKHB ={
 	config:{
 		// http://www.iiuk.org/Pages/HealthBoard_App/webservice.php
+		// http://stage.iiuk.homeip.net/Pages/App
 		remoteAddress : 'http://stage.iiuk.homeip.net/Pages/App',
 		debug:true,
 		version:null,

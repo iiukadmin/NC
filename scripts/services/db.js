@@ -416,7 +416,7 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 	tasks.list(function(data){
 		// callback(null,data);
 		async.each(data,function(item,callback){
-			var url = AKHB.config.remoteAddress+'/webservice.php?type=2&table=directory';
+			var url = AKHB.config.remoteAddress+'/webservice2.php?type=2&table=directory';
 			url+='&id='+item.committe_id;
 			url+='&inst_type='+item.inst_type;
 			url+='&uuid='+AKHB.user.id;
@@ -456,28 +456,41 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 								name.committees = JSON.stringify(name.committees);
 								name.name = name.forename + ' '+name.Surname;
 								var result = persons.all();
-
-								if(name.title && name.title != ''){
-									result = result.and(new persistence.PropertyFilter('title','=',name.title));
-								}
-								if(name.name && name.name != ''){
-									result = result.and(new persistence.PropertyFilter('name','=',name.name));
-								}
-								if(name.home_number && name.home_number != ''){
-									result = result.and(new persistence.PropertyFilter('home_number','=',name.home_number));
-								}
-								if(name.mobile && name.mobile != ''){
-									result = result.and(new persistence.PropertyFilter('mobile','=',name.mobile));
-								}
-								if(name.email && name.email != ''){
-									result = result.and(new persistence.PropertyFilter('email','=',name.email));
-								}
-								if(name.committees && name.committees != ''){
-									result = result.and(new persistence.PropertyFilter('committees','=',name.committees));
-								}
+								result = result.and(new persistence.PropertyFilter('server_id','=',name.ID));
+								// if(name.title && name.title != ''){
+								// 	result = result.and(new persistence.PropertyFilter('title','=',name.title));
+								// }
+								// if(name.name && name.name != ''){
+								// 	result = result.and(new persistence.PropertyFilter('name','=',name.name));
+								// }
+								// if(name.home_number && name.home_number != ''){
+								// 	result = result.and(new persistence.PropertyFilter('home_number','=',name.home_number));
+								// }
+								// if(name.mobile && name.mobile != ''){
+								// 	result = result.and(new persistence.PropertyFilter('mobile','=',name.mobile));
+								// }
+								// if(name.email && name.email != ''){
+								// 	result = result.and(new persistence.PropertyFilter('email','=',name.email));
+								// }
+								// if(name.committees && name.committees != ''){
+								// 	result = result.and(new persistence.PropertyFilter('committees','=',name.committees));
+								// }
 								result.one(function(dbPerson){
 									if(!dbPerson){
+										name.server_id = name.ID;
 										persistence.add(new persons(name));
+									}else{
+										if(name.last_modified  && name.last_modified > dbPerson.last_modified){
+											dbPerson.server_id = name.ID;
+											dbPerson.Surname = name.Surname;
+											dbPerson.forename = name.forename;
+											dbPerson.home_number = name.home_number;
+											dbPerson.mobile = name.mobile;
+											dbPerson.title = name.title;
+											dbPerson.email = name.email;
+											dbPerson.last_modified  = name.last_modified;
+											dbPerson.committees  = name.committees;
+										}
 									}
 									nameCallback(null);
 								})

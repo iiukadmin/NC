@@ -88,7 +88,7 @@ AKHB.services.authentication = (function(){
 		};
 		this.checkRemoteAuthentication = function($http,requestData,callback){
 			var self = this;
-			var url = appConfig.remoteAddress+'/webservice.php?'+ decodeURIComponent($.param(requestData));
+			var url = appConfig.remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
 			$http({
 				url:url,
 				timeout:appConfig.timeout,
