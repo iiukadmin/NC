@@ -70,6 +70,11 @@ var syncTask = persistence.define('tasks', {
     inst_type:"INT"
 });
 
+var committeePersons = persistence.define('committee_persons_link', {
+    committe_id: "INT",
+    person_id:"INT"
+});
+
 // var directory =  persistence.define('directories', {
 //     server_id: "INT",
 //     type:"INT",
@@ -91,7 +96,6 @@ var persons = persistence.define('persons', {
     server_id:"INT",
     last_modified:"DATE",
 });
-
 
 var committees = persistence.define('committees', {
     server_id:"INT",

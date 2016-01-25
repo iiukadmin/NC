@@ -196,10 +196,8 @@ AKHB.services.db.prototype.getCommitteById = function(id,callback){
 AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,callback){
 	var that = this;
 	var dbCommitte = null;
-	var isPullData = false;
 	this.getCommitteById(_committe.id,function(err,resultCommitte){
 		if(!resultCommitte){
-			isPullData = true;
 			dbCommitte = new committees({
 				server_id:_committe.id,
 			    inst_type :_committe.inst_type,
@@ -231,7 +229,7 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			}
 		}
 		persistence.flush(function(){
-			if(isPullData) that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
+			that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
 			callback(err);
 		});
 		
@@ -413,10 +411,63 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 	if(!AKHB.services.xhr){
 		AKHB.services.xhr = [];
 	}
+
 	tasks.list(function(data){
 		// callback(null,data);
+		if(data.length == 0){
+			persistence.transaction(function(tx){
+				tx.executeSql('DELETE FROM persons WHERE server_id not in ( SELECT person_id FROM committee_persons_link)',
+					[],
+					function(result){
+						callback(null);
+					},
+					function(err){
+						callback(err);
+					});
+			})
+			return;
+		}
+		var clearCommittee = function(committe_id,callback){
+			async.waterfall([
+				function(callback){
+					committees.all().filter('server_id','=',committe_id)
+					.one(function(data){
+						callback(null,data);
+					})
+				},function(committee,callback){
+					persistence.transaction(function(tx){
+					tx.executeSql('DELETE FROM committee_persons_link WHERE committe_id = ?;',
+						[committee.server_id],
+						function(result){
+							console.log('Delete committee_persons_link',result,committee.server_id);
+							callback(null,committee);
+						},
+						function(err){
+							console.log('Delete committee_persons_link err',err);
+							callback(err,committee);
+						});
+					})
+				},function(committee,callback){
+					persistence.transaction(function(tx){
+						tx.executeSql('DELETE FROM persons WHERE server_id not in ( SELECT person_id FROM committee_persons_link)',
+						[],
+						function(result){
+							console.log('Delete persons',result);
+							callback(null);
+						},
+						function(err){
+							console.log('Delete persons err',err);
+							callback(err);
+						});
+					});
+				}
+			],function(err){
+				callback(err);
+			});
+		}	
+		
 		async.each(data,function(item,callback){
-			var url = AKHB.config.remoteAddress+'/webservice2.php?type=2&table=directory';
+			var url = AKHB.config.remoteAddress+'?type=2&table=directory';
 			url+='&id='+item.committe_id;
 			url+='&inst_type='+item.inst_type;
 			url+='&uuid='+AKHB.user.id;
@@ -425,7 +476,8 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 			url+='&last_content_synced='+moment(item.last_modified).format("YYYY-MM-DD");
 
 			var directories = committees.all()
-			.filter('server_id','=',item.committe_id)				
+			.filter('server_id','=',item.committe_id)		
+				
 			var xhr = $.ajax({
 				url:url,
 				type:'GET',
@@ -439,72 +491,82 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 					}
 					if(data.content) {
 						var content = JSON.stringify(data.content);
-						var _committeeContent = committeeContents.all().filter('server_id','=',item.committe_id);
-						_committeeContent.one(function(committeeContent){
-							if(committeeContent){
-								committeeContent.content = content;
-							}else{
-								persistence.add(new committeeContents({
-									server_id:item.committe_id,
-									content:content
-								}));
-							}
-							
-						});
-						async.each(data.content,function(role,contentCallback){
-							async.each(role.names,function(name,nameCallback){
-								name.committees = JSON.stringify(name.committees);
-								name.name = name.forename + ' '+name.Surname;
-								var result = persons.all();
-								result = result.and(new persistence.PropertyFilter('server_id','=',name.ID));
-								// if(name.title && name.title != ''){
-								// 	result = result.and(new persistence.PropertyFilter('title','=',name.title));
-								// }
-								// if(name.name && name.name != ''){
-								// 	result = result.and(new persistence.PropertyFilter('name','=',name.name));
-								// }
-								// if(name.home_number && name.home_number != ''){
-								// 	result = result.and(new persistence.PropertyFilter('home_number','=',name.home_number));
-								// }
-								// if(name.mobile && name.mobile != ''){
-								// 	result = result.and(new persistence.PropertyFilter('mobile','=',name.mobile));
-								// }
-								// if(name.email && name.email != ''){
-								// 	result = result.and(new persistence.PropertyFilter('email','=',name.email));
-								// }
-								// if(name.committees && name.committees != ''){
-								// 	result = result.and(new persistence.PropertyFilter('committees','=',name.committees));
-								// }
-								result.one(function(dbPerson){
-									if(!dbPerson){
-										name.server_id = name.ID;
-										persistence.add(new persons(name));
-									}else{
-										if(name.last_modified  && name.last_modified > dbPerson.last_modified){
-											dbPerson.server_id = name.ID;
-											dbPerson.Surname = name.Surname;
-											dbPerson.forename = name.forename;
-											dbPerson.home_number = name.home_number;
-											dbPerson.mobile = name.mobile;
-											dbPerson.title = name.title;
-											dbPerson.email = name.email;
-											dbPerson.last_modified  = name.last_modified;
-											dbPerson.committees  = name.committees;
-										}
-									}
-									nameCallback(null);
+						async.waterfall([
+
+							function(callback){
+								persistence.transaction(function(tx){
+									tx.executeSql('DELETE FROM committee_persons_link WHERE committe_id = ?;',
+										[item.committe_id],
+										function(result){
+											callback(null);
+										},
+										function(err){
+											callback(err);
+										});
 								})
-								
-							},function(err){
-								contentCallback(null);
-							})
-						},function(err){
-							persistence.remove(item);
-							callback(null);
-						});
+				
+							},
+							function(callback){
+								var _committeeContent = committeeContents.all().filter('server_id','=',item.committe_id);
+								_committeeContent.one(function(data){
+
+									if(data){
+										data.content = content;
+									}else{
+										data = new committeeContents({
+											server_id:item.committe_id,
+											content:content
+										});
+										persistence.add(data);
+									}
+									callback(null,data);
+								});
+							},function(committeeContent,callback){
+								async.each(data.content,function(role,contentCallback){
+									async.each(role.names,function(name,nameCallback){
+										name.committees = JSON.stringify(name.committees);
+										name.name = name.forename + ' '+name.Surname;
+										var result = persons.all();
+										result = result.and(new persistence.PropertyFilter('server_id','=',name.ID));
+										result.one(function(dbPerson){
+											if(!dbPerson){
+												name.server_id = name.ID;
+												persistence.add(new persons(name));
+												
+											}else{
+												var now = moment(name.last_modified);
+												var then = moment(dbPerson.last_modified); 
+											
+												if(name.last_modified  && then.diff(now,'days')>=0 ){
+													dbPerson.server_id = name.ID;
+													dbPerson.Surname = name.Surname;
+													dbPerson.forename = name.forename;
+													dbPerson.home_number = name.home_number;
+													dbPerson.mobile = name.mobile;
+													dbPerson.title = name.title;
+													dbPerson.name = name.name;
+													dbPerson.last_modified  = name.last_modified;
+												}
+											}
+											persistence.add(new committeePersons({
+												committe_id: item.committe_id,
+												person_id:name.ID
+											}));
+											nameCallback(null);
+										})
+										
+									},function(err){
+										contentCallback(null);
+									})
+								},function(err){
+									callback(err);
+								});
+							}
+						],function(err){
+							callback(err);
+						})
 					}else{
-						persistence.remove(item);
-						callback(null);
+						clearCommittee(item.committe_id,callback)
 					}
 				},
 				error:function(){
@@ -512,7 +574,7 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 				}
 			})
 			AKHB.services.xhr.push(xhr);
-
+			persistence.remove(item);
 		},function(err){
 			persistence.flush(function(){
 				callback();
@@ -525,13 +587,22 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 AKHB.services.db.prototype.setDirectories = function(model,last_modified,remoteAddress){
 	var that = this;
 
-	var _task = new syncTask({
-		committe_id: model.server_id,
-	    status:0,
-	    inst_type : model.inst_type,
-	    last_modified:last_modified
+	var tasks = syncTask.all()
+	.filter('last_modified','=',last_modified)
+	.and(new persistence.PropertyFilter('committe_id','=',model.server_id))
+	
+	tasks.count(function(num){
+		if(num == 0){
+			var _task = new syncTask({
+				committe_id: model.server_id,
+			    status:0,
+			    inst_type : model.inst_type,
+			    last_modified:last_modified
+			});
+			persistence.add(_task);
+		}
 	});
-	persistence.add(_task);
+	
 	
 	
 

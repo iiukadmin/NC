@@ -48,7 +48,7 @@ AKHB.services.db.DBSync =  (function(){
 						function(callback){
 							dbServices.getTableLastUpdateTime('articles',function(err,result){
 								var requestData = Request('articles',AKHB.user,getLastModified(result));
-								var url = remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 								callback(null,url);
 							});
 						},
@@ -98,7 +98,7 @@ AKHB.services.db.DBSync =  (function(){
 						function(callback){
 							dbServices.getTableLastUpdateTime('messages',function(err,result){
 								var requestData = Request('messages',AKHB.user,getLastModified(result));
-								var url = remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 								callback(null,url);
 							});
 						},
@@ -176,7 +176,7 @@ AKHB.services.db.DBSync =  (function(){
 						function(callback){
 							dbServices.getTableLastUpdateTime('navigations',function(err,result){
 								var requestData = Request('navigation',AKHB.user,getLastModified(result));
-								var url = remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 								callback(null,url);
 							});
 						},
@@ -227,7 +227,7 @@ AKHB.services.db.DBSync =  (function(){
 								var requestData = Request('directory',AKHB.user,getLastModified(result));
 								requestData.type = 5;
 
-								var url = remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 								callback(null,url,requestData.last_content_synced);
 							});
 						},
@@ -288,7 +288,7 @@ AKHB.services.db.DBSync =  (function(){
 						function(callback){
 							dbServices.getTableLastUpdateTime('committees',function(err,result){
 								requestData = Request('committees',AKHB.user,getLastModified(result));
-								var url = remoteAddress+'/webservice2.php?'+ decodeURIComponent($.param(requestData));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 								callback(null,url);
 							});
 						},
@@ -352,7 +352,7 @@ AKHB.services.db.DBSync =  (function(){
 				});
 		};
 		this.syncUsage = function(callback,tx){
-			var url = remoteAddress+'/webservice2.php?type=3';
+			var url = remoteAddress+'?type=3';
 			function sendUsage(status,callback){
 				DB.getUsage(status,function(err,data){
 					var request = [];
@@ -464,11 +464,10 @@ AKHB.services.db.DBSync =  (function(){
 						
 					}
 					if(noSleep && AKHB.config.firstRun){
-						
 						AKHB.config.firstRun = false;
 						var syncTask = function(){
 							DB.syncLatestTask(function(){
-								AKHB.services.timer.latestTask = setTimeout(syncTask,10000);
+								AKHB.services.timer.latestTask = setTimeout(syncTask,AKHB.config.taskTimeout);
 							});
 						}
 						syncTask();

@@ -753,9 +753,12 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
         $rootScope.$emit("NOTBUSY");
         // if(typeof $scope.directory.members == "undefined")
         //     $scope.directory.members = JSON.parse($scope.directory.content);
-        if(typeof $scope.directory.members == "undefined" && $scope.directory.content){
+        try{
             $scope.directory.members = JSON.parse($scope.directory.content);
+        }catch(ex){
+
         }
+        
         if(!$scope.directory.content){
             $scope.isSync = true;
         }
@@ -917,7 +920,7 @@ function errorHandler (error) {
     navigator.notification.alert('error = ' + error,null,'Error');
 }
 function sendRegistionId(id){
-    var url = window.AKHB.config.remoteAddress+'/webservice2.php?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
+    var url = window.AKHB.config.remoteAddress+'?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
     $.get(url,function(data){
     })
 }

@@ -19,12 +19,6 @@
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
            
-    <preference name="target-device" value="universal" />
-    <preference name="Fullscreen" value="false" />
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="WebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="orientation" value="portrait"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
 
     <feature name="debug-server" required="true">
@@ -82,13 +76,17 @@
 
     <content src="index.html" />
     <preference name="permissions" value="none" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="default" />
+    <!--<preference name="orientation" value="portrait"/>-->
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
-    <preference name="prerendered-icon" value="true" />
+    <preference name="prerendered-icon" value="false" />
     <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <!--<preference name="ios-statusbarstyle" value="black-opaque" />-->
+    <preference name="ios-statusbarstyle" value="lightcontent" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
