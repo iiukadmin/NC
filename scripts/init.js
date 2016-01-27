@@ -926,9 +926,9 @@ function sendRegistionId(id){
 }
 
 // IIUK login service
-function adminLogin(buttonIndex) {
+function adminLogin(buttonIndex,logincode) {
 	if (buttonIndex == 2) {
-	    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid;
+	    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid+'logincode='+logincode;
 		$.get(url,function(data){
 		})
 	}
@@ -939,7 +939,14 @@ function onNotificationAPN (event) {
     if ( event.alert )
     {
 		if (event.alert == 'IIUK Login Request') { 
-	        navigator.notification.confirm(event.alert,adminLogin,'IIUK.org',['Cancel','Login'])
+	        navigator.notification.confirm(
+	        	event.alert,
+	        	function(buttonIndex) {
+		       	 adminLogin(buttonIndex,event.alert);
+			   	},
+			   	'IIUK.org',
+			   	['Cancel','Login']
+			);
 		} else {
 	        navigator.notification.alert(event.alert,null,'New Notification');
 		}
@@ -985,7 +992,15 @@ function onNotificationGCM(e) {
 //        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
         
         if (e.message == 'IIUK Login Request') { 
-			navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login'])
+			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
+			navigator.notification.confirm(
+	        	e.message,
+	        	function(buttonIndex) {
+		       	 adminLogin(buttonIndex,e.message);
+			   	},
+			   	'IIUK.org',
+			   	['Cancel','Login']
+			);
       
         } else {
 	        navigator.notification.alert(e.message,null,'New Notification');
