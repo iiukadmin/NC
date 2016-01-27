@@ -15,15 +15,7 @@
         Ismaili Council for the UK
     </author>
 
-
-
-           
-
-    <feature name="debug-server" required="true">
-       <param name="domain" value="http://172.27.23.1:8080"/>
-<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
-       <param name="key" value="anonymous"/>
-    </feature>
+    <preference name="phonegap-version" value="cli-5.2.0" />
     
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -85,28 +77,17 @@
     <content src="index.html" />
 
 
-    <preference name="target-device" value="universal" />
+    <preference name="permissions" value="none" />
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+
     <preference name="Fullscreen" value="false" />
-	<preference name="StatusBarOverlaysWebView" value="true" />
+    
+    <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="WebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="portrait"/>
-    <preference name="phonegap-version" value="cli-5.2.0" />
-
-
-    <preference name="permissions" value="none" />
-
-
-    <feature name="http://api.phonegap.com/1.0/device" />
-    <feature name="http://api.phonegap.com/1.0/network" />
-    <feature name="http://api.phonegap.com/1.0/camera" />
-    <feature name="http://api.phonegap.com/1.0/notification" />
-    <feature name="http://api.phonegap.com/1.0/geolocation" />
-    <feature name="http://api.phonegap.com/1.0/media" />
-    <feature name="http://api.phonegap.com/1.0/contacts" />
-    <feature name="http://api.phonegap.com/1.0/file" />
-    <feature name="http://api.phonegap.com/1.0/battery" />
-
 
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
