@@ -996,7 +996,7 @@ function onNotificationGCM(e) {
 			navigator.notification.confirm(
 	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e.subtitle);
+		       	 adminLogin(buttonIndex,e.message);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
