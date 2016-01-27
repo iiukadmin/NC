@@ -937,9 +937,9 @@ function adminLogin(buttonIndex) {
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-		if (event.alert = 'IIUK Login Request') { 
+		if (event.alert == 'IIUK Login Request') { 
 	        //navigator.notification.alert(event.alert,adminLogin,'IIUK.org');
-	        navigator.notification.prompt(event.alert,adminLogin,'IIUK.org',['Cancel','Login'])
+	        navigator.notification.confirm(event.alert,adminLogin,'IIUK.org',['Cancel','Login'])
 		} else {
 	        navigator.notification.alert(event.alert,null,'New Notification');
 		}
@@ -984,9 +984,9 @@ function onNotificationGCM(e) {
         }
 //        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
         
-        if (e.message = 'IIUK Login Request') { 
+        if (e.message == 'IIUK Login Request') { 
 	        //navigator.notification.alert(e.message,adminLogin,'IIUK.org');	  
-			navigator.notification.prompt(e.message,adminLogin,'IIUK.org',['Cancel','Login'])
+			navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login'])
       
         } else {
 	        navigator.notification.alert(e.message,null,'New Notification');
