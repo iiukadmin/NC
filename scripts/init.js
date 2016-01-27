@@ -928,7 +928,7 @@ function sendRegistionId(id){
 // IIUK login service
 function adminLogin(buttonIndex,logincode) {
 	if (buttonIndex == 2) {
-	    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid+'logincode='+logincode;
+	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode;
 		$.get(url,function(data){
 		})
 	}
@@ -942,7 +942,7 @@ function onNotificationAPN (event) {
 	        navigator.notification.confirm(
 	        	event.alert,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,event.alert);
+		       	 adminLogin(buttonIndex,event.other_data);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
@@ -996,7 +996,7 @@ function onNotificationGCM(e) {
 			navigator.notification.confirm(
 	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e.message);
+		       	 adminLogin(buttonIndex,e.other_data);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
