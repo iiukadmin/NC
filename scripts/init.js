@@ -928,7 +928,7 @@ function sendRegistionId(id){
 // IIUK login service
 function adminLogin(buttonIndex,logincode) {
 //	if (buttonIndex == 2) {
-	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.message+logincode.title+logincode.event+logincode;
+	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.message+logincode.payload.message+logincode.event+logincode;
 		$.get(url,function(data){
 		})
 //	}

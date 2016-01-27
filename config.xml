@@ -25,13 +25,6 @@
     <feature name="http://api.phonegap.com/1.0/file" />
     <feature name="http://api.phonegap.com/1.0/battery" />
            
-    <preference name="target-device" value="universal" />
-    <preference name="Fullscreen" value="false" />
-	<preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="WebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="orientation" value="portrait"/>
-    <preference name="phonegap-version" value="cli-5.2.0" />
 
     <feature name="debug-server" required="true">
        <param name="domain" value="http://172.27.23.1:8080"/>
@@ -87,11 +80,20 @@
     
 
     <content src="index.html" />
+
+    <preference name="target-device" value="universal" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="disallowOverscroll" value="true" />
+    <preference name="orientation" value="portrait"/>
+    <preference name="phonegap-version" value="cli-5.2.0" />
+
+
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-    <preference name="webviewbounce" value="true" />
+    <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
