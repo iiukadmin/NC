@@ -928,7 +928,7 @@ function sendRegistionId(id){
 // IIUK login service
 function adminLogin(buttonIndex,logincode) {
 //	if (buttonIndex == 2) {
-	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.payload.message+logincode.payload.other+logincode.event+logincode;
+	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode;
 		$.get(url,function(data){
 		})
 //	}
@@ -996,7 +996,7 @@ function onNotificationGCM(e) {
 			 navigator.notification.confirm(
 	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e);
+		       	 adminLogin(buttonIndex,e.message);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
