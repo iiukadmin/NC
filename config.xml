@@ -80,14 +80,13 @@
     
 
     <content src="index.html" />
-
+    
     <preference name="target-device" value="universal" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="disallowOverscroll" value="true" />
     <preference name="orientation" value="portrait"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
-
 
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
@@ -104,7 +103,9 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
-
+    <preference name="android-windowSoftInputMode" value="stateVisible" />
+    
+    
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
