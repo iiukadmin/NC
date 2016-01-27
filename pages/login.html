@@ -22,8 +22,17 @@
             The Ismaili Community in the UK. <br />
             For assistance contact enquiries@iiuk.org
         </div>
-        <div class="login_foot" data-fullscreen="true" data-position="fixed">
+        <div class="login_foot">
             &copy; Copyright The Ismaili Council for the UK
         </div>
     </div>
+    <script>
+	    $("input").focus(function(){
+		    $('.login_foot').hide();
+		});
+		
+		$("input").blur(function(){
+		    $('.login_foot').show();
+		});
+	</script>
 </ons-page>
