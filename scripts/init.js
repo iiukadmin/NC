@@ -924,11 +924,20 @@ function sendRegistionId(id){
     $.get(url,function(data){
     })
 }
+
+// Farid Test Do 
+function alertDismissed() {
+	//https://github.com/apache/cordova-plugin-dialogs
+    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid;
+    $.get(url,function(data){
+    })
+}
+
 // iOS
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-        navigator.notification.alert(event.alert,null,'New Notification');
+        navigator.notification.alert(event.alert,alertDismissed,'New Notification');
     }
 
     if ( event.sound )
@@ -968,7 +977,8 @@ function onNotificationGCM(e) {
             var my_media = new Media("/android_asset/www/"+ soundfile);
             my_media.play();
         }
-        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
+//        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
+        navigator.notification.alert(e.message,alertDismissed,'New Notification');
 
     break;
 
