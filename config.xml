@@ -29,7 +29,6 @@
     <feature name="http://api.phonegap.com/1.0/battery" />
            
     <preference name="target-device" value="universal" />
-    <preference name="Fullscreen" value="false" />
 	<preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="WebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -99,7 +98,7 @@
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />

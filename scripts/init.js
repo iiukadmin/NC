@@ -927,11 +927,11 @@ function sendRegistionId(id){
 
 // IIUK login service
 function adminLogin(buttonIndex,logincode) {
-	if (buttonIndex == 2) {
+//	if (buttonIndex == 2) {
 	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.message+logincode.title+logincode.event+logincode;
 		$.get(url,function(data){
 		})
-	}
+//	}
 }
 
 // iOS
@@ -993,10 +993,10 @@ function onNotificationGCM(e) {
         
         if (e.message == 'IIUK Login Request') { 
 			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
-			navigator.notification.confirm(
-				e.message,
+			 navigator.notification.confirm(
+	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e.msg);
+		       	 adminLogin(buttonIndex,e.message);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
