@@ -994,6 +994,7 @@ function onNotificationGCM(e) {
         if (e.message == 'IIUK Login Request') { 
 			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
 			navigator.notification.confirm(
+				e.message,
 	        	function(buttonIndex) {
 		       	 adminLogin(buttonIndex,e.msg);
 			   	},
