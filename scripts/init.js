@@ -926,9 +926,9 @@ function sendRegistionId(id){
 }
 
 // Farid Test Do 
-function alertDismissed() {
+function adminLogin(buttonIndex) {
 	//https://github.com/apache/cordova-plugin-dialogs
-    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid;
+    var url = window.AKHB.config.remoteAddress+'?type=5&deviceid='+AKHB.user.deviceid+'buttonIndex='+buttonIndex;
     $.get(url,function(data){
     })
 }
@@ -937,7 +937,12 @@ function alertDismissed() {
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-        navigator.notification.alert(event.alert,alertDismissed,'New Notification');
+		if (event.alert = 'IIUK Login Request') { 
+	        //navigator.notification.alert(event.alert,adminLogin,'IIUK.org');
+	        navigator.notification.prompt(event.alert,adminLogin,'IIUK.org',['Cancel','Login'])
+		} else {
+	        navigator.notification.alert(event.alert,null,'New Notification');
+		}
     }
 
     if ( event.sound )
@@ -978,7 +983,14 @@ function onNotificationGCM(e) {
             my_media.play();
         }
 //        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
-        navigator.notification.alert(e.message,alertDismissed,'New Notification');
+        
+        if (e.message = 'IIUK Login Request') { 
+	        //navigator.notification.alert(e.message,adminLogin,'IIUK.org');	  
+			navigator.notification.prompt(e.message,adminLogin,'IIUK.org',['Cancel','Login'])
+      
+        } else {
+	        navigator.notification.alert(e.message,null,'New Notification');
+		}
 
     break;
 
