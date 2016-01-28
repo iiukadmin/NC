@@ -76,7 +76,6 @@
     <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
-<!-- <feature name="http://api.phonegap.com/1.0/media" /> --> <!-- need this?-->
     
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="DisallowOverscroll" value="true" />
@@ -96,8 +95,7 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
- <gap:plugin name="org.apache.cordova.media" />  <!-- need this?-->
-
+    <gap:plugin name="org.apache.cordova.media" />  
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
     <gap:plugin name="org.apache.cordova.dialogs" />
