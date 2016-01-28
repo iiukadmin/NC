@@ -77,17 +77,21 @@
 
 <!-- Check from here onwards -->
 
-
- <feature name="http://api.phonegap.com/1.0/device" />
+    <content src="index.html" />
+    <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network" />
-    <feature name="http://api.phonegap.com/1.0/camera" />
     <feature name="http://api.phonegap.com/1.0/notification" />
+
+    <!-- <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/camera" />
     <feature name="http://api.phonegap.com/1.0/geolocation" />
     <feature name="http://api.phonegap.com/1.0/media" />
     <feature name="http://api.phonegap.com/1.0/contacts" />
     <feature name="http://api.phonegap.com/1.0/file" />
     <feature name="http://api.phonegap.com/1.0/battery" />
-           
+     -->
+    
+       
     <preference name="target-device" value="universal" />
     <preference name="Fullscreen" value="false" />
 	<preference name="StatusBarOverlaysWebView" value="true" />
@@ -95,17 +99,13 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="portrait"/>
 
-    <feature name="debug-server" required="true">
+ <!--    <feature name="debug-server" required="true">
        <param name="domain" value="http://172.27.23.1:8080"/>
-<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
+       <param name="domain" value="http://192.168.0.4:8080"/>
        <param name="key" value="anonymous"/>
     </feature>
+ -->
 
-
-
-
-    <content src="index.html" />
-    <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
@@ -121,24 +121,30 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
+<!--
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
     <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-motion" />
-    <gap:plugin name="org.apache.cordova.device-orientation" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.geolocation" />
     <gap:plugin name="org.apache.cordova.globalization" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.media" />
+-->
+
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.device-orientation" />
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+
+    <gap:plugin name="org.apache.cordova.statusbar" />
+
     <gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
     <gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
