@@ -83,8 +83,8 @@
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-<preference name="WebViewBounce" value="true" /> 	 <!-- try true -->
-<preference name="prerendered-icon" value="false" /> 	 <!-- try false -->
+    <preference name="WebViewBounce" value="false" /> 	
+    <preference name="prerendered-icon" value="false" /> 	
     <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="lightcontent" /> 
     <preference name="detect-data-types" value="true" />
@@ -96,7 +96,7 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
-<gap:plugin name="org.apache.cordova.media" />  <!-- need this?-->
+<!-- <gap:plugin name="org.apache.cordova.media" /> -->  <!-- need this?-->
 
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
