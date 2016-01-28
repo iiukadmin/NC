@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
-        id          = "com.iiuk.myiiuk"
-        versionCode = "10" 
-        version     = "1.0.0" >
+        id          = "com.novasoftware.Notifications"
+        versionCode = "11" 
+        version     = "1.1.5" >
 
-    <name>IIUK</name>
+    <name>myIIUK</name>
 
     <description>
-        Developed by Ismaili Council for the UK
+        Developed By Nova
     </description>
 
-    <author href="http://www.iiuk.org" email="iiukadmin@iiuk.org">
-        Ismaili Council for the UK
+    <author href="http://phonegap.com" email="lict@novasoftware.cn">
+        Nova Team
     </author>
 
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/camera" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+    <feature name="http://api.phonegap.com/1.0/geolocation" />
+    <feature name="http://api.phonegap.com/1.0/media" />
+    <feature name="http://api.phonegap.com/1.0/contacts" />
+    <feature name="http://api.phonegap.com/1.0/file" />
+    <feature name="http://api.phonegap.com/1.0/battery" />
+           
+    <preference name="target-device" value="universal" />
+    <preference name="Fullscreen" value="false" />
+	<preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="WebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="orientation" value="portrait"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
 
+    <feature name="debug-server" required="true">
+       <param name="domain" value="http://172.27.23.1:8080"/>
+<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
+       <param name="key" value="anonymous"/>
+    </feature>
+    
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
@@ -26,12 +48,6 @@
     <gap:splash src="icons/Default@2x.png"      gap:platform="ios" width="640" height="960" />
     <gap:splash src="icons/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
 
-    <icon src="icons/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="icons/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="icons/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
-    <icon src="icons/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <icon src="icons/icon.png" />
     <!-- iPhone 6 / 6+ -->
@@ -48,7 +64,6 @@
     <!-- Settings Icon -->
     <icon src="icons/icon-small.png" gap:platform="ios" width="29" height="29" />
     <icon src="icons/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons/icon-small@3x.png" gap:platform="ios" width="87" height="87" />
 
     <!-- Spotlight Icon -->
     <icon src="icons/icon-40.png" gap:platform="ios" width="40" height="40" />
@@ -65,50 +80,53 @@
     <!-- iPhone Spotlight and Settings Icon -->    
     <icon src="icons/icon-small.png" gap:platform="ios" width="29" height="29" />
     <icon src="icons/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons/icon-40@3x.png" gap:platform="ios" width="120" height="120" />
 
     <!-- iPad Spotlight and Settings Icon -->
     <icon src="icons/icon-Small-50.png" gap:platform="ios" width="50" height="50" />
     <icon src="icons/icon-Small-50@2x.png" gap:platform="ios" width="100" height="100" />
-    <icon src="icons/icon-83.5@2x.png" gap:platform="ios" width="167" height="167" />
+    
 
     <content src="index.html" />
     <preference name="permissions" value="none" />
-    <feature name="http://api.phonegap.com/1.0/network" />
-    <feature name="http://api.phonegap.com/1.0/notification" />
-    
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="false" />
-    <preference name="WebViewBounce" value="false" /> 	
-    <preference name="prerendered-icon" value="false" /> 	
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="lightcontent" /> 
+    <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="KeepRunning" value="true"/>
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
-    <gap:plugin name="org.apache.cordova.media" />  
+    <gap:plugin name="org.apache.cordova.battery-status" />
+    <gap:plugin name="org.apache.cordova.camera" />
+    <gap:plugin name="org.apache.cordova.media-capture" />
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.contacts" />
     <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.device-motion" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
     <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.file-transfer" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
     <gap:plugin name="org.apache.cordova.globalization" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
-    <gap:plugin name="org.apache.cordova.statusbar" />
     <gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
     <gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 
+<!--     <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+    <plugin name="EmailComposer" value="APPEmailComposer" /> -->
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
