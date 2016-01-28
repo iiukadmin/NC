@@ -90,22 +90,13 @@
        
     <preference name="target-device" value="universal" />
     <preference name="Fullscreen" value="false" />
-	<preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="WebViewBounce" value="false" />
+
+    <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="portrait"/>
-
-   <!--   <feature name="debug-server" required="true">
-       <param name="domain" value="http://172.27.23.1:8080"/>
-       <param name="domain" value="http://192.168.0.4:8080"/> 
-      <param name="key" value="anonymous"/>
-    </feature>-->
-
-
-    <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-    <preference name="webviewbounce" value="true" />
+    <preference name="WebViewBounce" value="false" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
@@ -117,35 +108,32 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
-    <!--
-    -->
+    <preference name="orientation" value="default" />
+    <preference name="webviewbounce" value="true" />
 
-    <gap:plugin name="org.apache.cordova.globalization" />
+
     <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.device-motion" />
 
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.console" />
+
+<!-- This is ok -->
+
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
     <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.globalization" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
-
     <gap:plugin name="org.apache.cordova.statusbar" />
-
     <gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
     <gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 
-<!--     <plugin name="InAppBrowser" value="CDVInAppBrowser" />
-    <plugin name="EmailComposer" value="APPEmailComposer" /> -->
-
-
-<!-- This is ok -->
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
