@@ -17,22 +17,13 @@
         </ons-button> 这一段时跳转到菜单的-->
         <button class="button button--large" id="btn_login" ng-init="" enabled="false" ng-click="login()" ng-show="isready">Login</button>
      
-        <div class="login_content">
+        <div class="login_content" onloadstart="">
             This application is for <br />
             The Ismaili Community in the UK. <br />
             For assistance contact enquiries@iiuk.org
         </div>
-        <div class="login_foot">
+        <div class="login_foot" id="footer">
             &copy; Copyright The Ismaili Council for the UK
         </div>
     </div>
-    <script>
-	    $("input").focus(function(){
-		    $('.login_foot').hide();
-		});
-		
-		$("input").blur(function(){
-		    $('.login_foot').show();
-		});
-	</script>
 </ons-page>
