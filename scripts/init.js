@@ -929,7 +929,7 @@ function sendRegistionId(id){
 function adminLogin(buttonIndex,logincode) {
 //	if (buttonIndex == 2) {
 //	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.message+'logincode='+logincode.payload.other;
-	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode;
+	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+logincode+'buttonIndex='+buttonIndex;
 		$.get(url,function(data){
 		})
 //	}
@@ -943,7 +943,7 @@ function onNotificationAPN (event) {
 			navigator.notification.confirm(
 	        	event.alert,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,event.alert);
+		       	 adminLogin(buttonIndex,event.other);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
@@ -998,7 +998,7 @@ function onNotificationGCM(e) {
 			 navigator.notification.confirm(
 	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e);
+		       	 adminLogin(buttonIndex,e.payload.other);
 			   	},
 			   	'IIUK.org',
 			   	['Cancel','Login']
