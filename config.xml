@@ -87,19 +87,16 @@
     <feature name="http://api.phonegap.com/1.0/media" />
     <feature name="http://api.phonegap.com/1.0/file" />
     
-       
-    <preference name="target-device" value="universal" />
-    <preference name="Fullscreen" value="false" />
 
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="orientation" value="portrait"/>
+    <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-    <preference name="WebViewBounce" value="false" />
+    <preference name="WebViewBounce" value="false" /> <!--webviewbounce / true -->
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="ios-statusbarstyle" value="lightcontent" /> <!-- black-opaque -->
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
@@ -108,8 +105,6 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
-    <preference name="orientation" value="default" />
-    <preference name="webviewbounce" value="true" />
 
 
     <gap:plugin name="org.apache.cordova.media" />
