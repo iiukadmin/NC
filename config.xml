@@ -84,7 +84,7 @@
 
     <feature name="http://api.phonegap.com/1.0/device" />
     
-   <!-- <feature name="http://api.phonegap.com/1.0/media" /> -->
+    <feature name="http://api.phonegap.com/1.0/media" /> <!-- need this?-->
     <feature name="http://api.phonegap.com/1.0/file" />
     
 
@@ -108,7 +108,7 @@
 
 
 
- <!--   <gap:plugin name="org.apache.cordova.media" /> -->
+    <gap:plugin name="org.apache.cordova.media" />  <!-- need this?-->
 
 <!--   <gap:plugin name="org.apache.cordova.device-motion" /> -->
 <!--
