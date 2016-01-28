@@ -86,10 +86,10 @@
     <!--
     <feature name="http://api.phonegap.com/1.0/camera" />
     <feature name="http://api.phonegap.com/1.0/geolocation" />
-    <feature name="http://api.phonegap.com/1.0/media" />
     <feature name="http://api.phonegap.com/1.0/contacts" />
     <feature name="http://api.phonegap.com/1.0/battery" />
      -->
+    <feature name="http://api.phonegap.com/1.0/media" />
     <feature name="http://api.phonegap.com/1.0/file" />
     
        
@@ -100,12 +100,12 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="portrait"/>
 
- <!--    <feature name="debug-server" required="true">
+    <feature name="debug-server" required="true">
        <param name="domain" value="http://172.27.23.1:8080"/>
-       <param name="domain" value="http://192.168.0.4:8080"/>
-       <param name="key" value="anonymous"/>
+    <!--     <param name="domain" value="http://192.168.0.4:8080"/> -->
+      <param name="key" value="anonymous"/>
     </feature>
- -->
+
 
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -126,15 +126,12 @@
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.device-motion" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.globalization" />
-    <gap:plugin name="org.apache.cordova.media" />
 -->
+    <gap:plugin name="org.apache.cordova.media" />
+    <gap:plugin name="org.apache.cordova.device-motion" />
+    <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.globalization" />
