@@ -229,10 +229,8 @@ span.Editeve{
 }
 .login_foot{
 	width: 100%;
-	position: fixed;
+	position: absolute;
 	bottom: 20px;
-	z-index: 100;
-	/*"top": login_foot.position().top, "bottom": "auto";*/
 }
  #login_container .login_content,.login_foot{
 	color:#fff;

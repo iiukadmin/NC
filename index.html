@@ -2,17 +2,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">-->
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=0, width=device-width, height=device-height"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+
     <link rel="stylesheet" href="lib/onsen/css/onsenui.css"/>
     <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css"/>
-  <!--  <script src="cordova.js"></script>-->
+    <script src="cordova.js"></script>
     <script src="lib/onsen/js/angular/angular.min.js"></script>
     <script src="lib/onsen/js/angular/angular-touch.js"></script>
     <script src="scripts/libs/jquery-1.11.2.min.js"></script>
     <script src="scripts/libs/moment.min.js"></script>
     <script src="scripts/libs/jquery.event.swipe.js"></script>
-    // <!-- <script src="scripts/libs/iscroll/iscroll.js"></script> -->
+    <!-- <script src="scripts/libs/iscroll/iscroll.js"></script> -->
     <script src="scripts/libs/iscroll/iscroll-probe.js"></script>
 <!--     // <script src="scripts/libs/angular-plugins/ng-iscroll.min.js"></script> -->
     <script src="lib/onsen/js/onsenui_all.js"></script>
@@ -29,14 +29,14 @@
     <script src="scripts/services/db.sync.js"></script>
     <script src="scripts/services/authentication.js"></script>
     <script src="scripts/init.js"></script>
-    
-    <link rel="stylesheet" href="components/loader.css" />
-    <link rel="stylesheet" href="css/style.css" />
-	   <script type="text/javascript">
+   	<script type="text/javascript">
         document.write( '<style>#footer{visibility:hidden}@media(min-height:' + ($( window ).height() - 10) + 'px){#footer{visibility:visible}}</style>' );
     </script>
+    <link rel="stylesheet" href="components/loader.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
 </head>
-    <body ng-controller="AppController" ng-init="busy">
+    <body ng-controller="AppController" ng-init="busy" onresize="onResize();">
         <div id="home">
             <div id="app-status-div">
                 <ul id="app-status-ul">
@@ -64,4 +64,3 @@
         </ons-navigator>
     </body>
 </html>
- 
