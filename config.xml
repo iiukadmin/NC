@@ -15,33 +15,8 @@
         Ismaili Council for the UK
     </author>
 
-
-
-
-    <feature name="http://api.phonegap.com/1.0/device" />
-    <feature name="http://api.phonegap.com/1.0/network" />
-    <feature name="http://api.phonegap.com/1.0/camera" />
-    <feature name="http://api.phonegap.com/1.0/notification" />
-    <feature name="http://api.phonegap.com/1.0/geolocation" />
-    <feature name="http://api.phonegap.com/1.0/media" />
-    <feature name="http://api.phonegap.com/1.0/contacts" />
-    <feature name="http://api.phonegap.com/1.0/file" />
-    <feature name="http://api.phonegap.com/1.0/battery" />
-           
-    <preference name="target-device" value="universal" />
-    <preference name="Fullscreen" value="false" />
-	<preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="WebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="orientation" value="portrait"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
 
-    <feature name="debug-server" required="true">
-       <param name="domain" value="http://172.27.23.1:8080"/>
-<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
-       <param name="key" value="anonymous"/>
-    </feature>
-    
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
@@ -51,14 +26,12 @@
     <gap:splash src="icons/Default@2x.png"      gap:platform="ios" width="640" height="960" />
     <gap:splash src="icons/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
 
-
-     <icon src="icons/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
-     <icon src="icons/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
-     <icon src="icons/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
-     <icon src="icons/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
-     <icon src="icons/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
-     <icon src="icons/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
-
+    <icon src="icons/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="icons/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
+    <icon src="icons/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <icon src="icons/icon.png" />
     <!-- iPhone 6 / 6+ -->
@@ -101,6 +74,36 @@
 
     
 
+
+<!-- Check from here onwards -->
+
+
+ <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/camera" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+    <feature name="http://api.phonegap.com/1.0/geolocation" />
+    <feature name="http://api.phonegap.com/1.0/media" />
+    <feature name="http://api.phonegap.com/1.0/contacts" />
+    <feature name="http://api.phonegap.com/1.0/file" />
+    <feature name="http://api.phonegap.com/1.0/battery" />
+           
+    <preference name="target-device" value="universal" />
+    <preference name="Fullscreen" value="false" />
+	<preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="WebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="orientation" value="portrait"/>
+
+    <feature name="debug-server" required="true">
+       <param name="domain" value="http://172.27.23.1:8080"/>
+<!--        <param name="domain" value="http://192.168.0.4:8080"/> -->
+       <param name="key" value="anonymous"/>
+    </feature>
+
+
+
+
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
@@ -142,6 +145,9 @@
 
 <!--     <plugin name="InAppBrowser" value="CDVInAppBrowser" />
     <plugin name="EmailComposer" value="APPEmailComposer" /> -->
+
+
+<!-- This is ok -->
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
