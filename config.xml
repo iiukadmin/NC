@@ -72,29 +72,19 @@
     <icon src="icons/icon-Small-50@2x.png" gap:platform="ios" width="100" height="100" />
     <icon src="icons/icon-83.5@2x.png" gap:platform="ios" width="167" height="167" />
 
-    
-
-
-<!-- Check from here onwards -->
-
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
-
-  <!--  <feature name="http://api.phonegap.com/1.0/device" /> -->
+<feature name="http://api.phonegap.com/1.0/media" /> <!-- need this?-->
     
-    <feature name="http://api.phonegap.com/1.0/media" /> <!-- need this?-->
- <!--   <feature name="http://api.phonegap.com/1.0/file" /> -->
-    
-
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-    <preference name="WebViewBounce" value="false" /> 	 <!-- try true -->
-    <preference name="prerendered-icon" value="true" /> 	 <!-- try false -->
+<preference name="WebViewBounce" value="true" /> 	 <!-- try true -->
+<preference name="prerendered-icon" value="false" /> 	 <!-- try false -->
     <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="lightcontent" /> 
     <preference name="detect-data-types" value="true" />
@@ -106,17 +96,7 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
-
-
-    <gap:plugin name="org.apache.cordova.media" />  <!-- need this?-->
-
-<!-- <gap:plugin name="org.apache.cordova.device-motion" />
-     <gap:plugin name="org.apache.cordova.file-transfer" />
-     <gap:plugin name="org.apache.cordova.file" /> 
-     <gap:plugin name="org.apache.cordova.console" /> 
--->
-
-<!-- This is ok -->
+<gap:plugin name="org.apache.cordova.media" />  <!-- need this?-->
 
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
