@@ -93,8 +93,8 @@
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
-    <preference name="WebViewBounce" value="false" /> 
-    <preference name="prerendered-icon" value="true" />
+    <preference name="WebViewBounce" value="false" />  <!-- try true -->
+    <preference name="prerendered-icon" value="true" /> <!-- try false -->
     <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="lightcontent" /> 
     <preference name="detect-data-types" value="true" />
@@ -102,18 +102,18 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="KeepRunning" value="true"/> <!-- THIS IS NEW -->
+    <preference name="KeepRunning" value="true"/>
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
 
 
 
     <gap:plugin name="org.apache.cordova.media" />
-    <gap:plugin name="org.apache.cordova.device-motion" />
+<!--   <gap:plugin name="org.apache.cordova.device-motion" /> -->
 <!--
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.file" /> 
-    <gap:plugin name="org.apache.cordova.console" />-->
+    <gap:plugin name="org.apache.cordova.console" /> -->
 
 <!-- This is ok -->
 
