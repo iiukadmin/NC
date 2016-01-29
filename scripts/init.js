@@ -43,7 +43,6 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 
 
 module.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
-    
     $rootScope.$on("BUSY", function(){ 
         $scope.busy = true;
         $scope.waitNetwork = false;
@@ -82,8 +81,8 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
 	    if(!window.plugins || !window.plugins.pushNotification) return;
 	    try{
 	       
-	        alert('hello'); 
-	        alert(scope.messageCount); 
+	       // alert('hello'); 
+	       // alert(scope.messageCount); 
 	
 	        //regist notification
 	        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
@@ -126,7 +125,7 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
     }, false);
 	document.addEventListener("pause", function(){ 
 //		 updateBadge(88);
-		 updateBadge(scope.messageCount);
+		 updateBadge($rootScope.messageCount);
 	},false);
 
 }]);
@@ -138,6 +137,7 @@ module.controller('SlidingMenuController',['$scope',function($scope){
 }]);
 module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
+    var rootScope = $rootScope;
 
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
@@ -165,6 +165,9 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                         DB.setUsage(result.server_id,1,1,0);
                     }
                     scope.messageCount = count;
+                    $rootScope.messageCount = count;
+                    console.log('asdf'+scope.messageCount);
+                    //alert('asdf'+scope.messageCount);
                     scope.hasMessage = count > 0;
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
@@ -173,7 +176,8 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
             });
         })  
     });
-
+    
+	
 }]);
 
 module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
@@ -543,6 +547,9 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                 $scope.hasMessage = count > 0;
             });
         });
+        
+        //var fruit = $rootScope.messageCount;
+        //console.log($rootScope.messageCount);
         
 }]);
 
