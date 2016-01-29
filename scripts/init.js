@@ -85,6 +85,7 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
     try{
        
         var pushNotification = window.plugins.pushNotification;
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 8); 
 
         //regist notification
         if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
@@ -118,8 +119,8 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
                 "alert":"true",
                 "ecb":"onNotificationAPN"
             });
-            updateBadge();
-        //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11); (Working)
+        //    updateBadge;
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11); 
 		//	cordova.plugins.notification.badge.set(13);	(working)
         }
         
