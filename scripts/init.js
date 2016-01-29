@@ -958,7 +958,7 @@ function onNotificationAPN (event) {
 		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
 			   	event.title,
-		   		['Cancel','Login']
+		   		event.buttons
 			);
 
 		} else {
