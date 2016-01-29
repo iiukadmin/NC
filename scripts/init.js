@@ -161,6 +161,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                         DB.setUsage(result.server_id,1,1,0);
                     }
                     scope.messageCount = count;
+                    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 200);
                     scope.hasMessage = count > 0;
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
@@ -537,7 +538,6 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
         DB.getMessageCount(function(err,count){
              $scope.$apply( function() {
                 $scope.hasMessage = count > 0;
-                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 200);
             });
         });
         
