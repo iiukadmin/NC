@@ -975,6 +975,7 @@ function onNotificationGCM(e) {
     break;
 
     case 'message':
+		cordova.plugins.notification.badge.set(10);
         // if this flag is set, this notification happened while we were in the foreground.
         // you might want to play a sound to get the user's attention, throw up a dialog, etc.
         if ( e.foreground )
