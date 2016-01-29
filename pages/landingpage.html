@@ -1,11 +1,11 @@
 ﻿<ons-page class="theme-blue"  ng-controller="LandingPageController">
     <ons-toolbar>
         <div class="left">
-            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu(); pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 1);"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu();"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
         </div>
         <div class="center">HOME</div>
         <div class="right">
-            <i ng-show="hasMessage" class="fa fa-envelope-o  Editeve" onclick="pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 2); app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true });"></i><span class="Editeve" ng-show="hasMessage">{{messageCount}}</span>
+            <i ng-show="hasMessage" class="fa fa-envelope-o  Editeve" onclick="app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true });"></i><span class="Editeve" ng-show="hasMessage">{{messageCount}}</span>
         </div>
     </ons-toolbar>
     <div id="LandingPageContainer">

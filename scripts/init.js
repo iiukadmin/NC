@@ -118,7 +118,7 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
                 "alert":"true",
                 "ecb":"onNotificationAPN"
             });
-            
+            updateBadge();
         //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11); (Working)
 		//	cordova.plugins.notification.badge.set(13);	(working)
         }
@@ -936,7 +936,7 @@ function notificationFeedback(buttonIndex,passedData) {
 
 function updateBadge(){
 	pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 10);
-	cordova.plugins.notification.badge.set(12);	
+	//cordova.plugins.notification.badge.set(12);	
 }
 
 // iOS
