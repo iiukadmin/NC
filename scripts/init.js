@@ -1014,7 +1014,7 @@ function onNotificationGCM(e) {
 		       	 notificationFeedback(buttonIndex,e.payload.other);
 			   	},
 			   	e.payload.title,
-			   	['Cancel','Login']
+			   	['Cancel1','Login1']
 			);
       
         } else {
