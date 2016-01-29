@@ -120,7 +120,7 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
             });
             
             pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);
-			cordova.plugins.notification.badge.set(13);	
+		//	cordova.plugins.notification.badge.set(13);	
         }
         
     }catch(ex){
