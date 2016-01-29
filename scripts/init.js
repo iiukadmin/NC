@@ -82,8 +82,8 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
 	    if(!window.plugins || !window.plugins.pushNotification) return;
 	    try{
 	       
-	        var pushNotification = window.plugins.pushNotification;
-	        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 8); 
+	        alert('hello'); 
+	        alert(scope.messageCount); 
 	
 	        //regist notification
 	        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
@@ -125,7 +125,8 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
 
     }, false);
 	document.addEventListener("pause", function(){ 
-		 updateBadge(88);
+//		 updateBadge(88);
+		 updateBadge(scope.messageCount);
 	},false);
 
 }]);
