@@ -1,8 +1,7 @@
-
 //ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by  
 var MSG_RETUIREDNETWORK = {title:'Internet Connection',content:'Sorry, a network connection is required, please try later.'};
 var MSG_LOGINFAILED = {title:'Incorrect Password',content:'Please check password and try again.'};
-var MSG_SYSTEMERROR = {title:'System Error',content:'There has been an error,Please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:{0}'};
+var MSG_SYSTEMERROR = {title:'System Error',content:'There has been an error, Please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:{0}'};
 
 var pushNotification;
 var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
@@ -926,31 +925,28 @@ function sendRegistionId(id){
 }
 
 // IIUK login service
-function adminLogin(buttonIndex,logincode) {
-//	if (buttonIndex == 2) {
-//	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'logincode='+logincode.message+'logincode='+logincode.payload.other;
-	    var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+logincode+'buttonIndex='+buttonIndex;
-		$.get(url,function(data){
-		})
-//	}
+function notificationFeedback(buttonIndex,passedData) {
+	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+passedData+'buttonIndex='+buttonIndex;
+	$.get(url,function(data){
+	})
 }
 
 // iOS
 function onNotificationAPN (event) {
     if ( event.alert )
     {
-		if (event.alert == 'IIUK Login Request') { 
+		if (event.type == '2') { 
 			navigator.notification.confirm(
 	        	event.alert,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,event.other);
+		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
-			   	'IIUK.org',
+			   	event.title,
 			   	['Cancel','Login']
 			);
 
 		} else {
-	        navigator.notification.alert(event.alert,null,'New Notification');
+	        navigator.notification.alert(event.alert,null,event.title);
 		}
     }
 
@@ -993,19 +989,19 @@ function onNotificationGCM(e) {
         }
 //        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
         
-        if (e.message == 'IIUK Login Request') { 
+        if (e.payload.type == '2') { 
 			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
 			 navigator.notification.confirm(
 	        	e.message,
 	        	function(buttonIndex) {
-		       	 adminLogin(buttonIndex,e.payload.other);
+		       	 notificationFeedback(buttonIndex,e.payload.other);
 			   	},
-			   	'IIUK.org',
+			   	e.payload.title,
 			   	['Cancel','Login']
 			);
       
         } else {
-	        navigator.notification.alert(e.message,null,'New Notification');
+	        navigator.notification.alert(e.message,null,e.payload.title);
 		}
 
     break;
