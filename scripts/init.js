@@ -43,7 +43,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 
 
 module.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
-
+    
     $rootScope.$on("BUSY", function(){ 
         $scope.busy = true;
         $scope.waitNetwork = false;
@@ -79,56 +79,56 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
         });
     }
     document.addEventListener('deviceready', function(){
-	    
-	    if(!window.plugins || !window.plugins.pushNotification) return;
-	    try{
 
-            var pushNotification = window.plugins.pushNotification;
-   
-	        //regist notification
-	        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-	            pushNotification.register(
-	            successHandler,
-	            errorHandler,
-	            {
-	                "senderID":window.AKHB.config.senderID,
-	                "ecb":"onNotificationGCM"
-	            });
-	        } else if ( device.platform == 'blackberry10'){
-	            // pushNotification.register(
-	            // successHandler,
-	            // errorHandler,
-	            // {
-	            //     invokeTargetId : "replace_with_invoke_target_id",
-	            //     appId: "replace_with_app_id",
-	            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
-	            //     ecb: "pushNotificationHandler",
-	            //     simChangeCallback: replace_with_simChange_callback,
-	            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
-	            //     launchApplicationOnPush: true
-	            // });
-	        } else {
-	            pushNotification.register(
-	            tokenHandler,
-	            errorHandler,
-	            {
-	                "badge":"true",
-	                "sound":"true",
-	                "alert":"true",
-	                "ecb":"onNotificationAPN"
-	            });
-	        }
-	        
-	    }catch(ex){
-	        console.log("Notification error:",ex);
-	    }
+
+    if(!window.plugins || !window.plugins.pushNotification) return;
+    try{
+       
+        var pushNotification = window.plugins.pushNotification;
+
+        //regist notification
+        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+            pushNotification.register(
+            successHandler,
+            errorHandler,
+            {
+                "senderID":window.AKHB.config.senderID,
+                "ecb":"onNotificationGCM"
+            });
+        } else if ( device.platform == 'blackberry10'){
+            // pushNotification.register(
+            // successHandler,
+            // errorHandler,
+            // {
+            //     invokeTargetId : "replace_with_invoke_target_id",
+            //     appId: "replace_with_app_id",
+            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
+            //     ecb: "pushNotificationHandler",
+            //     simChangeCallback: replace_with_simChange_callback,
+            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
+            //     launchApplicationOnPush: true
+            // });
+        } else {
+            pushNotification.register(
+            tokenHandler,
+            errorHandler,
+            {
+                "badge":"true",
+                "sound":"true",
+                "alert":"true",
+                "ecb":"onNotificationAPN"
+            });
+        }
+        
+    }catch(ex){
+        console.log("Notification error:",ex);
+    }
 
     }, false);
-	document.addEventListener("pause", function(){ 
-//		 updateBadge(88);
-		 updateBadge($rootScope.messageCount);
-	},false);
-
+    // Added to update iOS bade with unread message count.
+    document.addEventListener("pause", function(){ 
+	updateBadge($rootScope.messageCount);
+    },false);
 }]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
@@ -138,7 +138,7 @@ module.controller('SlidingMenuController',['$scope',function($scope){
 }]);
 module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
-    var rootScope = $rootScope;
+    var rootScope = $rootScope; // Added to allow access to messageCount
 
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
@@ -166,7 +166,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                         DB.setUsage(result.server_id,1,1,0);
                     }
                     scope.messageCount = count;
-                    $rootScope.messageCount = count;
+		     $rootScope.messageCount = count; // Added to allow access to messageCount
                     scope.hasMessage = count > 0;
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
@@ -175,8 +175,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
             });
         })  
     });
-    
-	
+
 }]);
 
 module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
@@ -546,9 +545,6 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                 $scope.hasMessage = count > 0;
             });
         });
-        
-        //var fruit = $rootScope.messageCount;
-        //console.log($rootScope.messageCount);
         
 }]);
 
@@ -934,17 +930,18 @@ function sendRegistionId(id){
     })
 }
 
-// IIUK login service
+// notificationFeedback Service
 function notificationFeedback(buttonIndex,passedData) {
 	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+passedData+'buttonIndex='+buttonIndex;
 	$.get(url,function(data){
 	})
 }
 
+// added badge update function
 function updateBadge(badgeCount){
     var pushNotification = window.plugins.pushNotification;
     pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
-	//cordova.plugins.notification.badge.set(badgeCount); // Android
+    //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
 // iOS
@@ -958,7 +955,7 @@ function onNotificationAPN (event) {
 		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
 			   	event.title,
-		   		event.buttons
+			   	event.buttons
 			);
 
 		} else {
@@ -991,7 +988,6 @@ function onNotificationGCM(e) {
     break;
 
     case 'message':
-		//cordova.plugins.notification.badge.set(10);
         // if this flag is set, this notification happened while we were in the foreground.
         // you might want to play a sound to get the user's attention, throw up a dialog, etc.
         if ( e.foreground )
@@ -1014,7 +1010,7 @@ function onNotificationGCM(e) {
 		       	 notificationFeedback(buttonIndex,e.payload.other);
 			   	},
 			   	e.payload.title,
-			   	['Cancel1','Login1']
+			   	e.payload.buttons
 			);
       
         } else {
