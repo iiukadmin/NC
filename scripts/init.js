@@ -117,9 +117,6 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
 	                "alert":"true",
 	                "ecb":"onNotificationAPN"
 	            });
-	            updateBadge(8);
-	        //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);  (working)
-			//	cordova.plugins.notification.badge.set(13);	(working)
 	        }
 	        
 	    }catch(ex){
@@ -140,7 +137,6 @@ module.controller('SlidingMenuController',['$scope',function($scope){
 }]);
 module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
-	updateBadge(2); 
 
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
