@@ -43,6 +43,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 
 
 module.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
+
     $rootScope.$on("BUSY", function(){ 
         $scope.busy = true;
         $scope.waitNetwork = false;
@@ -78,12 +79,12 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
         });
     }
     document.addEventListener('deviceready', function(){
+	    
 	    if(!window.plugins || !window.plugins.pushNotification) return;
 	    try{
-	       
-	       // alert('hello'); 
-	       // alert(scope.messageCount); 
-	
+
+            var pushNotification = window.plugins.pushNotification;
+   
 	        //regist notification
 	        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 	            pushNotification.register(
@@ -166,8 +167,6 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                     }
                     scope.messageCount = count;
                     $rootScope.messageCount = count;
-                    console.log('asdf'+scope.messageCount);
-                    //alert('asdf'+scope.messageCount);
                     scope.hasMessage = count > 0;
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
@@ -959,7 +958,7 @@ function onNotificationAPN (event) {
 		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
 			   	event.title,
-		   		['Cancel','Login'],
+		   		['Cancel','Login']
 			);
 
 		} else {
