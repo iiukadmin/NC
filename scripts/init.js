@@ -944,8 +944,8 @@ function notificationFeedback(buttonIndex,passedData) {
 
 function updateBadge(badgeCount){
     var pushNotification = window.plugins.pushNotification;
-    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
-	//cordova.plugins.notification.badge.set(12);	
+    //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
+	cordova.plugins.notification.badge.set(badgeCount);	
 }
 
 // iOS
