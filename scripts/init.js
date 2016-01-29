@@ -79,56 +79,58 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
         });
     }
     document.addEventListener('deviceready', function(){
-
-
-    if(!window.plugins || !window.plugins.pushNotification) return;
-    try{
-       
-        var pushNotification = window.plugins.pushNotification;
-        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 8); 
-
-        //regist notification
-        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-            pushNotification.register(
-            successHandler,
-            errorHandler,
-            {
-                "senderID":window.AKHB.config.senderID,
-                "ecb":"onNotificationGCM"
-            });
-        } else if ( device.platform == 'blackberry10'){
-            // pushNotification.register(
-            // successHandler,
-            // errorHandler,
-            // {
-            //     invokeTargetId : "replace_with_invoke_target_id",
-            //     appId: "replace_with_app_id",
-            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
-            //     ecb: "pushNotificationHandler",
-            //     simChangeCallback: replace_with_simChange_callback,
-            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
-            //     launchApplicationOnPush: true
-            // });
-        } else {
-            pushNotification.register(
-            tokenHandler,
-            errorHandler,
-            {
-                "badge":"true",
-                "sound":"true",
-                "alert":"true",
-                "ecb":"onNotificationAPN"
-            });
-            updateBadge(8);
-        //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);  (working)
-		//	cordova.plugins.notification.badge.set(13);	(working)
-        }
-        
-    }catch(ex){
-        console.log("Notification error:",ex);
-    }
+	    if(!window.plugins || !window.plugins.pushNotification) return;
+	    try{
+	       
+	        var pushNotification = window.plugins.pushNotification;
+	        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 8); 
+	
+	        //regist notification
+	        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+	            pushNotification.register(
+	            successHandler,
+	            errorHandler,
+	            {
+	                "senderID":window.AKHB.config.senderID,
+	                "ecb":"onNotificationGCM"
+	            });
+	        } else if ( device.platform == 'blackberry10'){
+	            // pushNotification.register(
+	            // successHandler,
+	            // errorHandler,
+	            // {
+	            //     invokeTargetId : "replace_with_invoke_target_id",
+	            //     appId: "replace_with_app_id",
+	            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
+	            //     ecb: "pushNotificationHandler",
+	            //     simChangeCallback: replace_with_simChange_callback,
+	            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
+	            //     launchApplicationOnPush: true
+	            // });
+	        } else {
+	            pushNotification.register(
+	            tokenHandler,
+	            errorHandler,
+	            {
+	                "badge":"true",
+	                "sound":"true",
+	                "alert":"true",
+	                "ecb":"onNotificationAPN"
+	            });
+	            updateBadge(8);
+	        //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);  (working)
+			//	cordova.plugins.notification.badge.set(13);	(working)
+	        }
+	        
+	    }catch(ex){
+	        console.log("Notification error:",ex);
+	    }
 
     }, false);
+	document.addEventListener("pause", function(){ 
+		 updateBadge(88);
+	},false);
+
 }]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
