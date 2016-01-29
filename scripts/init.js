@@ -168,7 +168,6 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
                     scope.article = $sce.trustAsHtml(result.content);
-                    updateBadge;
                 });
             });
         })  
