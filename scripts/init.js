@@ -958,7 +958,7 @@ function onNotificationAPN (event) {
 		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
 			   	event.title,
-		   		event.buttons
+		   		JSON.stringify(event.buttons)
 			);
 
 		} else {
