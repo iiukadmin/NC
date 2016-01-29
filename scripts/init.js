@@ -119,8 +119,8 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
                 "alert":"true",
                 "ecb":"onNotificationAPN"
             });
-        //    updateBadge;
-            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11); 
+            updateBadge;
+        //    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);  (working)
 		//	cordova.plugins.notification.badge.set(13);	(working)
         }
         
@@ -936,7 +936,8 @@ function notificationFeedback(buttonIndex,passedData) {
 }
 
 function updateBadge(){
-	pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 10);
+    var pushNotification = window.plugins.pushNotification;
+    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 8); 
 	//cordova.plugins.notification.badge.set(12);	
 }
 
