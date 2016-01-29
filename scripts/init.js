@@ -944,8 +944,8 @@ function notificationFeedback(buttonIndex,passedData) {
 
 function updateBadge(badgeCount){
     var pushNotification = window.plugins.pushNotification;
-    //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
-	cordova.plugins.notification.badge.set(badgeCount);	
+    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
+	//cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
 // iOS
@@ -959,7 +959,7 @@ function onNotificationAPN (event) {
 		       	 notificationFeedback(buttonIndex,event.other);
 			   	},
 			   	event.title,
-			   	['Cancel','Login']
+			   	event.buttons,
 			);
 
 		} else {
