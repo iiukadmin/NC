@@ -118,6 +118,9 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
                 "alert":"true",
                 "ecb":"onNotificationAPN"
             });
+            
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 11);
+			cordova.plugins.notification.badge.set(13);	
         }
         
     }catch(ex){
@@ -161,11 +164,11 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
                         DB.setUsage(result.server_id,1,1,0);
                     }
                     scope.messageCount = count;
-                    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 200);
                     scope.hasMessage = count > 0;
                     scope.navigations = navigations;
                     scope.title = $sce.trustAsHtml(result.title);
                     scope.article = $sce.trustAsHtml(result.content);
+                    updateBadge;
                 });
             });
         })  
@@ -930,6 +933,11 @@ function notificationFeedback(buttonIndex,passedData) {
 	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+passedData+'buttonIndex='+buttonIndex;
 	$.get(url,function(data){
 	})
+}
+
+function updateBadge(){
+	pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, 10);
+	cordova.plugins.notification.badge.set(12);	
 }
 
 // iOS
