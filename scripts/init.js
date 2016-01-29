@@ -138,6 +138,7 @@ module.controller('SlidingMenuController',['$scope',function($scope){
 }]);
 module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
+	updateBadge(2); 
 
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
