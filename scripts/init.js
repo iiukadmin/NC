@@ -940,7 +940,7 @@ function notificationFeedback(buttonIndex,passedData) {
 // added badge update function
 function updateBadge(badgeCount){
     var pushNotification = window.plugins.pushNotification;
-    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, badgeCount); 
+    pushNotification.setApplicationIconBadgeNumber(null, null, badgeCount); 
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
