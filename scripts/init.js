@@ -864,7 +864,18 @@ $(document).on('click','a',function(e){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
                 window.open( $href, '_blank', 'location=yes');
-
+            }else if($href.toLowerCase().indexOf('tel') == 0){
+                navigator.notification.confirm(
+                    "",
+                    function(buttonIndex) {
+                        if(buttonIndex == 1){
+                           window.open( $href, '_system', 'location=yes');
+                        }
+                    },
+                    $(this).text(),
+                    ["Call","Cancel"]
+                );
+               
             }else if($href.toLowerCase().indexOf('mailto') == 0){
                 window.plugin.email.open({
                     to:[$href.substring(7)]
@@ -872,6 +883,7 @@ $(document).on('click','a',function(e){
             }else{
                  window.open( $href, '_system', 'location=yes');
             }
+            
         } 
 })
 /*.on('swipe','ons-list-item.swipe',function(e){

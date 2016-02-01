@@ -196,6 +196,7 @@ AKHB.services.db.prototype.getCommitteById = function(id,callback){
 AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,callback){
 	var that = this;
 	var dbCommitte = null;
+	var isPullData = false;
 	this.getCommitteById(_committe.id,function(err,resultCommitte){
 		if(!resultCommitte){
 			dbCommitte = new committees({
@@ -217,19 +218,32 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			}else{
 				
 				dbCommitte = resultCommitte;
-				isPullData = moment(_committe.last_changed) > dbCommitte.last_modified;
-				dbCommitte.title = _committe.title;
-				dbCommitte.last_modified = moment(_committe.last_modified).toDate();
-				dbCommitte.inst_type = _committe.inst_type;
-				dbCommitte.status = _committe.status;
-				dbCommitte.category = _committe.category;
-				dbCommitte.description = _committe.description;
-				dbCommitte.email = _committe.email;
-				dbCommitte.last_changed = moment(_committe.last_changed);
+
+				var now = moment(_committe.last_changed);
+				var then = moment(dbCommitte.last_changed); 
+											
+				if(_committe.last_changed  && then.diff(now,'days')>=0 ){
+					isPullData = true;
+				// console.log(moment(_committe.last_changed) > dbCommitte.last_modified,moment(_committe.last_changed) , dbCommitte.last_modified);
+				// isPullData = moment(_committe.last_changed) > dbCommitte.last_modified;
+				// if(isPullData){
+					
+				
+					dbCommitte.title = _committe.title;
+					dbCommitte.last_modified = moment(_committe.last_modified).toDate();
+					dbCommitte.inst_type = _committe.inst_type;
+					dbCommitte.status = _committe.status;
+					dbCommitte.category = _committe.category;
+					dbCommitte.description = _committe.description;
+					dbCommitte.email = _committe.email;
+					dbCommitte.last_changed = moment(_committe.last_changed);
+				}
 			}
 		}
 		persistence.flush(function(){
-			that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
+			if(isPullData){
+				that.setDirectories(dbCommitte,_committe.last_content_synced,remoteAddress);
+			}
 			callback(err);
 		});
 		

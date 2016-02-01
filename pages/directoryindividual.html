@@ -9,10 +9,10 @@
     </ons-toolbar>
     <ons-list class="list--inset" style="margin-top:10px;">
         <ons-list-item ng-show="individual.home_number">
-        Home&nbsp;&nbsp;&nbsp;<a href="tel:{{individual.home_number | safePhone}}">{{individual.home_number}}</a>
+        Home&nbsp;&nbsp;&nbsp;<a href="tel:{{individual.home_number | safePhone}}" class="phone">{{individual.home_number}}</a>
         </ons-list-item>
         <ons-list-item ng-show="individual.mobile">
-        Mobile&nbsp;&nbsp;<a href="tel:{{individual.mobile | safePhone}}">{{individual.mobile}}</a>
+        Mobile&nbsp;&nbsp;<a href="tel:{{individual.mobile | safePhone}}" class="phone">{{individual.mobile}}</a>
         </ons-list-item>
         <ons-list-item ng-show="individual.email">
         Email&nbsp;&nbsp;&nbsp;<a href="mailto:{{individual.email}}">{{individual.email}}</a>
