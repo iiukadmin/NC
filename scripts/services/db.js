@@ -211,6 +211,7 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			    last_modified:moment(_committe.last_modified).toDate(),
 			    last_changed:moment(_committe.last_changed).toDate()
 			});
+			isPullData = true;
 			persistence.add(dbCommitte);
 		}else{
 			if(_committe.status == 1){
@@ -479,8 +480,9 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 				callback(err);
 			});
 		}	
-		
+		//debugger
 		async.each(data,function(item,callback){
+			//debugger
 			var url = AKHB.config.remoteAddress+'?type=2&table=directory';
 			url+='&id='+item.committe_id;
 			url+='&inst_type='+item.inst_type;
@@ -604,7 +606,7 @@ AKHB.services.db.prototype.setDirectories = function(model,last_modified,remoteA
 	var tasks = syncTask.all()
 	.filter('last_modified','=',last_modified)
 	.and(new persistence.PropertyFilter('committe_id','=',model.server_id))
-	
+	//console.log("setDirectories",model.server_id,last_modified);
 	tasks.count(function(num){
 		if(num == 0){
 			var _task = new syncTask({

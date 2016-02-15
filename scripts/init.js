@@ -944,7 +944,7 @@ function sendRegistionId(id){
 
 // notificationFeedback Service
 function notificationFeedback(buttonIndex,passedData) {
-	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
+	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'other='+passedData+'buttonIndex='+buttonIndex;
 	$.get(url,function(data){
 	})
 }
