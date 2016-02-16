@@ -759,7 +759,11 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
         // if(typeof $scope.directory.members == "undefined")
         //     $scope.directory.members = JSON.parse($scope.directory.content);
         try{
-            $scope.directory.members = JSON.parse($scope.directory.content);
+            if(typeof $scope.directory.content == "object"){
+                $scope.directory.members = $scope.directory.content;
+            }else if(typeof $scope.directory.content == "string"){
+                $scope.directory.members = JSON.parse($scope.directory.content);
+            }
         }catch(ex){
 
         }
