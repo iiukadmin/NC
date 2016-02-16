@@ -575,7 +575,15 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
         $scope.OpenDirectoryDetail = function(directory){
             $rootScope.$emit("BUSY");
             DB.getCommitteContentById(directory.server_id,function(err,data){
-                if(data) directory.content = JSON.parse(data.content); 
+                if(data) { 
+	            	if(typeof data.content == "object"){
+			            directory.content = data.content;
+			        } else if(typeof data.content == "string"){
+			            directory.content = JSON.parse(data.content);
+			        }
+	            
+	                //directory.content = JSON.parse(data.content); 
+	            }
                 $templateCache.put('directory',directory);
                 myNavigator.pushPage('pages/directorydetail.html');
             })
@@ -675,7 +683,15 @@ module.controller('DirectoryListController',['$scope','$rootScope','$http','$tem
         $scope.OpenDirectoryDetail = function(directory){
             $rootScope.$emit("BUSY");
             DB.getCommitteContentById(directory.server_id,function(err,data){
-                if(data) directory.content = data.content; 
+                if(data) {
+	             	if(typeof data.content == "object"){
+			            directory.content = data.content;
+			        } else if(typeof data.content == "string"){
+			            directory.content = JSON.parse(data.content);
+			        }
+	             
+	             //   directory.content = data.content; 
+	            }
                 $templateCache.put('directory',directory);
                 myNavigator.pushPage('pages/directorydetail.html');
             })
@@ -761,7 +777,7 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
         try{
             if(typeof $scope.directory.content == "object"){
                 $scope.directory.members = $scope.directory.content;
-            }else if(typeof $scope.directory.content == "string"){
+            } else if(typeof $scope.directory.content == "string"){
                 $scope.directory.members = JSON.parse($scope.directory.content);
             }
         }catch(ex){
@@ -814,7 +830,14 @@ module.controller('DirectorySearchController',['$scope','$rootScope','$http','$t
         
         $scope.OpenDirectoryDetail = function(directory){
             DB.getCommitteContentById(directory.server_id,function(err,data){
-                if(data) directory.content = JSON.parse(data.content); 
+                if(data) { 
+	                if(typeof data.content == "object"){
+			            directory.content = data.content;
+			        } else if(typeof data.content == "string"){
+			            directory.content = JSON.parse(data.content);
+			        }
+	                // directory.content = JSON.parse(data.content); 
+	            }
                 $templateCache.put('directory',directory);
                 myNavigator.pushPage('pages/directorydetail.html');
             })
