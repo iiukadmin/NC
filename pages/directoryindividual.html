@@ -20,7 +20,7 @@
         <ons-list-header ng-show="individual.committees">
         Committees
         </ons-list-header>
-        <ons-list-item class="item-name" ng-show="individual.committees" ng-repeat="item in individual.committees" ng-click="openIndividual(item)">
+        <ons-list-item class="item-name" ng-show="individual.committees_json" ng-repeat="item in individual.committees_json" ng-click="openIndividual(item)">
         {{item.title}}
         </ons-list-item>
 
