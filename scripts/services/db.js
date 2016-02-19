@@ -559,6 +559,7 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 													dbPerson.forename = name.forename;
 													dbPerson.home_number = name.home_number;
 													dbPerson.mobile = name.mobile;
+													dbPerson.email = name.email;
 													dbPerson.title = name.title;
 													dbPerson.name = name.name;
 													dbPerson.last_modified  = name.last_modified;

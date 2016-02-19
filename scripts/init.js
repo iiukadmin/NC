@@ -1,7 +1,7 @@
 //ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by  
 var MSG_RETUIREDNETWORK = {title:'Internet Connection',content:'Sorry, a network connection is required, please try later.'};
 var MSG_LOGINFAILED = {title:'Incorrect Password',content:'Please check password and try again.'};
-var MSG_SYSTEMERROR = {title:'System Error',content:'There has been an error, Please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:{0}'};
+var MSG_SYSTEMERROR = {title:'System Error',content:'Please check you have a network connection. If issues persist, please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:100'};
 
 var pushNotification;
 var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
