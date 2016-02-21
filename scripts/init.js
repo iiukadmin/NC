@@ -882,7 +882,7 @@ $(document).on('click','a',function(e){
                     "",
                     function(buttonIndex) {
                         if(buttonIndex == 1){
-                           window.open( $href, '_system', 'location=yes,enableviewportscale=yes');
+                           window.open( $href, '_system', 'location=yes');
                         }
                     },
                     $(this).text(),
@@ -894,7 +894,7 @@ $(document).on('click','a',function(e){
                     to:[$href.substring(7)]
                 });
             }else{
-                 window.open( $href, '_system', 'location=yes,enableviewportscale=yes');
+                 window.open( $href, '_system', 'location=yes');
             }
             
         } 
