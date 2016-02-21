@@ -876,7 +876,7 @@ $(document).on('click','a',function(e){
         if($href != ''){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
-                window.open( $href, '_blank', 'location=yes,enableviewportscale=yes');
+                window.open( $href, '_blank', 'location=yes,toolbar=yes,EnableViewportScale=yes,DisallowOverscroll=yes');
             }else if($href.toLowerCase().indexOf('tel') == 0){
                 navigator.notification.confirm(
                     "",
