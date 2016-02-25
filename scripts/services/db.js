@@ -450,6 +450,10 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 						callback(null,data);
 					})
 				},function(committee,callback){
+					if(!committee){
+						callback(null,null);
+						return;
+					}
 					persistence.transaction(function(tx){
 					tx.executeSql('DELETE FROM committee_persons_link WHERE committe_id = ?;',
 						[committee.server_id],
@@ -463,6 +467,10 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 						});
 					})
 				},function(committee,callback){
+					if(!committee){
+						callback(null,null);
+						return;
+					}
 					persistence.transaction(function(tx){
 						tx.executeSql('DELETE FROM persons WHERE server_id not in ( SELECT person_id FROM committee_persons_link)',
 						[],
@@ -482,6 +490,43 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 		}	
 		//debugger
 		async.each(data,function(item,callback){
+			if(item.committe_status == 1){
+				console.log(1);
+				async.waterfall([
+					function(callback){
+						committees.all()
+						.filter('server_id','=',item.committe_id)
+						.one(function(entity){
+							if(entity){
+								persistence.remove(entity);		
+							}	
+							callback();
+						})
+					},function(callback){
+						committeeContents.all()
+						.filter('server_id','=',item.committe_id)
+						.one(function(entity){
+							if(entity){
+								persistence.remove(entity);
+							}
+							callback();
+						})
+					},function(callback){
+						committeePersons.all()
+						.filter('committe_id','=',item.committe_id)
+						.list(function(links){
+							if(links){
+								//persistence.remove(links);
+							}
+							callback();
+						})
+					}
+					],function(err){
+						persistence.remove(item);
+						clearCommittee(item.committe_id,callback);
+				})
+				return;
+			}
 			//debugger
 			var url = AKHB.config.remoteAddress+'?type=2&table=directory';
 			url+='&id='+item.committe_id;
@@ -614,7 +659,8 @@ AKHB.services.db.prototype.setDirectories = function(model,last_modified,remoteA
 				committe_id: model.server_id,
 			    status:0,
 			    inst_type : model.inst_type,
-			    last_modified:last_modified
+			    last_modified:last_modified,
+			    committe_status:model.status
 			});
 			persistence.add(_task);
 		}
@@ -690,6 +736,7 @@ AKHB.services.db.prototype.getDirectories = function(type,callback){
 	var directories = committees.all()
 	.filter('inst_type','=',type)
 	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.and(new persistence.PropertyFilter('status','=','0'))
 	.limit(30);
 	directories.list(function(data){
 		callback(null,data);
@@ -699,6 +746,7 @@ AKHB.services.db.prototype.getOneDirectory = function(category,index,callback){
 	var directories = committees.all()
 	.filter('inst_type','=',category)
 	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.and(new persistence.PropertyFilter('status','=','0'))
 	.order('title',true).limit(1).skip((index-1)*1);
 	directories.list(function(data){
 		callback(null,data);
@@ -708,6 +756,7 @@ AKHB.services.db.prototype.getDirectoriesPagnation = function(category,index,pag
 	var directories = committees.all()
 	.filter('inst_type','=',category)
 	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.and(new persistence.PropertyFilter('status','=','0'))
 	.order('title',true).limit(pageSize).skip((index-1)*pageSize);
 	directories.list(function(data){
 		callback(null,data);
@@ -718,6 +767,7 @@ AKHB.services.db.prototype.searchPersons = function(key,callback){
 
 	var _persons = persons.all()
 	.filter('name','like','%'+key+'%')
+	.and(new persistence.PropertyFilter('status','=','0'))
 	//.and(new persistence.PropertyFilter('is_show','=','1'))
 	//.or(new persistence.PropertyFilter('title','like','%'+key+'%'))
 	.order('name',true).limit(20);
@@ -730,6 +780,7 @@ AKHB.services.db.prototype.searchCommittees = function(key,callback){
 	var directories = committees.all()
 	.filter('title','like','%'+key+'%')
 	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.and(new persistence.PropertyFilter('status','=','0'))
 	//.or(new persistence.PropertyFilter('title','like','%'+key+'%'))
 	.order('title',true).limit(20);
 	directories.list(function(data){
@@ -760,7 +811,8 @@ AKHB.services.db.prototype.getCommitteContentById = function(id,callback){
 AKHB.services.db.prototype.getDirectoriesCount = function(category,callback){
 	var directories = committees.all()
 	.filter('inst_type','=',category)
-	.and(new persistence.PropertyFilter('is_show','=','1'));
+	.and(new persistence.PropertyFilter('is_show','=','1'))
+	.and(new persistence.PropertyFilter('status','=','0'));
 	directories.count(function(count){
 		callback(null,count);
 	})
