@@ -767,7 +767,7 @@ AKHB.services.db.prototype.searchPersons = function(key,callback){
 
 	var _persons = persons.all()
 	.filter('name','like','%'+key+'%')
-	.and(new persistence.PropertyFilter('status','=','0'))
+	//.and(new persistence.PropertyFilter('status','=','0'))
 	//.and(new persistence.PropertyFilter('is_show','=','1'))
 	//.or(new persistence.PropertyFilter('title','like','%'+key+'%'))
 	.order('name',true).limit(20);
