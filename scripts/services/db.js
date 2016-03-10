@@ -215,6 +215,7 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			persistence.add(dbCommitte);
 		}else{
 			if(_committe.status == 1){
+				that.clearCommitteePersons(resultCommitte.server_id);
 				persistence.remove(resultCommitte);
 			}else{
 				
@@ -377,8 +378,6 @@ AKHB.services.db.prototype.getCommitteById = function(id,callback){
 
 
 AKHB.services.db.prototype.getDirectoryCategories = function(callback){
-
-
 	persistence.transaction(function(tx){
 		tx.executeSql('select inst_type as id ,category as title from committees group by inst_type,category ;',
 			null,
@@ -389,8 +388,25 @@ AKHB.services.db.prototype.getDirectoryCategories = function(callback){
 				console.log(err);
 			});
 	})
-
 };
+
+
+AKHB.services.db.prototype.clearCommitteePersons = function(committe_id,callback){
+	persistence.transaction(function(tx){
+		tx.executeSql('DELETE FROM committee_persons_link WHERE committe_id = ?',
+			[committe_id],
+			function(data){
+				if(typeof callback == 'function'){
+					callback(null,data);
+				}
+			},
+			function(err){
+				console.log(err);
+			});
+	})
+};
+
+
 AKHB.services.db.prototype.setDirectoryCategories = function(model,remoteAddress,last_content_synced,callback){
 	var that = this;
 	var _category = category.all().filter('type','=',model.type);
@@ -604,7 +620,6 @@ AKHB.services.db.prototype.syncLatestTask =function(callback){
 													dbPerson.forename = name.forename;
 													dbPerson.home_number = name.home_number;
 													dbPerson.mobile = name.mobile;
-													dbPerson.email = name.email;
 													dbPerson.title = name.title;
 													dbPerson.name = name.name;
 													dbPerson.last_modified  = name.last_modified;

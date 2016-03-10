@@ -642,14 +642,18 @@ module.controller('DirectoryController',['$scope','$rootScope','$http','$templat
                 $scope.key =  $.trim($scope.key.replace(/\s+/g, ' '));
                 async.series([
                     function(callback){
+                        //console.log("searchCommittees");
                         DB.searchCommittees($scope.key,function(err,committees){
                             data.committees = committees;
+                            //console.log("Committees",err,committees);
                             callback(err);
                         });
                     },
                     function(callback){
+                        //console.log("searchPersons");
                         DB.searchPersons($scope.key,function(err,persons){
                             data.persons = persons;
+                            //console.log("Persons",err,persons);
                             callback(err);
                         });
                     }
