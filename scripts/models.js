@@ -3,9 +3,9 @@
 
 persistence.store.cordovasql.config(
   persistence,
-  'myIIUK',
+  'IIUK',
   '1.0',                // DB version
-  'myIIUK db',          // DB display name
+  'IIUK db',          // DB display name
   5 * 1024 * 1024,        // DB size (WebSQL fallback only)
   0,                      // SQLitePlugin Background processing disabled
   2                       // DB location (iOS only), 0 (default): Documents, 1: Library, 2: Library/LocalDatabase
@@ -64,14 +64,14 @@ var usage = persistence.define('usages', {
 });
 
 var syncTask = persistence.define('tasks', {
-    committe_id: "INT",
+    committe_id: "TEXT",
     status:"INT",
     last_modified:"DATE",
     inst_type:"INT"
 });
 
 var committeePersons = persistence.define('committee_persons_link', {
-    committe_id: "INT",
+    committe_id: "TEXT",
     person_id:"INT"
 });
 
@@ -98,7 +98,7 @@ var persons = persistence.define('persons', {
 });
 
 var committees = persistence.define('committees', {
-    server_id:"INT",
+    server_id:"TEXT",
     inst_type :"INT",
     category :"TEXT",
     title:"TEXT",
@@ -110,7 +110,7 @@ var committees = persistence.define('committees', {
     is_show:"INT"
 });
 var committeeContents = persistence.define('committeeContent', {
-    server_id:"INT",
+    server_id:"TEXT",
     content:"TEXT",
 });
 
