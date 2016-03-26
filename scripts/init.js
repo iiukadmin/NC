@@ -563,7 +563,7 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                 },5000);
 //                alert('apple');
 //				AKHB.notification.alert('apple2',null,'Error');
-				$("#article-iframe").on("load", function () {
+				$("#content-iframe").on("load", function () {
 				    // do something once the iframe is loaded
 				     alert('apple');
 				});  
