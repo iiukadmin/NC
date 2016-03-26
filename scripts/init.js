@@ -886,6 +886,9 @@ $(document).on('click','a',function(e){
             
             if($href.toLowerCase().indexOf('http') == 0){
 	            
+	            if ($target == '') { 
+		              window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	            }
 	            if ($target.toLowerCase().indexOf('_blank') == 0) {
 	            
 		            navigator.notification.confirm(
