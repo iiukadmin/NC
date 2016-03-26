@@ -883,19 +883,34 @@ $(document).on('click','a',function(e){
         var $target = $this.attr('target');
         if($href != ''){
             e.preventDefault();
+            
             if($href.toLowerCase().indexOf('http') == 0){
-	            navigator.notification.confirm(
-                    "",
-                    function(buttonIndex) {
-                        if(buttonIndex == 1){
-	                        window.open($href, '_system');
-                        }
-                    },
-                    $(this).text(),
-                    ["Open","Cancel"]
-                );
 	            
+	            if ($target.toLowerCase().indexOf('blank') == 0) {
 	            
+		            navigator.notification.confirm(
+	                    "",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+		                        window.open($href, '_system');
+	                        }
+	                    },
+	                    $target,
+	                    ["Open","Cancel"]
+	                );
+		        }else{
+			       navigator.notification.confirm(
+	                    "",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+		                        window.open($href, '_system');
+	                        }
+	                    },
+	                    $target,
+	                    ["Open","Cancel"]
+	                ); 
+		        }    
+				
 	            
 	            
 	            
