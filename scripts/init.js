@@ -31,22 +31,13 @@ AKHB.openContentPage =  function(navigation,$templateCache){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 4){ // External Browser Link
 	             if(!Auth.isNetworkConnected()){
-		             AKHB.notification.alert('MESSAGE',null,'TITLE');
-
-		             
-				 	//$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
-	                //$templateCache.put('article', "<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
-	                //myNavigator.pushPage('pages/content.html',{article:article});
+		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				 }else{
                  	window.open(article.content,'_system');
 				 }
              }else if(article.type == 5){ // Internal Browser
 	            if(!Auth.isNetworkConnected()){
-                	$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
-  	                
-  	                $templateCache.put('article', article);
-  					myNavigator.pushPage('pages/content.html',{article:article});
-  					
+		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				}else{	
 					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 	                $('div.loading').removeClass('ng-hide');
@@ -56,8 +47,12 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 					});
 				}                     
              } else { // Pure content or an iFrame view of a web page (1,2)
-                $templateCache.put('article', article);
-                myNavigator.pushPage('pages/content.html',{article:article});
+	            if (article.type == 2 && !Auth.isNetworkConnected()) {
+		            AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+	            }else{ 
+	                $templateCache.put('article', article);
+					myNavigator.pushPage('pages/content.html',{article:article});
+				}
              }
         });
     }
@@ -907,18 +902,31 @@ $(document).on('click','a',function(e){
             if($href.toLowerCase().indexOf('http') == 0){
 	            
 	            if ($target == '') { 
-		              window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+		        	if(!Auth.isNetworkConnected()){
+		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				 	}else{	
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+		                $('div.loading').removeClass('ng-hide');
+						ref.addEventListener('loadstop', function(){
+							ref.show();
+		                    $('div.loading').addClass('ng-hide');
+						});
+					}                     
+
+		        
+		        
+		           //   window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 	            }
 	            if ($target.toLowerCase().indexOf('_blank') == 0) {
 	            
 		            navigator.notification.confirm(
-	                    "",
+	                    "Would you like to open this link in your browser?",
 	                    function(buttonIndex) {
 	                        if(buttonIndex == 1){
 		                        window.open($href, '_system');
 	                        }
 	                    },
-	                    $target,
+	                    'External Link',
 	                    ["Open","Cancel"]
 	                );
 		        }else if($target.toLowerCase().indexOf('_self') == 0){
