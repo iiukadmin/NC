@@ -930,7 +930,18 @@ $(document).on('click','a',function(e){
 	                    ["Open","Cancel"]
 	                );
 		        }else if($target.toLowerCase().indexOf('_self') == 0){
-			       navigator.notification.confirm(
+		        	if(!Auth.isNetworkConnected()){
+		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				 	}else{	
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+		                $('div.loading').removeClass('ng-hide');
+						ref.addEventListener('loadstop', function(){
+							ref.show();
+		                    $('div.loading').addClass('ng-hide');
+						});
+					}                     
+			      /*
+				       navigator.notification.confirm(
 	                    "",
 	                    function(buttonIndex) {
 	                        if(buttonIndex == 1){
@@ -939,33 +950,9 @@ $(document).on('click','a',function(e){
 	                    },
 	                    $target,
 	                    ["Open","Cancel"]
-	                ); 
+	                );
+	              */ 
 		        }    
-				
-	            
-	            
-	            
-	 //           if($target.toLowerCase().indexOf('_blank') != 0){
-	 //               window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
-	 //           } else {
-	 //               window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
-
-				//                window.open( $href, '_blank', 'location=yes');
-	//                window.open( $href, '_system', 'location=yes');
-	                
-	//                navigator.notification.confirm(
-	 //                   "",
-	  //                  function(buttonIndex) {
-	  //                      if(buttonIndex == 1){
-//		                      window.open( $href, '_blank', 'location=yes');	                        
-//	                        } else {
-//	                           window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-//	                        }
-//	                    },
-//	                    $(this).text(),
-//	                    ["Internal","External"]
-//	                );
-		//	}	                
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
                 navigator.notification.confirm(
