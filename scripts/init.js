@@ -30,21 +30,22 @@ AKHB.openContentPage =  function(navigation,$templateCache){
     }else if(!isNaN(navigation.content)){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 4){ // External Browser Link
-                 window.open(article.content,'_system');
+	             if(!Auth.isNetworkConnected()){
+				 	$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+				 }else{
+                 	window.open(article.content,'_system');
+				 }
              }else if(article.type == 5){ // Internal Browser
-				 
-				ref = window.open(article.content, '_blank', 'location=no,hidden=yes');
-                $('div.loading').removeClass('ng-hide');
-				ref.addEventListener('loadstop', function(){
-					ref.show();
-                    $('div.loading').addClass('ng-hide');
-				});         
-
-
-	             
-//                 window.open(article.content,'_blank','location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-            
-            
+	            if(!Auth.isNetworkConnected()){
+                	$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+				}else{	
+					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+	                $('div.loading').removeClass('ng-hide');
+					ref.addEventListener('loadstop', function(){
+						ref.show();
+	                    $('div.loading').addClass('ng-hide');
+					});
+				}                     
              } else { // Pure content or an iFrame view of a web page (1,2)
                 $templateCache.put('article', article);
                 myNavigator.pushPage('pages/content.html',{article:article});
