@@ -884,10 +884,9 @@ $(document).on('click','a',function(e){
         if($href != ''){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
-	            if($target.toLowerCase().indexOf('_blank') == 0){
+	            if($target.toLowerCase().indexOf('_blank') != 0){
 	                window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
-
-	            			} else {
+	            } else {
 	                window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
 
 				//                window.open( $href, '_blank', 'location=yes');
