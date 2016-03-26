@@ -30,7 +30,8 @@ AKHB.openContentPage =  function(navigation,$templateCache){
     }else if(!isNaN(navigation.content)){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 2){
-                 window.open(article.content);
+                 //window.open(article.content);
+                 window.open(article.content,'_blank','location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
                  //window.open( $href, '_blank', 'location=yes');
 
              }else if(article.type == 1){
@@ -889,9 +890,9 @@ $(document).on('click','a',function(e){
                     "",
                     function(buttonIndex) {
                         if(buttonIndex == 1){
-                           window.open( $href, '_system', 'location=yes');
-                        } else {
 	                      window.open( $href, '_blank', 'location=yes');	                        
+                        } else {
+                           window.open( $href, '_system', 'location=yes');
                         }
                     },
                     $(this).text(),
@@ -915,6 +916,9 @@ $(document).on('click','a',function(e){
                 window.plugin.email.open({
                     to:[$href.substring(7)]
                 });
+            }else if($href.toLowerCase().indexOf('internal') == 0){
+               window.open( $href, '_blank', 'location=yes');	                        
+             
             }else{
                  window.open( $href, '_system', 'location=yes');
             }
