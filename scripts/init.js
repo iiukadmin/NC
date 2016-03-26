@@ -561,8 +561,12 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                    // $rootScope.$emit("BUSY");
                     $('div.loading').addClass('ng-hide');
                 },5000);
-                alert('apple');
-				AKHB.notification.alert('apple2',null,'Error');
+//                alert('apple');
+//				AKHB.notification.alert('apple2',null,'Error');
+				$("#article-iframe").on("load", function () {
+				    // do something once the iframe is loaded
+				     alert('apple');
+				});  
                 
                 // console.log($('#content-iframe'));
                 // setTimeout(function(){
