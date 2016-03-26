@@ -561,6 +561,9 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                    // $rootScope.$emit("BUSY");
                     $('div.loading').addClass('ng-hide');
                 },5000);
+                alert('apple');
+				AKHB.notification.alert('apple2',null,'Error');
+                
                 // console.log($('#content-iframe'));
                 // setTimeout(function(){
                 //     var iframe =  $('#content-iframe')[0];
@@ -940,18 +943,6 @@ $(document).on('click','a',function(e){
 		                    $('div.loading').addClass('ng-hide');
 						});
 					}                     
-			      /*
-				       navigator.notification.confirm(
-	                    "",
-	                    function(buttonIndex) {
-	                        if(buttonIndex == 1){
-		                        window.open($href, '_system');
-	                        }
-	                    },
-	                    $target,
-	                    ["Open","Cancel"]
-	                );
-	              */ 
 		        }    
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
