@@ -29,7 +29,21 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 
     }else if(!isNaN(navigation.content)){
         DB.getArticleById(navigation.content,function(err,article){
-             if(article.type == 2){
+             if(article.type == 4){
+                 //window.open(article.content);
+                 window.open(article.content,'_system');
+                 //window.open( $href, '_blank', 'location=yes');
+
+             }else if(article.type == 5){
+                 window.open(article.content,'_blank','location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+             } else {
+	           //$scope.myNavigator.pushPage('pages/content.html',{article:article});
+                $templateCache.put('article', article);
+                //app.slidingMenu.setMainPage('pages/content.html',{closeMenu: true});
+                myNavigator.pushPage('pages/content.html',{article:article});
+ 
+             }
+/*             if(article.type == 2){
                  //window.open(article.content);
                  window.open(article.content,'_blank','location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
                  //window.open( $href, '_blank', 'location=yes');
@@ -40,6 +54,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
                 //app.slidingMenu.setMainPage('pages/content.html',{closeMenu: true});
                 myNavigator.pushPage('pages/content.html',{article:article});
              }
+    */
         });
     }
 }
