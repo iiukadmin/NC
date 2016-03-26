@@ -883,22 +883,28 @@ $(document).on('click','a',function(e){
         if($href != ''){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
-//                window.open( $href, '_blank', 'location=yes');
-//                window.open( $href, '_system', 'location=yes');
-                
-                navigator.notification.confirm(
-                    "",
-                    function(buttonIndex) {
-                        if(buttonIndex == 1){
-	                      window.open( $href, '_blank', 'location=yes');	                        
-                        } else {
-                           window.open( $href, '_system', 'location=yes');
-                        }
-                    },
-                    $(this).text(),
-                    ["Internal","External"]
-                );
-                
+	            if($href.toLowerCase().indexOf('_blank') == 0){
+	                window.open( $href, '_system', 'location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+
+	            
+	
+			} else {
+				//                window.open( $href, '_blank', 'location=yes');
+	//                window.open( $href, '_system', 'location=yes');
+	                
+	                navigator.notification.confirm(
+	                    "",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+		                      window.open( $href, '_blank', 'location=yes');	                        
+	                        } else {
+	                           window.open( $href, '_system', 'location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	                        }
+	                    },
+	                    $(this).text(),
+	                    ["Internal","External"]
+	                );
+			}	                
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
                 navigator.notification.confirm(
@@ -916,9 +922,6 @@ $(document).on('click','a',function(e){
                 window.plugin.email.open({
                     to:[$href.substring(7)]
                 });
-            }else if($href.toLowerCase().indexOf('internal') == 0){
-               window.open( $href, '_blank', 'location=yes');	                        
-             
             }else{
                  window.open( $href, '_system', 'location=yes');
             }
