@@ -31,9 +31,12 @@ AKHB.openContentPage =  function(navigation,$templateCache){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 4){ // External Browser Link
 	             if(!Auth.isNetworkConnected()){
+		             AKHB.notification.alert('MESSAGE',null,'TITLE');
+
+		             
 				 	//$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
-	                $templateCache.put('article', "<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
-	                myNavigator.pushPage('pages/content.html',{article:article});
+	                //$templateCache.put('article', "<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+	                //myNavigator.pushPage('pages/content.html',{article:article});
 				 }else{
                  	window.open(article.content,'_system');
 				 }
