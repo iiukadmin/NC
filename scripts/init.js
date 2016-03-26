@@ -29,14 +29,16 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 
     }else if(!isNaN(navigation.content)){
         DB.getArticleById(navigation.content,function(err,article){
-            // if(article.type == 2){
-            //     window.open(article.content);
-            // }else if(article.type == 1){
+             if(article.type == 2){
+                 window.open(article.content);
+                 //window.open( $href, '_blank', 'location=yes');
+
+             }else if(article.type == 1){
                 //$scope.myNavigator.pushPage('pages/content.html',{article:article});
                 $templateCache.put('article', article);
                 //app.slidingMenu.setMainPage('pages/content.html',{closeMenu: true});
                 myNavigator.pushPage('pages/content.html',{article:article});
-            // }
+             }
         });
     }
 }
@@ -881,7 +883,22 @@ $(document).on('click','a',function(e){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
 //                window.open( $href, '_blank', 'location=yes');
-                window.open( $href, '_system', 'location=yes');
+//                window.open( $href, '_system', 'location=yes');
+                
+                navigator.notification.confirm(
+                    "",
+                    function(buttonIndex) {
+                        if(buttonIndex == 1){
+                           window.open( $href, '_system', 'location=yes');
+                        } else {
+	                      window.open( $href, '_blank', 'location=yes');	                        
+                        }
+                    },
+                    $(this).text(),
+                    ["Internal","External"]
+                );
+                
+                
             }else if($href.toLowerCase().indexOf('tel') == 0){
                 navigator.notification.confirm(
                     "",
