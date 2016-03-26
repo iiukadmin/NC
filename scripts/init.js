@@ -886,7 +886,7 @@ $(document).on('click','a',function(e){
             
             if($href.toLowerCase().indexOf('http') == 0){
 	            
-	            if ($target.toLowerCase().indexOf('blank') == 0) {
+	            if ($target.toLowerCase().indexOf('_blank') == 0) {
 	            
 		            navigator.notification.confirm(
 	                    "",
@@ -898,7 +898,7 @@ $(document).on('click','a',function(e){
 	                    $target,
 	                    ["Open","Cancel"]
 	                );
-		        }else{
+		        }else if($target.toLowerCase().indexOf('_self') == 0){
 			       navigator.notification.confirm(
 	                    "",
 	                    function(buttonIndex) {
