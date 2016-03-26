@@ -884,10 +884,25 @@ $(document).on('click','a',function(e){
         if($href != ''){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
-	            if($target.toLowerCase().indexOf('_blank') != 0){
-	                window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
-	            } else {
-	                window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	            navigator.notification.confirm(
+                    "",
+                    function(buttonIndex) {
+                        if(buttonIndex == 1){
+	                        window.open($href, '_system');
+                        }
+                    },
+                    $(this).text(),
+                    ["Open","Cancel"]
+                );
+	            
+	            
+	            
+	            
+	            
+	 //           if($target.toLowerCase().indexOf('_blank') != 0){
+	 //               window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	 //           } else {
+	 //               window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
 
 				//                window.open( $href, '_blank', 'location=yes');
 	//                window.open( $href, '_system', 'location=yes');
@@ -904,7 +919,7 @@ $(document).on('click','a',function(e){
 //	                    $(this).text(),
 //	                    ["Internal","External"]
 //	                );
-			}	                
+		//	}	                
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
                 navigator.notification.confirm(
