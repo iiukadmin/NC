@@ -881,6 +881,7 @@ $(document).on('click','a',function(e){
         var $this = $(this);
         var $href = $this.attr('href');
         var $target = $this.attr('target');
+        if ($target != '_blank') { $target = '_self' ;}
         if($href != ''){
             e.preventDefault();
             
