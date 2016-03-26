@@ -31,7 +31,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 2){
                  //window.open(article.content);
-                 window.open(article.content,'_blank','location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+                 window.open(article.content,'_blank','location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
                  //window.open( $href, '_blank', 'location=yes');
 
              }else if(article.type == 1){
@@ -880,11 +880,12 @@ $(document).on('click','a',function(e){
 
         var $this = $(this);
         var $href = $this.attr('href');
+        var $target = $this.attr('target');
         if($href != ''){
             e.preventDefault();
             if($href.toLowerCase().indexOf('http') == 0){
-	            if($href.toLowerCase().indexOf('_blank') == 0){
-	                window.open( $href, '_system', 'location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	            if($target.toLowerCase().indexOf('_blank') == 0){
+	                window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
 
 	            
 	
@@ -898,7 +899,7 @@ $(document).on('click','a',function(e){
 	                        if(buttonIndex == 1){
 		                      window.open( $href, '_blank', 'location=yes');	                        
 	                        } else {
-	                           window.open( $href, '_system', 'location=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+	                           window.open( $href, '_system', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 	                        }
 	                    },
 	                    $(this).text(),
