@@ -31,13 +31,19 @@ AKHB.openContentPage =  function(navigation,$templateCache){
         DB.getArticleById(navigation.content,function(err,article){
              if(article.type == 4){ // External Browser Link
 	             if(!Auth.isNetworkConnected()){
-				 	$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+				 	//$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+	                $templateCache.put('article', "<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+	                myNavigator.pushPage('pages/content.html',{article:article});
 				 }else{
                  	window.open(article.content,'_system');
 				 }
              }else if(article.type == 5){ // Internal Browser
 	            if(!Auth.isNetworkConnected()){
                 	$scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
+  	                
+  	                $templateCache.put('article', article);
+  					myNavigator.pushPage('pages/content.html',{article:article});
+  					
 				}else{	
 					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 	                $('div.loading').removeClass('ng-hide');

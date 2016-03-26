@@ -2,7 +2,7 @@
     <ons-list style="background-color: white;">
 		<ons-list-item modifier="tappable" class="list__item__line-height"
 		               onclick="app.slidingMenu.setMainPage('pages/landingpage.html', { closeMenu: true })">
-		    <i class="fa fa-home"></i>
+		    <i class="fa fa-home fa-fw"></i>
 		    Home
 		</ons-list-item>
 		<!--  <ng-include src="'pages/menutemplate.html'" ng-model="navigations"></ng-include> -->
@@ -10,7 +10,7 @@
 		<ons-list-item ng-repeat-start="navigation in navigations"  ng-if="navigation.status == 0 && (navigation.type==1 || navigation.type==5)"
 		    modifier="chevron"  
 		    class="list__item__line-height"  ng-model="navigation" ng-click="openPage(navigation)">
-		    <i ng-class="{true:'fa',false:'fa fa-'+navigation.icon}[navigation.icon =='']"></i>
+		    <i ng-class="{true:'fa',false:'fa fa-'+navigation.icon+' fa-fw'}[navigation.icon =='']"></i>
 		    {{navigation.title}}
 		</ons-list-item> 
 		<ons-list-item ng-repeat-end="navigation in navigations"  ng-if="navigation.status == 0 && navigation.type!=1 && navigation.type!=5"
