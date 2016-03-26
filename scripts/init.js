@@ -34,8 +34,10 @@ AKHB.openContentPage =  function(navigation,$templateCache){
              }else if(article.type == 5){ // Internal Browser
 				 
 				ref = window.open(article.content, '_blank', 'location=no,hidden=yes');
+                $('div.loading').removeClass('ng-hide');
 				ref.addEventListener('loadstop', function(){
 					ref.show();
+                    $('div.loading').addClass('ng-hide');
 				});         
 
 
