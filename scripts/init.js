@@ -913,10 +913,6 @@ $(document).on('click','a',function(e){
 		                    $('div.loading').addClass('ng-hide');
 						});
 					}                     
-
-		        
-		        
-		           //   window.open( $href, '_blank', 'location=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 	            }
 	            if ($target.toLowerCase().indexOf('_blank') == 0) {
 	            
