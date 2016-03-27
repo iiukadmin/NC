@@ -1,7 +1,7 @@
 window.AKHB ={
 	config:{
-		// https://www.iiuk.org/Pages/App/webservice.php
-		// http://stage.iiuk.homeip.net/Pages/App/webservice.php
+		// https://www.iiuk.org/Pages/App/webservice2.php
+		// http://stage.iiuk.homeip.net/Pages/App/webservice2.php
 		remoteAddress : 'http://stage.iiuk.homeip.net/Pages/App/webservice2.php',
 		debug:true,
 		version:null,

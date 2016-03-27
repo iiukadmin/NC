@@ -1012,7 +1012,7 @@ function errorHandler (error) {
     navigator.notification.alert('error = ' + error,null,'Error');
 }
 function sendRegistionId(id){
-    var url = window.AKHB.config.remoteAddress+'?type=4&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
+    var url = window.AKHB.config.remoteAddress+'?type=4&version='+AKHB.user.appVersion+'&os='+AKHB.user.os+'&device='+AKHB.user.deviceName+'&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
     $.get(url,function(data){
     })
 }
