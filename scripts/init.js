@@ -553,20 +553,18 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                 // });
                 //------------------------------------------------------------------------
 
-                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2"></iframe>');
+				$('div.loading').removeClass('ng-hide');
+                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2" onload="$(\'div.loading\').addClass(\'ng-hide\');"></iframe>');
+//                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2"></iframe>');
 
                 //$scope.contentHTML = $sce.trustAsHtml('<iframe id="content-iframe" src="http://127.0.0.1" ng-if="article.type==2"></iframe>');
-                $('div.loading').removeClass('ng-hide');
-                setTimeout(function(){
+//                $('div.loading').removeClass('ng-hide');
+//                setTimeout(function(){
                    // $rootScope.$emit("BUSY");
-                    $('div.loading').addClass('ng-hide');
-                },5000);
+//                    $('div.loading').addClass('ng-hide');
+//                },5000);
 //                alert('apple');
 //				AKHB.notification.alert('apple2',null,'Error');
-				$("#content-iframe").on("load", function () {
-				    // do something once the iframe is loaded
-				     alert('apple');
-				});  
                 
                 // console.log($('#content-iframe'));
                 // setTimeout(function(){
