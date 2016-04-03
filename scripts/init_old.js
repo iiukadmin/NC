@@ -114,7 +114,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
             AKHB.config.firstRun = true;
             app.slidingMenu.setSwipeable(false); 
             app.slidingMenu.closeMenu();
-            app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');    
+            app.slidingMenu.setMainPage('pages/login.html');    
         });
     }
     document.addEventListener('deviceready', function(){
@@ -184,7 +184,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
         if(nav.type==2){
             AKHB.openContentPage(nav,$templateCache);
         }else if(nav.type==3){
-            app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+            app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==4){
@@ -373,7 +373,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                                         rootScope.$emit("NOTBUSY");
                                         $rootScope.$broadcast("MenuReady");
                                         app.slidingMenu.setSwipeable(true);
-                                        app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
+                                        app.slidingMenu.setMainPage('pages/landingpage.html');
                                         setTimeout(syncBackGround,window.AKHB.config.timeout);
                                     },true);
                                     runMessageSync();
@@ -404,7 +404,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 if(Auth.isCachedAuthentication()){
                     $rootScope.$emit("NOTBUSY");
                     app.slidingMenu.setSwipeable(true); 
-                    app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
+                    app.slidingMenu.setMainPage('pages/landingpage.html');
                     var user = JSON.parse(Auth.getCachedAuthentication());
                     AKHB.user = user;
                     DBSync.runInBackGround(function(err){
@@ -441,7 +441,7 @@ module.controller('MenuController',['$scope','$rootScope','$http','$templateCach
             if(nav.type==2){
                 AKHB.openContentPage(nav,$templateCache);
             }else if(nav.type==3){
-                app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+                app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
             }else if(nav.type==5){
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
             }else if(nav.type==4){
