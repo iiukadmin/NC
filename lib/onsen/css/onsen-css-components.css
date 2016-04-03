@@ -463,22 +463,19 @@ h6 {
   line-height: 44px;
   font-size: 17px;
   font-weight: 500;
-//  color: #1f1f21;
-  color: #fff;
+  color: #1f1f21;
 }
 .navigation-bar__title {
   line-height: 44px;
   font-size: 17px;
   font-weight: 500;
- // color: #1f1f21;
-  color: #fff;
+  color: #1f1f21;
   margin: 0;
   padding: 0;
   overflow: visible;
 }
 .navigation-bar__center:first-child:last-child {
   width: 100%;
-  color: #fff;
 }
 /* topdoc
   name: Navigation Bar Item
