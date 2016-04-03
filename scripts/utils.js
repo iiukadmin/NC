@@ -57,15 +57,8 @@ AKHB.notification.confirm = function(message,callback,title){
 	}
 };
 AKHB.notification.alert = function(message,callback,title){
-	if(navigator.notification && navigator.notification.alert){
-		navigator.notification.alert(
-		    message,  			// message
-		    callback,         	// callback
-		    title ? title : 'Message',          // title
-		    'Done'              // buttonName
-		);
-	}else{
-		alert(message);
-		callback();
-	}
+	ons.notification.alert({
+	    messageHTML:message
+	});
+	if(typeof callback == 'function') callback();
 };

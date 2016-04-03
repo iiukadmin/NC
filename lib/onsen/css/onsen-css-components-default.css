@@ -469,7 +469,8 @@ h6 {
   line-height: 44px;
   font-size: 17px;
   font-weight: 500;
-  color: #1f1f21;
+//  color: #1f1f21;
+  color: #fff;
   margin: 0;
   padding: 0;
   overflow: visible;

@@ -1,36 +1,66 @@
-
 //ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by  
 var MSG_RETUIREDNETWORK = {title:'Internet Connection',content:'Sorry, a network connection is required, please try later.'};
 var MSG_LOGINFAILED = {title:'Incorrect Password',content:'Please check password and try again.'};
-var MSG_SYSTEMERROR = {title:'System Error',content:'There has been an error,Please contact a member of the Aga Khan Health Board. \r\n Error Code:{0}'};
+var MSG_SYSTEMERROR = {title:'System Error',content:'Please check you have a network connection. If issues persist, please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:100'};
 
 var pushNotification;
-var module = ons.bootstrap('AKHB', ['onsen']);
-AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
+var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
+var Auth = new AKHB.services.authentication(AKHB.config);
+var DBSync = null;
+window.DB = null;
 
-var DB = new AKHB.services.db();
+AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
+AKHB.xhr = [];
+$.ajaxSetup({
+    beforeSend :function(xhr){
+        AKHB.xhr.push(xhr);
+    },complete:function(xhr){
+        var tmp = [];
+        for(var _index in AKHB.xhr){
+            if(AKHB.xhr[_index].readyState == 4){
+                AKHB.xhr.pop(AKHB.xhr[_index]);
+            }
+        }
+    }
+});
+
 AKHB.openContentPage =  function(navigation,$templateCache){
     if(navigation.type == 1){
 
     }else if(!isNaN(navigation.content)){
         DB.getArticleById(navigation.content,function(err,article){
-            // if(article.type == 2){
-            //     window.open(article.content);
-            // }else if(article.type == 1){
-                //$scope.myNavigator.pushPage('pages/content.html',{article:article});
-                $templateCache.put('article', article);
-                //app.slidingMenu.setMainPage('pages/content.html',{closeMenu: true});
-                myNavigator.pushPage('pages/content.html',{article:article});
-            // }
+             if(article.type == 4){ // External Browser Link
+	             if(!Auth.isNetworkConnected()){
+		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				 }else{
+                 	window.open(article.content,'_system');
+				 }
+             }else if(article.type == 5){ // Internal Browser
+	            if(!Auth.isNetworkConnected()){
+		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				}else{	
+					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+	                $('div.loading').removeClass('ng-hide');
+					ref.addEventListener('loadstop', function(){
+						ref.show();
+	                    $('div.loading').addClass('ng-hide');
+					});
+				}                     
+             } else { // Pure content or an iFrame view of a web page (1,2)
+	            if (article.type == 2 && !Auth.isNetworkConnected()) {
+		            AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+	            }else{ 
+	                $templateCache.put('article', article);
+					myNavigator.pushPage('pages/content.html',{article:article});
+				}
+             }
         });
     }
 }
 
 
-module.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
-    //var scope = $scope;
+module.controller('AppController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
     
-
     $rootScope.$on("BUSY", function(){ 
         $scope.busy = true;
         $scope.waitNetwork = false;
@@ -46,14 +76,55 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
         $scope.waitNetwork = true;
         console.log('emit WAITINGNETWORK',$scope.busy,$scope.$id);
     });
-    setTimeout(function(){
+
+    $rootScope.openIndividual = function(individual,isindividual){
+        $rootScope.$emit("BUSY");
+        if(isindividual){
+            $templateCache.put('individual',individual);
+            myNavigator.pushPage('pages/directoryindividual.html');
+        }else{
+            DB.getCommitteById(individual.id,function(err,data){
+                if(!err && data){
+                    var directory = data;
+                    DB.getCommitteContentById(directory.server_id,function(err,data){
+                        if(data) directory.content = JSON.parse(data.content); 
+                        $templateCache.put('directory',directory);
+                        myNavigator.pushPage('pages/directorydetail.html');
+                    })
+                }else{
+                    $templateCache.put('individual',individual);
+                    myNavigator.pushPage('pages/directoryindividual.html');
+                }
+            })
+        }
+        
+    };
+    $rootScope.signOut = function(){
+        var Auth = new AKHB.services.authentication(AKHB.config);
+        Auth.cleanAuthentication(function(){
+            for(var timer in AKHB.services.timer){
+                clearTimeout(AKHB.services.timer[timer]);
+                delete AKHB.services.timer[timer];
+            }
+            for(var _index in AKHB.xhr){
+                if(AKHB.xhr[_index].readyState != 4){
+                    AKHB.xhr[_index].abort();
+                }
+            }
+            AKHB.config.firstRun = true;
+            app.slidingMenu.setSwipeable(false); 
+            app.slidingMenu.closeMenu();
+            app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');    
+        });
+    }
+    document.addEventListener('deviceready', function(){
 
 
-    console.log("AppController",window,window.plugins);
     if(!window.plugins || !window.plugins.pushNotification) return;
     try{
-        console.log("pushNotification start");
-        pushNotification = window.plugins.pushNotification;
+       
+        var pushNotification = window.plugins.pushNotification;
+
         //regist notification
         if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
             pushNotification.register(
@@ -61,7 +132,7 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
             errorHandler,
             {
                 "senderID":window.AKHB.config.senderID,
-                "ecb":"onNotification"
+                "ecb":"onNotificationGCM"
             });
         } else if ( device.platform == 'blackberry10'){
             // pushNotification.register(
@@ -87,159 +158,168 @@ module.controller('AppController',['$scope','$rootScope',function($scope,$rootSc
                 "ecb":"onNotificationAPN"
             });
         }
-        function tokenHandler (result) {
-            // Your iOS push server needs to know the token before it can push to this device
-            // here is where you might want to send it the token for later use.
-            //alert('device token = ' + result);
-            sendRegistionId(result);
-        }
-        // result contains any message sent from the plugin call
-        function successHandler (result) {
-           // alert('result = ' + result);
-           sendRegistionId(result);
-        }
-        // result contains any error description text returned from the plugin call
-        function errorHandler (error) {
-            alert('error = ' + error);
-        }
-        function sendRegistionId(id){
-            var url = window.AKHB.config.remoteAddress+'/webservice.php?type=4&deviceid='+AKHB.user.deviceid+'&notificationid='+id;
-            $.get(url,function(data){
-                console.log('sendRegistionId',id,data);
-            })
-        }
-        // iOS
-        function onNotificationAPN (event) {
-            if ( event.alert )
-            {
-                navigator.notification.alert(event.alert);
-            }
-
-            if ( event.sound )
-            {
-                var snd = new Media(event.sound);
-                snd.play();
-            }
-
-            if ( event.badge )
-            {
-                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-            }
-        }
-
-        //Android and Amazon Fire OS 
-        function onNotification(e) {
-           $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-
-            switch( e.event )
-            {
-            case 'registered':
-                if ( e.regid.length > 0 )
-                {
-                    console.log("regID = " + e.regid);
-                }
-            break;
-
-            case 'message':
-                // if this flag is set, this notification happened while we were in the foreground.
-                // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-                if ( e.foreground )
-                {
-
-                    // on Android soundname is outside the payload.
-                    // On Amazon FireOS all custom attributes are contained within payload
-                    var soundfile = e.soundname || e.payload.sound;
-                    // if the notification contains a soundname, play it.
-                    var my_media = new Media("/android_asset/www/"+ soundfile);
-                    my_media.play();
-                }
-                alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-
-            break;
-
-            case 'error':
-               alert('GCM error = '+e.msg);
-            break;
-
-            default:
-                alert('An unknown GCM event has occurred');
-            break;
-          }
-        }
+        
     }catch(ex){
         console.log("Notification error:",ex);
     }
 
-    //---------
-    },5000);
+    }, false);
+    // Added to update iOS bade with unread message count.
+    document.addEventListener("pause", function(){ 
+	updateBadge($rootScope.messageCount);
+    },false);
 }]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
     $scope.$on("isready", function(event,data){ 
-        console.log('SlidingMenuController broadcast isready');
         $scope.isready = data;
     });
 }]);
-module.controller('LandingPageController',['$scope','$sce',function($scope,$sce){
+module.controller('LandingPageController',['$scope','$rootScope','$sce','$templateCache',function($scope,$rootScope,$sce,$templateCache){
     var scope = $scope;
-    DB.getHomeArticle(function(err,result){
-        console.log(result);
-        DB.getMessageCount(function(err,count){
-            
-            scope.$apply( function() {
-                $scope.hasMessage = count > 0;
-                $scope.title = $sce.trustAsHtml(result.title);
-                $scope.article = $sce.trustAsHtml(result.content);
-            });
-        });
+    var rootScope = $rootScope; // Added to allow access to messageCount
+
+     $scope.openPage = function(nav){
+        $templateCache.put('navigation',nav);
+        if(nav.type==2){
+            AKHB.openContentPage(nav,$templateCache);
+        }else if(nav.type==3){
+            app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+        }else if(nav.type==5){
+            app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
+        }else if(nav.type==4){
+            $scope.signOut();
+        }else{
+            myNavigator.pushPage('pages/childmenu.html');
+        }
         
-            
-       
+    }
+
+    $scope.signOut = $rootScope.signOut;
+    DB.getHomeArticle(function(err,result){
+        DB.getHomepageIcons(function(err,navigations){
+            DB.getUnreadMessageCount(function(err,count){
+                scope.$apply(function(){
+                    if(!result.is_read){
+                        result.is_read=1;
+                        DB.setUsage(result.server_id,1,1,0);
+                    }
+                    scope.messageCount = count;
+		     $rootScope.messageCount = count; // Added to allow access to messageCount
+                    scope.hasMessage = count > 0;
+                    scope.navigations = navigations;
+                    scope.title = $sce.trustAsHtml(result.title);
+                    scope.article = $sce.trustAsHtml(result.content);
+                });
+            });
+        })  
     });
 
 }]);
 
-module.controller('MessageListController',['$scope','$templateCache',function($scope,$templateCache){
+module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
     var scope = $scope;
-    scope.openMessageDetail = function(msg){
-        console.log(msg);
-        msg.type = 2;
-        // if(msg.type == 1){
-        //     DB.setMessageUsed(msg.server_id,function(err,result){
-        //         msg.type = 2;
+    scope.nav =  $templateCache.get('navigation');
+    scope.messages = [];
+    scope.menuClick = function(){
+        app.slidingMenu.toggleMenu();
+    };
+    scope.openMessageDetail = function(msg,$event){
+        if($event.type != "touchend") return;
+        $templateCache.put('message',msg);
+        myNavigator.pushPage('pages/messagedetail.html');
+    };
+    var loadMessage = function(){
+       DB.getMessages(function(err,messages){
+            scope.$apply( function() {
+                scope.messages = messages;
+            });
+        }) 
+    }
+
+    if(Auth.isNetworkConnected()){
+        DBSync.runMessageSync(loadMessage,true);
+    }else{
+        loadMessage();
+    }
+    
+    $scope.$on("Refresh", function(){ 
+        loadMessage();
+        console.log('emit Refresh');
+    });
+    $scope.deleteMessage = function(msg,$event){
+        $event.stopPropagation();
+        ons.notification.confirm({
+            message: 'Are you sure you want to delete?',
+            callback: function(answer) {
+              if(answer){
+                DB.deleteMessage(msg.server_id,function(){
+                    DB.setUsage(msg.server_id,2,2);
+                    $rootScope.$broadcast("Refresh");
+
+                    if(Auth.isNetworkConnected()){
+                        DBSync.runMessageSync();
+                    }
+                });
+              }
+            }
+        });
+        
+    };
+}]);
+module.controller('MessageDetailController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        var scope = $scope;
+        var message = $templateCache.get('message');
+        $scope.message = message;
+    
+        if(message.status != 1)    {
+            DB.setUsage(message.server_id,2,1,0);
+            console.log(message.server_id,2,1,0);
+        }
+
+        message.status = 1;
+        persistence.flush();
+        
+        $scope.deleteMessage = function(){
+            ons.notification.confirm({
+                message: 'Are you sure you want to delete?',
+                callback: function(answer) {
+                  if(answer){
+                    DB.deleteMessage(message.server_id,function(){
+                        DB.setUsage(message.server_id,2,2);
+                        $rootScope.$broadcast("Refresh");
+                        if(Auth.isNetworkConnected()){
+                            DBSync.runMessageSync();
+                        }
+                        myNavigator.popPage();
+                    });
+                  }
+                }
+            });
+        }
+
+        // if(message.type == 1){
+        //     DB.setMessageUsed(message.server_id,function(err,result){
         //         console.log(err,result);
         //     });
         // }
-        // AKHB.notification.alert(msg.content,null,msg.title);
-        $templateCache.put('message', msg);
-        myNavigator.pushPage('pages/messagedetail.html');
-    };
-//{{moment(msg.last_modified).format('yyyy-MM-dd')}}
-    DB.getMessages(function(err,messages){
-        scope.$apply( function() {
-            scope.messages = messages;
-            console.log(JSON.stringify(messages));
-        });
-    })
 }]);
-
 
 
 module.controller('LoginController',['$scope','$http','$templateCache','$rootScope',
     function($scope, $http, $templateCache,$rootScope) {
-        console.log('LoginController',$scope.$id,$rootScope.$id);
 
-        var Auth = new AKHB.services.authentication(AKHB.config);
-        var DBSync = new AKHB.services.db.DBSync(AKHB.config);
+        app.slidingMenu.setSwipeable(false); 
         var scope = $scope;
         var rootScope = $rootScope;
 
-        scope.isready = false; 
+        scope.isready = true; 
 
         ons.ready(function(){
             if(typeof device == 'undefined'){
                 AKHB.user.deviceid = '00000000000000031';
-                AKHB.user.os = 'test';
+                AKHB.user.os = 'ios';
                 AKHB.user.deviceName = 'browser test';
             }else{
                 AKHB.user.deviceid = device.uuid;
@@ -252,24 +332,34 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     });
                 }
             };
-            scope.isready = true; 
+            scope.isready = true;  
+              
             setTimeout(function(){
+                DBSync = new AKHB.services.db.DBSync(AKHB.config,$http);
                 initLogin();
-            },100);           
+            },1000);           
         });
         
         function initLogin(){
+            var runMessageSync = function(){
+                if(Auth.isNetworkConnected()){
+                    DBSync.runMessageSync(runMessageSync);
+                }else{
+                    setTimeout(runMessageSync,30000);
+                }
+            }
             var onlineLogin = function(){
                 Auth.isWebserviceWorking($http,function(err,result){
+                    rootScope.$emit("NOTBUSY");
                     if(err){
                         AKHB.notification.alert(result.content,function(){
-                            rootScope.$emit("NOTBUSY");
                             AKHB.utils.exitApp();
                         },result.title);
                     }else{  
                         scope.login = function(){
                             var password = scope.password;
-                            var authData = Auth.AuthenticationRequest(AKHB.user.deviceid,password);
+                            var userName = scope.username;
+                            var authData = Auth.AuthenticationRequest(AKHB.user.deviceid,userName,password);
                             rootScope.$emit("BUSY");
                             Auth.checkRemoteAuthentication($http,authData,function(err,result){
                                 
@@ -281,50 +371,50 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                                     
                                     DBSync.runInBackGround(function(err){
                                         rootScope.$emit("NOTBUSY");
+                                        $rootScope.$broadcast("MenuReady");
                                         app.slidingMenu.setSwipeable(true);
-                                        app.slidingMenu.setMainPage('pages/landingpage.html');
-                                        syncBackGround();
-                                    });
+                                        app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
+                                        setTimeout(syncBackGround,window.AKHB.config.timeout);
+                                    },true);
+                                    runMessageSync();
                                 }
                                 
                             });
                         }
-                        rootScope.$emit("NOTBUSY");
+                        
                     }
                 });
             }
              try{
-                rootScope.$emit("BUSY"); 
+                //rootScope.$emit("BUSY"); 
                 // check network and server.
                 var syncTimes = 0;
                 var syncBackGround = function(){
                     syncTimes ++;
-                    if(Auth.checkNetworkConnected()){
+                    if(Auth.isNetworkConnected()){
                         DBSync.runInBackGround(function(){
-                            setTimeout(function(){
-                                console.log('sync times:'+syncTimes);
-                                syncBackGround();
-                            },30000);
-                        });
-                    }else{
-                        setTimeout(function(){
                             console.log('sync times:'+syncTimes);
                             syncBackGround();
-                        },60000);
+                        });
+                    }else{
+                            console.log('sync times:'+syncTimes);
+                            syncBackGround();
                     }
                 }
                 if(Auth.isCachedAuthentication()){
                     $rootScope.$emit("NOTBUSY");
                     app.slidingMenu.setSwipeable(true); 
-                    app.slidingMenu.setMainPage('pages/landingpage.html');
+                    app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
                     var user = JSON.parse(Auth.getCachedAuthentication());
                     AKHB.user = user;
                     DBSync.runInBackGround(function(err){
                         //$rootScope.$emit("BUSY");
                         syncBackGround();
-                    });
+                    },true);
+                   runMessageSync();
+
                 }else{
-                    Auth.checkNetworkConnected();
+                    //Auth.checkNetworkConnected();
                     onlineLogin();
                 }
             }catch(ex){
@@ -336,7 +426,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     },MSG_RETUIREDNETWORK.title);
                 document.addEventListener("online", function(){
                     rootScope.$emit("NOTBUSY");
-                    onlineLogin();
+                    initLogin();
                 }, false);
             }
         }
@@ -344,18 +434,25 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 }]);
 
 
-module.controller('MenuController',['$scope','$http','$templateCache',
-    function($scope, $http, $templateCache) {
-        console.log('MenuController',$scope.$id);
+module.controller('MenuController',['$scope','$rootScope','$http','$templateCache',
+    function($scope, $rootScope, $http, $templateCache) {
         $scope.openPage = function(nav){
+            $templateCache.put('navigation',nav);
             if(nav.type==2){
                 AKHB.openContentPage(nav,$templateCache);
+            }else if(nav.type==3){
+                app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+            }else if(nav.type==5){
+                app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
+            }else if(nav.type==4){
+                $scope.signOut();
             }else{
-                $templateCache.put('navigation',nav);
                 myNavigator.pushPage('pages/childmenu.html');
             }
             
         }
+        
+        $scope.signOut = $rootScope.signOut;
         $scope.navigations = [];
         var loadMenu = function(scope){
             DB.getNavigationsByParentId(0,function(err,navigations){
@@ -364,7 +461,11 @@ module.controller('MenuController',['$scope','$http','$templateCache',
                 });
             });
         }
-
+        $rootScope.$on("MenuReady", function(){ 
+            loadMenu($scope);
+            console.log('emit MenuReady');
+        });
+        
         app.slidingMenu.on('preopen',function(){
             loadMenu($scope);
         });
@@ -381,15 +482,14 @@ module.controller('MenuController',['$scope','$http','$templateCache',
 
 module.controller('ChildMenuController',['$scope','$http','$templateCache','$sce',
     function($scope, $http, $templateCache,$sce) {
-        console.log('ChildMenuController',$scope.$id);
         $scope.navigation = $templateCache.get('navigation');
         $scope.openPage = function(nav){
+            $templateCache.put('navigation',nav);
+            app.slidingMenu.setSwipeable(true); 
             if(nav.type==2){
-                console.log('open content');
                 AKHB.openContentPage(nav,$templateCache);
             }else{
-                console.log('open menu');
-                $templateCache.put('navigation',nav);
+                
                 myNavigator.pushPage('pages/childmenu.html');
             }
         }
@@ -419,11 +519,17 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
     function($scope, $http, $templateCache,$sce,$rootScope) {
         var Auth = new AKHB.services.authentication(AKHB.config);
 
-        console.log('ContentController',$scope.$id);
         var article = $templateCache.get('article');
+
         window.rootScope = $rootScope;
+        if(article == null) return;
         $scope.article = article;
-        DB.setUsage(article.server_id,1);
+        $scope.nav = $templateCache.get('navigation');
+
+        if(!article.is_read){
+            article.is_read = 1;
+            DB.setUsage(article.server_id,1,1,0);
+        }  
         if(article.type==2){
             if(!Auth.isNetworkConnected()){
                 $scope.contentHTML = $sce.trustAsHtml("<p class=empty-content>"+MSG_RETUIREDNETWORK.content+"</p>");
@@ -447,20 +553,22 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
                 // });
                 //------------------------------------------------------------------------
 
-                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2"></iframe>');
-
-                //$scope.contentHTML = $sce.trustAsHtml('<iframe id="content-iframe" src="http://127.0.0.1" ng-if="article.type==2"></iframe>');
-                $rootScope.$emit("BUSY");
-                setTimeout(function(){
-                    $('div.loading').addClass('ng-hide');
-                },5000);
+				$('div.loading').removeClass('ng-hide');
+                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2" onload="$(\'div.loading\').addClass(\'ng-hide\');"></iframe>');
+//                $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="'+article.content +'" ng-if="article.type==2"></iframe>');
+//                $('div.loading').removeClass('ng-hide');
+//                setTimeout(function(){
+     	            // $rootScope.$emit("BUSY");
+//                    $('div.loading').addClass('ng-hide');
+//                },5000);
+                
                 // console.log($('#content-iframe'));
                 // setTimeout(function(){
                 //     var iframe =  $('#content-iframe')[0];
-                //     debugger;
+                //     
                 //     console.log(iframe.readyState);
                 //    iframe.addEventListener("readystatechange",function(){
-                //     debugger;
+                //     
                 //         console.log(iframe.readyState);
                 //         $rootScope.$emit("NOTBUSY");
                 //     });
@@ -479,28 +587,370 @@ module.controller('ContentController',['$scope','$http','$templateCache','$sce',
         });
         
 }]);
-module.controller('MessageDetailController',['$scope','$http','$templateCache','$sce',
-    function($scope, $http, $templateCache,$sce) {
 
-        var message = $templateCache.get('message');
-        $scope.message = message;
-        message.read = 1;
-        DB.setUsage(message.server_id,2);
-        // if(message.type == 1){
-        //     DB.setMessageUsed(message.server_id,function(err,result){
-        //         console.log(err,result);
-        //     });
-        // }
+module.controller('DirectoryController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        
+        $scope.nav = $templateCache.get('navigation');
+
+        $scope.OpenDirectoryPage = function($event,type){
+            var dict = {
+                title : $($event.target).text(),
+                type:type.id
+            };
+            $templateCache.put('dict',dict);
+            myNavigator.pushPage('pages/directorylist.html'); 
+        }
+        $scope.categories = JSON.parse(localStorage.getItem("category")).items;
+
+        var timer = null;
+        var sec = 500;
+        $scope.loaddata = false;
+        $scope.directories = [];
+        $scope.persons = [];      
+        $scope.emptySearch = true;
+        $scope.noCommitteesData  = false;
+        $scope.noPersonsData  = false;
+
+        $scope.OpenDirectoryDetail = function(directory){
+            $rootScope.$emit("BUSY");
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = JSON.parse(data.content); 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
+        };
+
+        $scope.openIndividual = function(individual){
+            $rootScope.openIndividual(individual,true);
+        };
+        $scope.clearInput = function(){
+
+            $scope.key = '';
+            $scope.emptySearch = true;
+            $scope.loaddata = false;  
+            $scope.noCommitteesData  = true;
+            $scope.noPersonsData  = true;
+            $scope.directories = [];
+            $scope.persons = [];
+        }
+
+        var search = function(){
+            $scope.$apply(function(){
+                $scope.noCommitteesData  = false;
+                $scope.noPersonsData  = false;
+            })
+            if(timer){
+                clearTimeout(timer);
+                if($.trim($scope.key) == ''){
+                    $scope.$apply(function(){
+                        $scope.emptySearch = true;
+                        $scope.loaddata = false;  
+                        $scope.noCommitteesData  = false;
+                        $scope.noPersonsData  = false;
+                    })
+                    return;
+                }
+                
+            }
+
+            timer = setTimeout(function(){
+                var data = {};
+                $scope.key =  $.trim($scope.key.replace(/\s+/g, ' '));
+                async.series([
+                    function(callback){
+                        //console.log("searchCommittees");
+                        DB.searchCommittees($scope.key,function(err,committees){
+                            data.committees = committees;
+                            //console.log("Committees",err,committees);
+                            callback(err);
+                        });
+                    },
+                    function(callback){
+                        //console.log("searchPersons");
+                        DB.searchPersons($scope.key,function(err,persons){
+                            data.persons = persons;
+                            //console.log("Persons",err,persons);
+                            callback(err);
+                        });
+                    }
+                ],function(err){
+                     if(!err){
+                        $scope.$apply(function(){
+                            $scope.noCommitteesData  = data.committees.length == 0;
+                            $scope.noPersonsData  = data.persons.length == 0;
+                            $scope.loaddata = false;
+                            $scope.directories = data.committees;
+                            $scope.persons = data.persons;
+                        });
+                    }
+                });
+  
+            },sec);
+        };
+        $scope.triggerSearch = function(){
+            $scope.loaddata = true;
+            $scope.emptySearch = false;
+            $scope.directories = [];
+            timer = setTimeout(search,sec);
+        };
+
 }]);
+module.controller('DirectoryListController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        $scope.dict = $templateCache.get('dict');
+        $scope.dict.count = 50;
+        $rootScope.$emit("BUSY");
+        var busy = true;
+        // DB.getDirectoriesCount($scope.dict.type,function(err,data){
+        //     $scope.$apply(function(){
+        //         $scope.dict.count = data;
+        //         $('ons-list').css('height',45*$scope.dict.count);
+        //         $scope.MyDelegate.countItems = function() {
+        //             return $scope.dict.count;
+        //         }
+        //     })
+            
+        // });
+        $scope.OpenDirectoryDetail = function(directory){
+            $rootScope.$emit("BUSY");
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = data.content; 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
+        };
+        $scope.dicts = [];
+        $scope.loadCompleted = false;
+        $scope.pageIndex = 1;
+        $scope.pageSize = 20;
+        $scope.myScroll = null;
+        $scope.isLoading = true;
+        $scope.myScrollOptions = {
+            probeType: 3, 
+            mouseWheel: true 
+        };
+        $scope.myScroll = new IScroll('#wrapper',{ probeType: 2, mouseWheel: true });
+        $scope.getDirectoryDataCallback = function(err,data){
+            $scope.isLoading = false;
+            $scope.$apply(function(){
+                if(data.length < $scope.pageSize){
+                    $scope.loadCompleted = true;
+                }
+                if(busy) {
+                    busy = false;
+                    $rootScope.$emit("NOTBUSY");
+                } 
+                $scope.dicts = $scope.dicts.concat(data);
+                $scope.pageIndex ++;
+
+                setTimeout(function(){
+                    $scope.myScroll.refresh();
+                },500);
+                
+            });
+        }
+
+        $scope.myScroll.on('scrollEnd', function (){
+            if($scope.loadCompleted || $scope.isLoading) return;
+            if(Math.abs(this.maxScrollY - this.y) < 40){
+                $scope.isLoading = true;
+                DB.getDirectoriesPagnation($scope.dict.type,$scope.pageIndex,$scope.pageSize,$scope.getDirectoryDataCallback);
+            }
+        });
+        
+        DB.getDirectoriesPagnation($scope.dict.type,$scope.pageIndex,$scope.pageSize,$scope.getDirectoryDataCallback);
+
+        
+
+        // $scope.MyDelegate  = {
+        //   configureItemScope: function(index, itemScope) {
+
+        //     if(!itemScope.item){
+        //         itemScope.item = {};
+        //         DB.getDirectoriesPagnation($scope.dict.type,index,function(err,data){
+        //             $scope.$apply(function(){
+        //                 if(busy) {
+        //                     busy = false;
+
+        //                     $rootScope.$emit("NOTBUSY");
+        //                 } 
+        //                 itemScope.item = data[0];
+        //             })
+        //         });
+        //     }
+        //     //itemScope.item = $scope.dict.items[index];
+        //   },
+        //   calculateItemHeight: function(index) {
+        //     return 45;
+        //   },
+        //   countItems: function() {
+        //     return 5;
+        //   },
+        //   destroyItemScope: null
+        // };
+}]);
+
+module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        $scope.directory = $templateCache.get('directory');
+        $rootScope.$emit("NOTBUSY");
+        // if(typeof $scope.directory.members == "undefined")
+        //     $scope.directory.members = JSON.parse($scope.directory.content);
+        try{
+            if(typeof $scope.directory.content == "object"){
+                $scope.directory.members = $scope.directory.content;
+            }else if(typeof $scope.directory.content == "string"){
+                $scope.directory.members = JSON.parse($scope.directory.content);
+            }
+        }catch(ex){
+
+        }
+        
+        if(!$scope.directory.content){
+            $scope.isSync = true;
+        }
+        $scope.openIndividual = function(individual){
+            $rootScope.openIndividual(individual,true);
+        };
+}]);
+module.controller('DirectoryIndividualController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        $rootScope.$emit("NOTBUSY");
+        $scope.individual = $templateCache.get('individual');
+        if(!$scope.individual.name){
+            $scope.individual.name = $scope.individual.forename + ' '+$scope.individual.Surname;
+        }
+        if($scope.individual.committees && typeof $scope.individual.committees == 'string'){
+            $scope.individual.committees_json = JSON.parse($scope.individual.committees);
+        }else if(typeof $scope.individual.committees == 'object'){
+            $scope.individual.committees_json = $scope.individual.committees;
+        }
+        $scope.openIndividual = function(individual){
+            $rootScope.openIndividual(individual);
+        };
+}]);
+module.controller('DirectoryDescriptionController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        $scope.directory = $templateCache.get('directory');
+}]);
+module.controller('DirectorySearchController',['$scope','$rootScope','$http','$templateCache','$sce',
+    function($scope,$rootScope,$http, $templateCache,$sce) {
+        var timer = null;
+        var sec = 500;
+        $scope.loaddata = false;
+        $scope.directories = [];
+        
+        $scope.OpenDirectoryDetail = function(directory){
+            DB.getCommitteContentById(directory.server_id,function(err,data){
+                if(data) directory.content = JSON.parse(data.content); 
+                $templateCache.put('directory',directory);
+                myNavigator.pushPage('pages/directorydetail.html');
+            })
+            
+        };
+
+        var search = function(){
+            if(timer){
+                clearTimeout(timer);
+                if($.trim($scope.key) == ''){
+                    $scope.loaddata = false;
+                    return;
+                }
+            }
+
+            timer = setTimeout(function(){
+                
+                DB.searchDirectories($scope.key,function(err,data){
+                    if(!err){
+                        $scope.$apply(function(){
+                            $scope.loaddata = false;
+                            $scope.directories = data;
+                        });
+                    }
+                });
+            },sec);
+        };
+
+        $scope.clearInput = function(){
+            $scope.key = '';
+            $scope.emptySearch = true;
+            $scope.nodata  = false;  
+            $scope.directories = [];
+        }
+
+        $scope.triggerSearch = function(){
+            $scope.loaddata = true;
+            $scope.directories = [];
+            timer = setTimeout(search,sec);
+        };
+
+        
+}]);
+
+
 $(document).on('click','a',function(e){
 
         var $this = $(this);
         var $href = $this.attr('href');
+        var $target = $this.attr('target');
+        if ($target != '_blank') { $target = '_self' ;}
         if($href != ''){
             e.preventDefault();
+            
             if($href.toLowerCase().indexOf('http') == 0){
-                window.open( $href, '_blank', 'location=yes');
-
+	            
+	            if ($target == '') { 
+		        	if(!Auth.isNetworkConnected()){
+		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				 	}else{	
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+		                $('div.loading').removeClass('ng-hide');
+						ref.addEventListener('loadstop', function(){
+							ref.show();
+		                    $('div.loading').addClass('ng-hide');
+						});
+					}                     
+	            }
+	            if ($target.toLowerCase().indexOf('_blank') == 0) {
+	            
+		            navigator.notification.confirm(
+	                    "Would you like to open this link in your browser?",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+		                        window.open($href, '_system');
+	                        }
+	                    },
+	                    'External Link',
+	                    ["Open","Cancel"]
+	                );
+		        }else if($target.toLowerCase().indexOf('_self') == 0){
+		        	if(!Auth.isNetworkConnected()){
+		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				 	}else{	
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+		                $('div.loading').removeClass('ng-hide');
+						ref.addEventListener('loadstop', function(){
+							ref.show();
+		                    $('div.loading').addClass('ng-hide');
+						});
+					}                     
+		        }    
+                
+            }else if($href.toLowerCase().indexOf('tel') == 0){
+                navigator.notification.confirm(
+                    "",
+                    function(buttonIndex) {
+                        if(buttonIndex == 1){
+                           window.open( $href, '_system', 'location=yes');
+                        }
+                    },
+                    $(this).text(),
+                    ["Call","Cancel"]
+                );
+               
             }else if($href.toLowerCase().indexOf('mailto') == 0){
                 window.plugin.email.open({
                     to:[$href.substring(7)]
@@ -508,110 +958,160 @@ $(document).on('click','a',function(e){
             }else{
                  window.open( $href, '_system', 'location=yes');
             }
+            
         } 
 })
+/*.on('swipe','ons-list-item.swipe',function(e){
+    console.log('left',e);
+    //$(this).
+})*/
+;
+
 
 
 //define filter
-module.filter('trustHtml', function ($sce) {
-
+module.filter('safePhone', function ($sce) {
     return function (input) {
-
-        return $sce.trustAsHtml(input);
-
+        if(input) 
+            return input.replace(/\ +/g,"");
+        else
+            return '';
     }
-
+});
+module.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
+});
+module.filter('trustHtmlA', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input.replace(/<[^>]+>/g,""));
+    }
 });
 module.filter('formatTime', function ($sce) {
-
     return function (input) {
         if(input)
             return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
         return "";
     }
-
 });
-/*
 
-function ClickOpen() {
-    var dom = $('#childMenu');
-    if (dom.hasClass('visibleMenu')) {
-        dom.addClass('hiddenMenu');
-        dom.removeClass('visibleMenu');
+
+function tokenHandler (result) {
+    // Your iOS push server needs to know the token before it can push to this device
+    // here is where you might want to send it the token for later use.
+    //alert('device token = ' + result);
+    sendRegistionId(result);
+}
+// result contains any message sent from the plugin call
+function successHandler (result) {
+   //sendRegistionId(result);
+}
+// result contains any error description text returned from the plugin call
+function errorHandler (error) {
+    navigator.notification.alert('error = ' + error,null,'Error');
+}
+function sendRegistionId(id){
+    var url = window.AKHB.config.remoteAddress+'?type=4&version='+AKHB.user.appVersion+'&os='+AKHB.user.os+'&device='+AKHB.user.deviceName+'&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
+    $.get(url,function(data){
+    })
+}
+
+// notificationFeedback Service
+function notificationFeedback(buttonIndex,passedData) {
+	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
+	$.get(url,function(data){
+	})
+}
+
+// added badge update function
+function updateBadge(badgeCount){
+    var pushNotification = window.plugins.pushNotification;
+    pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
+    //cordova.plugins.notification.badge.set(badgeCount); // Android
+}
+
+// iOS
+function onNotificationAPN (event) {
+    if ( event.alert )
+    {
+		if (event.type == '2') { 
+			navigator.notification.confirm(
+	        	event.alert,
+	        	function(buttonIndex) {
+		       	 notificationFeedback(buttonIndex,event.other);
+			   	},
+			   	event.title,
+			   	event.buttons
+			);
+
+		} else {
+	        navigator.notification.alert(event.alert,null,event.title);
+		}
     }
-    else if (dom.hasClass('hiddenMenu')) {
-        dom.removeClass('hiddenMenu');
-        dom.addClass('visibleMenu');            
+
+    if ( event.sound )
+    {
+        var snd = new Media(event.sound);
+        snd.play();
     }
-} 
 
-angular.module('AKHB',[])
-.controller('LoginController',['$scope','$http','$templateCache',
-    function($scope, $http, $templateCache) {
-        var Auth = new AKHB.services.authentication(AKHB.config);
+    if ( event.badge )
+    {
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+    }
+}
 
-        try{
-            // check network and server.
-            Auth.checkNetworkConnected();
-            Auth.isWebserviceWorking($http,function(err,result){
-                if(err){
-                    AKHB.notification.alert(result,function(){
-                        AKHB.utils.exitApp();
-                    });
-                }else{
-                    doLogin();
-                }
-            });
-        }catch(ex){
-            console.log(ex);
-            AKHB.notification.alert(ex.message,function(){
-                AKHB.utils.exitApp();
-            });
+//Android and Amazon Fire OS 
+function onNotificationGCM(e) {
+   //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+    switch( e.event )
+    {
+    case 'registered':
+        if ( e.regid.length > 0 )
+        {
+            sendRegistionId(e.regid);
         }
-        function doLogin(){
-            if(Auth.isCachedAuthentication()){
-                myNavigator.pushPage('main.html');
-            }else{
-                $(document).on('click','#btn_login',function(){
-                    var pwd = $('#loginpwd').val();
-                    var authData = Auth.AuthenticationRequest(AKHB.user.deviceid,pwd);
+    break;
 
-                    Auth.checkRemoteAuthentication($http,authData,function(err,result){
-                        if(err) 
-                            AKHB.notification.alert(result);
-                        else
-                            myNavigator.pushPage('main.html');
-                    });
-                });
-            };
-        };
-}]);
+    case 'message':
+        // if this flag is set, this notification happened while we were in the foreground.
+        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+        if ( e.foreground )
+        {
 
-ons.ready(function() {
-      // Init code here
-      // init longin button
-    AKHB.user = {
-        deviceid:null,
-        id:null,
-        authcode:null,
-        os:null,
-        deviceName:null
-    };
-    if(AKHB.config.debug){
-        AKHB.user.deviceid = '00000000000000006';
-        AKHB.user.os = 'test';
-        AKHB.user.deviceName = 'browser test';
-    }else{
-        AKHB.user.deviceid = device.uuid;
-        AKHB.user.os = device.version;
-        AKHB.user.deviceName = device.model;
-    }
-    ;
+            // on Android soundname is outside the payload.
+            // On Amazon FireOS all custom attributes are contained within payload
+            var soundfile = e.soundname || e.payload.sound;
+            // if the notification contains a soundname, play it.
+            var my_media = new Media("/android_asset/www/"+ soundfile);
+            my_media.play();
+        }
+//        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
+        
+        if (e.payload.type == '2') { 
+			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
+			 navigator.notification.confirm(
+	        	e.message,
+	        	function(buttonIndex) {
+		       	 notificationFeedback(buttonIndex,e.payload.other);
+			   	},
+			   	e.payload.title,
+			   	e.payload.buttons
+			);
+      
+        } else {
+	        navigator.notification.alert(e.message,null,e.payload.title);
+		}
 
-   
+    break;
 
-    
-})
+    case 'error':
+       navigator.notification.alert('GCM error = '+e.msg,null,'Error');
+    break;
 
-
-*/
+    default:
+        navigator.notification.alert('An unknown GCM event has occurred',null,'Error');
+    break;
+  }
+}

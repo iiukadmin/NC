@@ -13,10 +13,11 @@ AKHB.services.authentication = (function(){
 
 	return function(appConfig){
 
-		this.AuthenticationRequest = function(deviceid,authcode){
+		this.AuthenticationRequest = function(deviceid,userName,password){
 			return {
 				deviceid:deviceid,
-				authcode:authcode,
+				password:password,
+				username:userName,
 				type:1
 			};
 		}
@@ -31,50 +32,63 @@ AKHB.services.authentication = (function(){
 		this.captureAuthentication = function(data){
 			localStorage.setItem('Authentication',JSON.stringify(data));
 		};
+		this.cleanAuthentication = function(callback){
+			localStorage.removeItem('Authentication');
+			persistence.reset(function(){
+				if(typeof callback == 'function') callback();
+			});
+			
+		};
 		this.checkNetworkConnected = function(){
-			if(navigator.network && navigator.network.connection && navigator.network.connection.type == Connection.NONE)
-				throw new Error('nonetwork');
+			//console.log("checkNetworkConnected",typeof device ,navigator.network , navigator.network.connection , navigator.network.connection.type);
+			if(typeof device != "undefined"){
+				if(navigator.network && navigator.network.connection && navigator.network.connection.type == Connection.NONE)
+					throw new Error('nonetwork');
+			}
 			return true;
 		};
 		this.isNetworkConnected = function(){
-			return navigator.network && navigator.network.connection && navigator.network.connection.type != Connection.NONE;
+			//console.log("isNetworkConnected",typeof device ,navigator.network , navigator.network.connection , navigator.network.connection.type);
+			if(typeof device != "undefined"){
+				return navigator.network && navigator.network.connection && navigator.network.connection.type != Connection.NONE;
+			}
+			return true;
 		};
 		this.isWebserviceWorking = function($http,callback){
-			$http({
-				url:appConfig.remoteAddress + '/webservice.php',
-				timeout:appConfig.timeout,
-				type:'GET',
-				// success :function(data){
-				// 	callback(false,data);
-				// },
-				// complete : function(XMLHttpRequest,status){
-				// 	if(status=='timeout'){
-				// 		callback(true,MSG_RETUIREDNETWORK);
-				// 	}
-				// },
-				// transformResponse:function(data, headersGetter, status){
-				// 	XMLHttpRequest.abort();
-				// 	if(textStatus !='timeout')
-				// 		callback(true,MSG_SYSTEMERROR);
-				// 	console.log(XMLHttpRequest, textStatus, errorThrown);
-				// }
-			}).
-			success(function(data,status){
-				callback(false,data);
-			}).
-			error(function(data,status,headers,config,statusText){
-				//XMLHttpRequest.abort();
-				if(statusText !='timeout')
-					callback(true,MSG_SYSTEMERROR);
-				else
-					callback(true,MSG_RETUIREDNETWORK);
-				
-				console.log(arguments);
-			})
+			callback(false,null);
+			// $http({
+			// 	url:appConfig.remoteAddress + '/webservice.php',
+			// 	timeout:appConfig.timeout,
+			// 	type:'GET',
+			// 	// success :function(data){
+			// 	// 	callback(false,data);
+			// 	// },
+			// 	// complete : function(XMLHttpRequest,status){
+			// 	// 	if(status=='timeout'){
+			// 	// 		callback(true,MSG_RETUIREDNETWORK);
+			// 	// 	}
+			// 	// },
+			// 	// transformResponse:function(data, headersGetter, status){
+			// 	// 	XMLHttpRequest.abort();
+			// 	// 	if(textStatus !='timeout')
+			// 	// 		callback(true,MSG_SYSTEMERROR);
+			// 	// 	console.log(XMLHttpRequest, textStatus, errorThrown);
+			// 	// }
+			// }).
+			// success(function(data,status){
+			// 	callback(false,data);
+			// }).
+			// error(function(data,status,headers,config,statusText){
+			// 	//XMLHttpRequest.abort();
+			// 	if(statusText !='timeout')
+			// 		callback(true,MSG_SYSTEMERROR);
+			// 	else
+			// 		callback(true,MSG_RETUIREDNETWORK);
+			// })
 		};
 		this.checkRemoteAuthentication = function($http,requestData,callback){
 			var self = this;
-			var url = appConfig.remoteAddress+'/webservice.php?'+ decodeURIComponent($.param(requestData));
+			var url = appConfig.remoteAddress+'?'+ decodeURIComponent($.param(requestData));
 			$http({
 				url:url,
 				timeout:appConfig.timeout,
@@ -100,10 +114,13 @@ AKHB.services.authentication = (function(){
                         callback(false,result);
                         break;
                     case 2:
-                    	callback(true,MSG_LOGINFAILED);
+                    	callback(true,{title:result.title, content : result.description});
                         break;
                     case 3:
                     	callback(true,{title:MSG_SYSTEMERROR.title,content : AKHB.utils.format(MSG_SYSTEMERROR.content,result.error)});
+                        break;
+                    default:
+                    	callback(true,MSG_LOGINFAILED);
                         break;
                 }
 
@@ -116,7 +133,6 @@ AKHB.services.authentication = (function(){
 				else
 					callback(true,MSG_RETUIREDNETWORK);
 				
-				console.log(arguments);
 			});
 		};
 	}
