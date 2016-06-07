@@ -1,4 +1,4 @@
-﻿cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Proxy.Core", function(require, exports, module) { /*
+cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Proxy.Core", function(require, exports, module) { /*
     Copyright 2013-2015 appPlant UG
 
     Licensed to the Apache Software Foundation (ASF) under one
@@ -103,7 +103,9 @@ proxy.core = {
         toast.id = options.id;
         toast.tag = 'Toast' + toast.id;
 
-        this.getToastNotifier().addToSchedule(toast);
+        Notifications.ToastNotificationManager
+            .createToastNotifier()
+            .addToSchedule(toast);
     },
 
     /**
@@ -324,12 +326,9 @@ proxy.core = {
             ids = [];
 
         for (var i = 0; i < toasts.length; i++) {
-            var toast   = toasts[i],
-                toastId = this.getToastId(toast);
+            var toast = toasts[i];
 
-            if (ids.indexOf(toastId) == -1) {
-                ids.push(toastId);
-            }
+            ids.push(this.getToastId(toast));
         }
 
         return ids;

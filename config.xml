@@ -9,5 +9,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <preference name="windows-target-version" value="10.0" />
 </widget>

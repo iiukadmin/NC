@@ -7,18 +7,22 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-device": {
+        "android.support.v4": {
             "PACKAGE_NAME": "NotificationExample"
         },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "NotificationExample"
-        },
-        "cordova-plugin-app-event": {
+        "de.appplant.cordova.common.registerusernotificationsettings": {
             "PACKAGE_NAME": "NotificationExample"
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "NotificationExample"
+        },
+        "nl.x-services.plugins.toast": {
+            "PACKAGE_NAME": "NotificationExample"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "NotificationExample"
+        }
+    }
 }

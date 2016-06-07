@@ -17,33 +17,25 @@
        under the License.
 */
 
-var Q     = require('q'),
+var Q     = require('Q'),
     path  = require('path'),
     exec  = require('./exec'),
-    shell = require('shelljs'),
-    spawn  = require('./spawn'),
-    Version = require('./Version');
+    spawn  = require('./spawn');
 
 function MSBuildTools (version, path) {
     this.version = version;
     this.path = path;
 }
 
-MSBuildTools.prototype.buildProject = function(projFile, buildType, buildarch, otherConfigProperties) {
+MSBuildTools.prototype.buildProject = function(projFile, buildType, buildarch) {
     console.log('Building project: ' + projFile);
     console.log('\tConfiguration : ' + buildType);
     console.log('\tPlatform      : ' + buildarch);
 
     var args = ['/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal', '/nologo',
     '/p:Configuration=' + buildType,
-    '/p:Platform=' + buildarch];
-
-    if (otherConfigProperties) {
-        var keys = Object.keys(otherConfigProperties);
-        keys.forEach(function(key) {
-            args.push('/p:' + key + '=' + otherConfigProperties[key]);
-        });
-    }
+    '/p:Platform=' + buildarch,
+    '/p:BuildFromCordovaTooling=' + true];
 
     return spawn(path.join(this.path, 'msbuild'), [projFile].concat(args));
 };
@@ -60,16 +52,6 @@ module.exports.findAvailableVersion = function () {
     });
 };
 
-module.exports.findAllAvailableVersions = function () {
-    var versions = ['14.0', '12.0', '4.0'];
-
-    return Q.all(versions.map(checkMSBuildVersion)).then(function(unprocessedResults) {
-        return unprocessedResults.filter(function(item) {
-            return !!item;
-        });
-    });
-};
-
 function checkMSBuildVersion(version) {
     var deferred = Q.defer();
     exec('reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\' + version + ' /v MSBuildToolsPath')
@@ -77,13 +59,7 @@ function checkMSBuildVersion(version) {
         // fetch msbuild path from 'reg' output
         var path = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
         if (path) {
-            path = path[1];
-            // CB-9565: Windows 10 invokes .NET Native compiler, which only runs on x86 arch,
-            // so if we're running an x64 Node, make sure to use x86 tools.
-            if (version === '14.0' && path.indexOf('amd64') > -1) {
-                path = require('path').join(path, '..');
-            }
-            deferred.resolve(new MSBuildTools(version, path));
+            deferred.resolve(new MSBuildTools(version, path[1]));
             return;
         }
         deferred.resolve(null); // not found
@@ -93,30 +69,3 @@ function checkMSBuildVersion(version) {
     });
     return deferred.promise;
 }
-
-/// returns an array of available UAP Versions
-function getAvailableUAPVersions() {
-    /*jshint -W069 */
-    var programFilesFolder = process.env['ProgramFiles(x86)'] || process.env['ProgramFiles'];
-    // No Program Files folder found, so we won't be able to find UAP SDK
-    if (!programFilesFolder) return [];
-
-    var uapFolderPath = path.join(programFilesFolder, 'Windows Kits', '10', 'Platforms', 'UAP');
-    if (!shell.test('-e', uapFolderPath)) {
-        return []; // No UAP SDK exists on this machine
-    }
-
-    var result = [];
-    shell.ls(uapFolderPath).filter(function(uapDir) {
-        return shell.test('-d', path.join(uapFolderPath, uapDir));
-    }).map(function(folder) {
-        return Version.tryParse(folder);
-    }).forEach(function(version, index) {
-        if (version) {
-            result.push(version);
-        }
-    });
-
-    return result;
-}
-module.exports.getAvailableUAPVersions = getAvailableUAPVersions;

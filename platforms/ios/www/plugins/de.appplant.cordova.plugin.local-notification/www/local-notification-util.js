@@ -1,5 +1,4 @@
-cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Util", function(require, exports, module) {
-/*
+cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Util", function(require, exports, module) { /*
  * Copyright (c) 2013-2015 by appPlant UG. All rights reserved.
  *
  * @APPPLANT_LICENSE_HEADER_START@
@@ -45,9 +44,6 @@ exports._defaults = {
 // listener
 exports._listener = {};
 
-// Registered permission flag
-exports._registered = false;
-
 
 /********
  * UTIL *
@@ -64,12 +60,11 @@ exports.applyPlatformSpecificOptions = function () {
 
     switch (device.platform) {
     case 'Android':
-        defaults.icon      = 'res://ic_popup_reminder';
-        defaults.smallIcon = undefined;
+        defaults.icon      = 'res://icon';
+        defaults.smallIcon = 'res://ic_popup_reminder';
         defaults.ongoing   = false;
         defaults.autoClear = true;
-        defaults.led       = 'FF0000';
-        defaults.color     = undefined;
+        defaults.led       = 'FFFFFF';
         break;
     }
 

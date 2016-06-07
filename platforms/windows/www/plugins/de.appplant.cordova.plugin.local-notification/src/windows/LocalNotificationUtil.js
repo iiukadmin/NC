@@ -1,4 +1,4 @@
-﻿cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Proxy.Util", function(require, exports, module) { /*
+cordova.define("de.appplant.cordova.plugin.local-notification.LocalNotification.Proxy.Util", function(require, exports, module) { /*
     Copyright 2013-2015 appPlant UG
 
     Licensed to the Apache Software Foundation (ASF) under one
@@ -412,8 +412,8 @@ channel.onCordovaReady.subscribe(function () {
 });
 
 // Handle onclick event
-document.addEventListener('activated', function (e) {
-    var id = e.args,
+WinJS.Application.addEventListener('activated', function (args) {
+    var id = args.detail.arguments,
         notification = exports.getAll([id])[0];
 
     if (!notification)

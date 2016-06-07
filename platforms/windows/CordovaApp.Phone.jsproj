@@ -59,10 +59,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>31b67a35-9503-4213-857e-f44eb42ae549</ProjectGuid>
   </PropertyGroup>
-  <PropertyGroup Label="CordovaBuildParameters" Condition="'$(CordovaBundlePlatforms)' != ''">
-    <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>$(CordovaBundlePlatforms)</AppxBundlePlatforms>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0'">
     <VisualStudioVersion>12.0</VisualStudioVersion>
@@ -75,6 +71,9 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).props" />
+  <PropertyGroup>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.phone.appxmanifest">
       <SubType>Designer</SubType>
@@ -87,7 +86,7 @@
   <Import Project="CordovaApp.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
   <!-- To modify your build process, add your task inside one of the targets below then uncomment
-       that target and the DisableFastUpToDateCheck PropertyGroup.
+       that target and the DisableFastUpToDateCheck PropertyGroup. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
