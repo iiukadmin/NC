@@ -955,7 +955,16 @@ $(document).on('click','a',function(e){
                 window.plugin.email.open({
                     to:[$href.substring(7)]
                 });
-            }else{
+            }else if($href.toLowerCase().indexOf('calendar') == 0){
+	              var startDate = new Date(2016,2,15,18,30,0,0,0); // beware: month 0 = january, 11 = december
+				  var endDate = new Date(2016,2,15,19,30,0,0,0);
+				  var title = "My nice event";
+				  var eventLocation = "Home";
+				  var notes = "Some notes about this event.";
+				  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+				  var error = function(message) { alert("Error: " + message); };
+				window.plugins.calendar.createEventInteractively(title,eventLocation,notes,startDate,endDate,success,error);
+			}else{
                  window.open( $href, '_system', 'location=yes');
             }
             
