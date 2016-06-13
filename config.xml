@@ -94,7 +94,8 @@
     <preference name="KeepRunning" value="true"/>
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
-	
+	<preference name="android-build-tool" value="gradle" />
+		
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
 	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.device-orientation" />
@@ -109,7 +110,8 @@
 	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
 	<gap:plugin name="de.appplant.cordova.plugin.badge" />
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
-
+	<plugin name="cordova-plugin-calendar" />
+	
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
