@@ -956,18 +956,23 @@ $(document).on('click','a',function(e){
                     to:[$href.substring(7)]
                 });
             }else if($href.toLowerCase().indexOf('calendar') == 0){
-				  var event = JSON.parse($href.substring(9));
-				  
-	              var startDate = new Date(event['startDate']); 
-//				  var endDate = new Date(2016,2,15,19,30,0,0,0);
-				  var endDate = new Date(event['endDate']);
-				  var title = event['title'];
-				  var eventLocation = event['eventLocation'];
-				  var notes = event['notes'];
-				  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-				  var error = function(message) { alert("Error: " + message); };
-
-				  window.plugins.calendar.createEventInteractively(title,eventLocation,notes,startDate,endDate,success,error);
+	            /*
+		           <a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T18:30","endDate":"2015-02-15T19:30"}'>Event at a time</a><a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T00:00","endDate":"2015-02-16T00:00"}'>All Day Event</a>
+		        */
+	            	
+				var event = JSON.parse($href.substring(9));
+				var startDate = new Date(event['startDate']); 
+				var endDate = new Date(event['endDate']);
+				var title = event['title'];
+				var eventLocation = event['eventLocation'];
+				var notes = event['notes'];
+				var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+				var error = function(message) { alert("Error: " + message); };
+			  
+				var calOptions = window.plugins.calendar.getCalendarOptions();
+				calOptions.firstReminderMinutes = 120; //minutes
+				calOptions.url = "https://www.google.com";
+			window.plugins.calendar.createEventInteractivelyWithOptions(title,eventLocation,notes,startDate,endDate,calOptions,success,error);
 			}else{
                  window.open( $href, '_system', 'location=yes');
             }
