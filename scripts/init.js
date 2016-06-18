@@ -962,7 +962,8 @@ $(document).on('click','a',function(e){
 				  // year, month, day [, hour, minute, second, millisecond ]
 				  // beware: month 0 = january, 11 = december
 		 	      // All day event: set the startdate to midnight and set the enddate to midnight the next day
-	              var startDate = new Date(2016,2,15,18,30,0,0,0); 
+	        //      var startDate = new Date(2016,2,15,18,30,0,0,0); 
+	              var startDate = new Date(event['startDate']); 
 				  var endDate = new Date(2016,2,15,19,30,0,0,0);
 				  var title = event['title'];
 				  var eventLocation = event['eventLocation'];
