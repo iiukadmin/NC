@@ -970,7 +970,7 @@ $(document).on('click','a',function(e){
 				var error = function(message) { alert("Error: " + message); };
 			  
 				var calOptions = window.plugins.calendar.getCalendarOptions();
-				calOptions.firstReminderMinutes = null; //minutes
+				calOptions.firstReminderMinutes = 'null'; //minutes
 				//calOptions.url = "https://www.google.com";
 			window.plugins.calendar.createEventInteractivelyWithOptions(title,eventLocation,notes,startDate,endDate,calOptions,success,error);
 			}else{
