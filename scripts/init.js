@@ -966,7 +966,8 @@ $(document).on('click','a',function(e){
 	              var startDate = new Date(event['startDate']); 
 				  var endDate = new Date(2016,2,15,19,30,0,0,0);
 				  var title = event['title'];
-				  var eventLocation = event['eventLocation'];
+			//	  var eventLocation = event['eventLocation'];
+				  var eventLocation = event['startDate'];
 				  var notes = event['notes'];
 				  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
 				  var error = function(message) { alert("Error: " + message); };
