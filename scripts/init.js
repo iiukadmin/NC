@@ -965,7 +965,7 @@ $(document).on('click','a',function(e){
 	        //      var startDate = new Date(2016,2,15,18,30,0,0,0); 
 				  var dateString = event['startDate'];
 //	              var startDate = new Date(dateString); 
-	              var startDate = new Date("2015-02-15T18:30"); 
+	              var startDate = new Date("2015-02-15 18:30"); 
 				  var endDate = new Date(2016,2,15,19,30,0,0,0);
 				  var title = event['title'];
 			//	  var eventLocation = event['eventLocation'];
