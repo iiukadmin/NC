@@ -958,11 +958,15 @@ $(document).on('click','a',function(e){
             }else if($href.toLowerCase().indexOf('calendar') == 0){
 				  var event = JSON.parse($href.substring(9));
 				  
-	              var startDate = new Date(2016,2,15,18,30,0,0,0); // beware: month 0 = january, 11 = december
+				  // Date Format
+				  // year, month, day [, hour, minute, second, millisecond ]
+				  // beware: month 0 = january, 11 = december
+		 	      // All day event: set the startdate to midnight and set the enddate to midnight the next day
+	              var startDate = new Date(2016,2,15,18,30,0,0,0); 
 				  var endDate = new Date(2016,2,15,19,30,0,0,0);
 				  var title = event['title'];
-				  var eventLocation = "Home";
-				  var notes = "Some notes about this event.";
+				  var eventLocation = event['eventLocation'];
+				  var notes = event['notes'];
 				  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
 				  var error = function(message) { alert("Error: " + message); };
 
