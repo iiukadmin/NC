@@ -966,8 +966,8 @@ $(document).on('click','a',function(e){
 				var title = event['title'];
 				var eventLocation = event['eventLocation'];
 				var notes = event['notes'];
-				//var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-				//var error = function(message) { alert("Error: " + message); };
+				var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+				var error = function(message) { alert("Error: " + message); };
 			  
 				var calOptions = window.plugins.calendar.getCalendarOptions();
 				calOptions.firstReminderMinutes = null; //minutes
