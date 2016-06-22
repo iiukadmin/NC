@@ -119,6 +119,37 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     }
     document.addEventListener('deviceready', function(){
 
+	var push = PushNotification.init({
+	    android: {
+	        senderID: window.AKHB.config.senderID
+	    },
+	    ios: {
+	        alert: "true",
+	        badge: "true",
+	        sound: "true"
+	    },
+	    windows: {}
+	});
+
+		push.on('registration', function(data) {
+		    // data.registrationId
+		});
+		
+		push.on('notification', function(data) {
+			alert('two');
+		    // data.message,
+		    // data.title,
+		    // data.count,
+		    // data.sound,
+		    // data.image,
+		    // data.additionalData
+		});
+		
+		push.on('error', function(e) {
+			alert('one');
+		    // e.message
+		});
+
 
     if(!window.plugins || !window.plugins.pushNotification) return;
     try{
