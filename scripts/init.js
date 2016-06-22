@@ -1049,6 +1049,12 @@ function updateBadge(badgeCount){
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
+function test() {
+	alert('one');
+}
+
+
+
 // iOS
 function onNotificationAPN (event) {
     if ( event.alert )
