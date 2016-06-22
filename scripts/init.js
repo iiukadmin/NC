@@ -148,7 +148,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	}
     
     
-    }, false);
+    , false);
     // Added to update iOS bade with unread message count.
     document.addEventListener("pause", function(){ 
 	updateBadge($rootScope.messageCount);
