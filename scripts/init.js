@@ -1089,6 +1089,7 @@ function onNotificationAPN (event) {
 //Android and Amazon Fire OS 
 function onNotificationGCM(e) {
    //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+   alert('asdf');
     switch( e.event )
     {
     case 'registered':
