@@ -1053,6 +1053,9 @@ function test() {
 	alert('one');
 }
 
+window.farid = function (data) {
+	alert('asdf1234');
+}
 
 
 // iOS
@@ -1088,8 +1091,10 @@ function onNotificationAPN (event) {
 
 //Android and Amazon Fire OS 
 function onNotificationGCM(e) {
-   //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+   $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
    alert('asdf');
+   navigator.notification.alert('asdf',null,'1234');
+   
     switch( e.event )
     {
     case 'registered':
