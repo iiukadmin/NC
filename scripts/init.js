@@ -118,82 +118,36 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
-
-	var push = PushNotification.init({
-	    android: {
-	        senderID: window.AKHB.config.senderID
-	    },
-	    ios: {
-	        alert: "true",
-	        badge: "true",
-	        sound: "true"
-	    },
-	    windows: {}
+	    var push = PushNotification.init({ 
+		    "android": {
+			    	"senderID": "721393051486"
+			 },
+			 "ios": {
+				 "alert": "true", "badge": "true", "sound": "true"
+			 }, "windows": {} } );
+	
+	push.on('registration', function(data) {
+		console.log(data.registrationId);
+	    $("#app-status-ul").append('<li>ID ->' + data.registrationId + '</li>');
+		alert(data.registrationId);
 	});
-
-		push.on('registration', function(data) {
-		    // data.registrationId
-		});
-		
-		push.on('notification', function(data) {
-			alert('two');
-		    // data.message,
-		    // data.title,
-		    // data.count,
-		    // data.sound,
-		    // data.image,
-		    // data.additionalData
-		});
-		
-		push.on('error', function(e) {
-			alert('one');
-		    // e.message
-		});
-
-
-    if(!window.plugins || !window.plugins.pushNotification) return;
-    try{
-       
-        var pushNotification = window.plugins.pushNotification;
-
-        //regist notification
-        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-            pushNotification.register(
-            successHandler,
-            errorHandler,
-            {
-                "senderID":window.AKHB.config.senderID,
-                "ecb":"onNotificationGCM"
-            });
-        } else if ( device.platform == 'blackberry10'){
-            // pushNotification.register(
-            // successHandler,
-            // errorHandler,
-            // {
-            //     invokeTargetId : "replace_with_invoke_target_id",
-            //     appId: "replace_with_app_id",
-            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
-            //     ecb: "pushNotificationHandler",
-            //     simChangeCallback: replace_with_simChange_callback,
-            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
-            //     launchApplicationOnPush: true
-            // });
-        } else {
-            pushNotification.register(
-            tokenHandler,
-            errorHandler,
-            {
-                "badge":"true",
-                "sound":"true",
-                "alert":"true",
-                "ecb":"onNotificationAPN"
-            });
-        }
-        
-    }catch(ex){
-        console.log("Notification error:",ex);
-    }
-
+	
+	push.on('notification', function(data) {
+	console.log(data.message);
+	alert(data.title+" Message: " +data.message);
+	// data.title,
+	// data.count,
+	// data.sound,
+	// data.image,
+	// data.additionalData
+	});
+	
+	push.on('error', function(e) {
+	console.log(e.message);
+	});
+	}
+    
+    
     }, false);
     // Added to update iOS bade with unread message count.
     document.addEventListener("pause", function(){ 
