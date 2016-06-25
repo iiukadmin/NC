@@ -145,13 +145,25 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
-			//alert(data.title+" Message: " +data.message);
-	        navigator.notification.alert("Type: "+data.additionalData.type+"Message: "+data.message+" additional Info: "+data.additionalData.info,null,data.title);
-			// data.title,
-			// data.count,
-			// data.sound,
-			// data.image,
-			// data.additionalData
+			
+			if (data.additionalData.type == '2') {
+				navigator.notification.confirm(
+		        	data.message,
+		        	function(buttonIndex) {
+			       	 notificationFeedback(buttonIndex,data.additionalData.other);
+				   	},
+				   	data.title,
+				   	data.additionalData.buttons
+			   	);
+			} else {
+				//alert(data.title+" Message: " +data.message);
+		        navigator.notification.alert("Type: "+data.additionalData.type+"Message: "+data.message+" additional Info: "+data.additionalData.info,null,data.title);
+				// data.title,
+				// data.count,
+				// data.sound,
+				// data.image,
+				// data.additionalData
+			}
 		});
 		
 		push.on('error', function(data) {
@@ -1086,61 +1098,4 @@ function onNotificationAPN (event) {
     {
         pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
     }
-}
-
-//Android and Amazon Fire OS 
-function onNotificationGCM(e) {
-   $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-   alert('asdf');
-   navigator.notification.alert('asdf',null,'1234');
-   
-    switch( e.event )
-    {
-    case 'registered':
-        if ( e.regid.length > 0 )
-        {
-            sendRegistionId(e.regid);
-        }
-    break;
-
-    case 'message':
-        // if this flag is set, this notification happened while we were in the foreground.
-        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-        if ( e.foreground )
-        {
-
-            // on Android soundname is outside the payload.
-            // On Amazon FireOS all custom attributes are contained within payload
-            var soundfile = e.soundname || e.payload.sound;
-            // if the notification contains a soundname, play it.
-            var my_media = new Media("/android_asset/www/"+ soundfile);
-            my_media.play();
-        }
-//        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
-        
-        if (e.payload.type == '2') { 
-			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
-			 navigator.notification.confirm(
-	        	e.message,
-	        	function(buttonIndex) {
-		       	 notificationFeedback(buttonIndex,e.payload.other);
-			   	},
-			   	e.payload.title,
-			   	e.payload.buttons
-			);
-      
-        } else {
-	        navigator.notification.alert(e.message,null,e.payload.title);
-		}
-
-    break;
-
-    case 'error':
-       navigator.notification.alert('GCM error = '+e.msg,null,'Error');
-    break;
-
-    default:
-        navigator.notification.alert('An unknown GCM event has occurred',null,'Error');
-    break;
-  }
 }
