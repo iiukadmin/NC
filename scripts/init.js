@@ -145,7 +145,6 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
-			
 			if (data.additionalData.type == '2') {
 				navigator.notification.confirm(
 		        	data.message,
@@ -156,13 +155,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				   	data.additionalData.buttons
 			   	);
 			} else {
-				//alert(data.title+" Message: " +data.message);
-		        navigator.notification.alert("Type: "+data.additionalData.type+"Message: "+data.message+" additional Info: "+data.additionalData.info,null,data.title);
-				// data.title,
-				// data.count,
-				// data.sound,
-				// data.image,
-				// data.additionalData
+		        navigator.notification.alert(data.message,null,data.title);
 			}
 		});
 		
@@ -1065,7 +1058,8 @@ function test() {
 
 // This works currently
 window.farid = function (data) {
-	alert("HERE-b: "+data.message+"Info: "+data.info+" Additional:"+data.additionalData.info);
+	notificationFeedback('1',data.additionalData.other);
+	alert("Other:"+data.additionalData.other);
 }
 
 
