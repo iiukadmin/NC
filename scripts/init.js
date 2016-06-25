@@ -1052,7 +1052,7 @@ function test() {
 }
 
 window.farid = function (data) {
-	alert("HERE-b: "data.message);
+	alert("HERE-b: "+data.message);
 }
 
 
