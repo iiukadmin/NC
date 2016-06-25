@@ -146,7 +146,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 			//alert(data.title+" Message: " +data.message);
-	        navigator.notification.alert("Message: "+data.message+" Other: "+data.other+" Type: "+data.type+" Other:"+data.other,null,data.title);
+	        navigator.notification.alert("Info: "+data.info+"Message: "+data.message+" Other: "+data.other+" Type: "+data.type,null,data.title);
 			// data.title,
 			// data.count,
 			// data.sound,
@@ -154,9 +154,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			// data.additionalData
 		});
 		
-		push.on('error', function(e) {
-			console.log(e.message);
-			navigator.notification.alert('Error = '+e.message,null,'Error');
+		push.on('error', function(data) {
+			console.log(data.message);
+			navigator.notification.alert('Error = '+data.message,null,'Error');
 		});
 	}
     
@@ -1047,12 +1047,12 @@ function updateBadge(badgeCount){
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
-function test(data) {
-	alert(data.message);
+function test() {
+	alert("HERE-a: "+data.message);
 }
 
 window.farid = function (data) {
-	alert(data.message);
+	alert("HERE-b: "data.message);
 }
 
 
