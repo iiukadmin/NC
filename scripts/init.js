@@ -121,6 +121,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	    
 	    var push = PushNotification.init({ 
 		    "android": {
+			    	"senderID": window.AKHB.config.senderID,
 			    	"android.sound": true,
 			    	"android.vibrate": true
 			 },
