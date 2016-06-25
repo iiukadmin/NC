@@ -146,7 +146,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 			//alert(data.title+" Message: " +data.message);
-	        navigator.notification.alert("Info: "+data.info+"Message: "+data.message+" Other: "+data.other+" Type: "+data.type,null,data.title);
+	        navigator.notification.alert("Info: "+data.info+"Message: "+data.message+" additional: "+data.additionalData,null,data.title);
 			// data.title,
 			// data.count,
 			// data.sound,
@@ -1051,8 +1051,9 @@ function test() {
 	alert("HERE-a: "+data.message);
 }
 
+// This works currently
 window.farid = function (data) {
-	alert("HERE-b: "+data.message);
+	alert("HERE-b: "+data.message+"Info: "+data.info+" Additional:"+data.additionalData);
 }
 
 
