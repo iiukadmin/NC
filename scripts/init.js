@@ -121,7 +121,6 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	    
 	    var push = PushNotification.init({ 
 		    "android": {
-			    	"senderID": "31742222780",
 			    	"android.sound": true,
 			    	"android.vibrate": true
 			 },
