@@ -121,13 +121,16 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	    
 	    var push = PushNotification.init({ 
 		    "android": {
-			    	"senderID": "721393051486"
+			    	"senderID": "31742222780",
+			    	"android.sound": true,
+			    	"android.vibrate": true
 			 },
 			 
 			 "ios": {
-				 "alert": "true", 
-				 "badge": "true", 
-				 "sound": "true"
+				 "alert": true, 
+				 "badge": true, 
+				 "vibration": true,
+				 "sound": true
 			 }, 
 			 
 			 "windows": {}
@@ -137,13 +140,13 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			console.log(data.registrationId);
 		    alert(data.registrationId);
 			// This is the real call, still need to test on both IOS and Android
-			//sendRegistionId(data.registrationId);
+			sendRegistionId(data.registrationId);
 		});
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
 			//alert(data.title+" Message: " +data.message);
-	        navigator.notification.alert(data.message,null,data.title);
+	        navigator.notification.alert("Message: "+data.message+" Other: "+data.other+" Type: "+data.type+" Other:"+data.other,null,data.title);
 			// data.title,
 			// data.count,
 			// data.sound,
@@ -1044,12 +1047,12 @@ function updateBadge(badgeCount){
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
-function test() {
-	alert('one');
+function test(data) {
+	alert(data.message);
 }
 
 window.farid = function (data) {
-	alert('asdf1234');
+	alert(data.message);
 }
 
 
