@@ -146,7 +146,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 			//alert(data.title+" Message: " +data.message);
-	        navigator.notification.alert("Info: "+data.info+"Message: "+data.message+" additional: "+data.additionalData.info2,null,data.title);
+	        navigator.notification.alert("Type: "+data.additionalData.type+"Message: "+data.message+" additional Info: "+data.additionalData.info,null,data.title);
 			// data.title,
 			// data.count,
 			// data.sound,
