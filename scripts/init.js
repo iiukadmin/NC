@@ -1052,14 +1052,10 @@ function updateBadge(badgeCount){
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
-function test() {
-	alert("HERE-a: "+data.message);
-}
-
-// This works currently
-window.farid = function (data) {
+// Login Action Button
+window.iiuklogin = function (data) {
 	notificationFeedback('1',data.additionalData.other);
-	alert("Other:"+data.additionalData.other);
+	//alert("Other:"+data.additionalData.other);
 }
 
 
