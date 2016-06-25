@@ -137,7 +137,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			console.log(data.registrationId);
 		    alert(data.registrationId);
 			// This is the real call, still need to test on both IOS and Android
-			sendRegistionId(data.registrationId);
+			//sendRegistionId(data.registrationId);
 		});
 		
 		push.on('notification', function(data) {
