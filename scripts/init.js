@@ -118,33 +118,43 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
+	    
 	    var push = PushNotification.init({ 
 		    "android": {
 			    	"senderID": "721393051486"
 			 },
+			 
 			 "ios": {
-				 "alert": "true", "badge": "true", "sound": "true"
-			 }, "windows": {} } );
+				 "alert": "true", 
+				 "badge": "true", 
+				 "sound": "true"
+			 }, 
+			 
+			 "windows": {}
+			 });
 	
-	push.on('registration', function(data) {
-		console.log(data.registrationId);
-	    $("#app-status-ul").append('<li>ID ->' + data.registrationId + '</li>');
-		alert(data.registrationId);
-	});
-	
-	push.on('notification', function(data) {
-	console.log(data.message);
-	alert(data.title+" Message: " +data.message);
-	// data.title,
-	// data.count,
-	// data.sound,
-	// data.image,
-	// data.additionalData
-	});
-	
-	push.on('error', function(e) {
-	console.log(e.message);
-	});
+		push.on('registration', function(data) {
+			console.log(data.registrationId);
+		    alert(data.registrationId);
+			// This is the real call, still need to test on both IOS and Android
+			sendRegistionId(data.registrationId);
+		});
+		
+		push.on('notification', function(data) {
+			console.log(data.message);
+			//alert(data.title+" Message: " +data.message);
+	        navigator.notification.alert(data.message,null,data.title);
+			// data.title,
+			// data.count,
+			// data.sound,
+			// data.image,
+			// data.additionalData
+		});
+		
+		push.on('error', function(e) {
+			console.log(e.message);
+			navigator.notification.alert('Error = '+e.message,null,'Error');
+		});
 	}
     
     
