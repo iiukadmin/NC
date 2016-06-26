@@ -415,8 +415,6 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                    runMessageSync();
 
                 }else{
-                    app.slidingMenu.setSwipeable(false);
-                    app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');
                     //Auth.checkNetworkConnected();
                     onlineLogin();
                 }
