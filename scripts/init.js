@@ -1053,6 +1053,7 @@ function updateBadge(badgeCount){
 // Login Action Button
 window.iiuklogin = function (data) {
 	notificationFeedback('1',data.additionalData.other);
+	navigator.app.exitApp();
 	//alert("Other:"+data.additionalData.other);
 }
 
