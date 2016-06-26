@@ -120,19 +120,24 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){
 
 
-		/*
+		
+		try {
 			var pushfarid = PushNotification.init({
-		    android: {
-		        senderID: "12345679"
-		    },
-		    ios: {
-		        alert: "true",
-		        badge: "true",
-		        sound: "true"
-		    },
-		    windows: {}
-		});
-			
+			    android: {
+			        senderID: "12345679"
+			    },
+			    ios: {
+			        alert: "true",
+			        badge: "true",
+			        sound: "true"
+			    },
+			    windows: {}
+			});
+		} catch(error) { 
+			alert(error)
+		}
+		
+		/*	
 		pushfarid.on('registration', function(data) {
 		    // data.registrationId
 		});
