@@ -138,9 +138,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	
 		push.on('registration', function(data) {
 			console.log(data.registrationId);
-		    alert(data.registrationId);
-			// This is the real call, still need to test on both IOS and Android
-			sendRegistionId(data.registrationId);
+		    sendRegistionId(data.registrationId);
 		});
 		
 		push.on('notification', function(data) {
@@ -417,6 +415,8 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                    runMessageSync();
 
                 }else{
+                    app.slidingMenu.setSwipeable(false);
+                    app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');
                     //Auth.checkNetworkConnected();
                     onlineLogin();
                 }
