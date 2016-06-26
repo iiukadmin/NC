@@ -146,9 +146,11 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    // data.additionalData
 		});
 		*/
+		/*
 		pushfarid.on('error', function(e) {
 		    // e.message
 		});
+		*/
     
 	/*
 		if(!window.plugins || !window.plugins.pushNotification) return;
