@@ -120,8 +120,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){
 
 
-    /*
-	if(!window.plugins || !window.plugins.pushNotification) return;
+    
+	/*
+		if(!window.plugins || !window.plugins.pushNotification) return;
     try{
        
         var pushNotification = window.plugins.pushNotification;
@@ -163,14 +164,13 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     }catch(ex){
         console.log("Notification error:",ex);
     }
-
+*/
     }, false);
     // Added to update iOS bade with unread message count.
     document.addEventListener("pause", function(){ 
-	updateBadge($rootScope.messageCount);
+	//updateBadge($rootScope.messageCount);
     },false);
 }]);
-*/
 
 module.controller('SlidingMenuController',['$scope',function($scope){
     $scope.$on("isready", function(event,data){ 
