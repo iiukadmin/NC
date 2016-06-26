@@ -120,7 +120,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){
 
 
-		var push = PushNotification.init({
+		var pushfarid = PushNotification.init({
 		    android: {
 		        senderID: "12345679"
 		    },
@@ -132,11 +132,11 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    windows: {}
 		});
 			
-		push.on('registration', function(data) {
+		pushfarid.on('registration', function(data) {
 		    // data.registrationId
 		});
 		
-		push.on('notification', function(data) {
+		pushfarid.on('notification', function(data) {
 		    // data.message,
 		    // data.title,
 		    // data.count,
@@ -145,7 +145,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    // data.additionalData
 		});
 		
-		push.on('error', function(e) {
+		pushfarid.on('error', function(e) {
 		    // e.message
 		});
     
