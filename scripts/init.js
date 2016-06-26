@@ -3,7 +3,7 @@ var MSG_RETUIREDNETWORK = {title:'Internet Connection',content:'Sorry, a network
 var MSG_LOGINFAILED = {title:'Incorrect Password',content:'Please check password and try again.'};
 var MSG_SYSTEMERROR = {title:'System Error',content:'Please check you have a network connection. If issues persist, please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:100'};
 
-var pushNotification;
+//var pushNotification;
 var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
 var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
@@ -120,7 +120,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){
 
 
-    if(!window.plugins || !window.plugins.pushNotification) return;
+    /*
+	if(!window.plugins || !window.plugins.pushNotification) return;
     try{
        
         var pushNotification = window.plugins.pushNotification;
@@ -169,6 +170,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 	updateBadge($rootScope.messageCount);
     },false);
 }]);
+*/
 
 module.controller('SlidingMenuController',['$scope',function($scope){
     $scope.$on("isready", function(event,data){ 
