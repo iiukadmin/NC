@@ -120,7 +120,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){
 
 
-		var pushfarid = PushNotification.init({
+		/*
+			var pushfarid = PushNotification.init({
 		    android: {
 		        senderID: "12345679"
 		    },
@@ -144,7 +145,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    // data.image,
 		    // data.additionalData
 		});
-		
+		*/
 		pushfarid.on('error', function(e) {
 		    // e.message
 		});
@@ -1106,7 +1107,7 @@ function onNotificationAPN (event) {
 
     if ( event.badge )
     {
-        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+        //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
     }
 }
 
