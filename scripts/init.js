@@ -172,7 +172,13 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
-			
+				
+				if (data.additionalData.coldstart == true) {
+					alert('coldstart - true');
+				} else {
+					alert('coldstart - false');				
+				}
+							
 				if (data.additionalData.foreground == true) {
 					alert('forground - true');
 				} else {
@@ -180,12 +186,10 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				
 				}
 			
-				if (data.additionalData.coldstart == true) {
-					alert('coldstart - true');
-				} else {
-					alert('coldstart - false');
+
 				
-				}
+				alert('NotID'+data.additionalData.notId);
+				
 				if (data.additionalData.foreground == true) {
 					if (data.additionalData.type == '2') {
 						navigator.notification.confirm(
