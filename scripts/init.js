@@ -118,7 +118,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
-	    
+	    try{
 	    var push = PushNotification.init({ 
 		    "android": {
 			    	"senderID": window.AKHB.config.senderID,
@@ -164,6 +164,10 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			 
 			 "windows": {}
 			 });
+			} catch(ex) {
+				alert(ex.message);
+			}
+			 
 	
 		push.on('registration', function(data) {
 			console.log(data.registrationId);
@@ -222,7 +226,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener("pause", function(){ 
 	updateBadge($rootScope.messageCount);
     },false);
-}]);
+}
+]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
     $scope.$on("isready", function(event,data){ 
