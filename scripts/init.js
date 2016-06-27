@@ -173,7 +173,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 			
-				if (data.additionalData.foreground == true) {
+				if (data.additionalData.foreground == true || data.additionalData.coldstart == true) {
 					if (data.additionalData.type == '2') {
 						navigator.notification.confirm(
 				        	data.message,
