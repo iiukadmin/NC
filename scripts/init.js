@@ -137,18 +137,26 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": true, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": true, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": true, "destructive": true
 		                },
 		                "maybe": {
 		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": true, "destructive": false
 		                }
 		            },
-		            "delete": {
+		            "authenticate": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Delete", "foreground": true, "destructive": true
+		                    "callback": "window.iiuklogin", "title": "Login", "foreground": true, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": true, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                }
+		            },
+					"choice": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Yes", "foreground": true, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "window.iiuklogin", "title": "No", "foreground": false, "destructive": false
 		                }
 		            }
 		        }
