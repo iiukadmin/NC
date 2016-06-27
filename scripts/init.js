@@ -130,7 +130,17 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				 "alert": true, 
 				 "badge": true, 
 				 "vibration": true,
-				 "sound": true
+				 "sound": true,
+				 "categories": {
+					 "authenticate": {
+						 "login": {
+							 "callback": "window.iiuklogin", "title": "Login", "foreground": true, "destructive": false
+						 },
+						 "cancel": {
+							 "callback": "", "title": "Cancel", "foreground": true, "destructive": false
+						 }
+					 }
+				 }
 			 }, 
 			 
 			 "windows": {}
