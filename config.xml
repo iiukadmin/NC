@@ -15,8 +15,7 @@
         Ismaili Council for the UK
     </author>
 
-<!--   <preference name="phonegap-version" value="cli-5.2.0" /> -->
-    <preference name="phonegap-version" value="cli-6.1.0" />
+    <preference name="phonegap-version" value="cli-5.2.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -108,12 +107,10 @@
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.statusbar" />
 	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
-	<!--<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />-->
-	<!--<gap:plugin name="net.bgta.phonegap.plugin.appversion" />-->
+	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
 	<gap:plugin name="de.appplant.cordova.plugin.badge" />
 	<plugin name="cordova-plugin-calendar" />
 	<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">
-	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->
 	    <param name="SENDER_ID" value="31742222780" />
 	</plugin>
 
