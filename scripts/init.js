@@ -132,23 +132,12 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				"vibration": true,
 				"sound": true,
 		        "categories": {
-		            "invite": {
-		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": true, "destructive": false
+		            "authorise": {
+		                "login": {
+		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": true
 		                },
-		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": true, "destructive": false
-		                },
-		                "maybe": {
-		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": true, "destructive": false
-		                }
-		            },
-		            "delete": {
-		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Delete", "foreground": true, "destructive": true
-		                },
-		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": true, "destructive": false
+		                "cancel": {
+		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": true, "destructive": true
 		                }
 		            }
 		        }
