@@ -186,11 +186,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				
 				}
 			
-
+				alert(data.additionalData.notId);
 				
-				alert('NotID'+data.additionalData.notId);
-				
-				if (data.additionalData.foreground == true) {
 					if (data.additionalData.type == '2') {
 						navigator.notification.confirm(
 				        	data.message,
@@ -203,7 +200,6 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 					} else {
 				        navigator.notification.alert(data.message,null,data.title);
 					}
-				}
 
 			push.finish(function() {
 		  	  console.log('accept callback finished');
