@@ -15,7 +15,8 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-5.2.0" />
+    <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
+    <preference name="phonegap-version" value="cli-6.0.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
