@@ -173,20 +173,21 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 			
-			if (data.additionalData.coldstart == true || data.additionalData.foreground == true) {
-				if (data.additionalData.type == '2') {
-					navigator.notification.confirm(
-			        	data.message,
-			        	function(buttonIndex) {
-				       	 notificationFeedback(buttonIndex,data.additionalData.other);
-					   	},
-					   	data.title,
-					   	data.additionalData.buttons
-				   	);
-				} else {
-			        navigator.notification.alert(data.message,null,data.title);
+				if (data.additionalData.foreground == true) {
+					if (data.additionalData.type == '2') {
+						navigator.notification.confirm(
+				        	data.message,
+				        	function(buttonIndex) {
+					       	 notificationFeedback(buttonIndex,data.additionalData.other);
+						   	},
+						   	data.title,
+						   	data.additionalData.buttons
+					   	);
+					} else {
+				        navigator.notification.alert(data.message,null,data.title);
+					}
 				}
-			}
+
 			push.finish(function() {
 		  	  console.log('accept callback finished');
 				}, function() {
