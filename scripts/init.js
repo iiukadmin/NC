@@ -184,6 +184,14 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			} else {
 		        navigator.notification.alert(data.message,null,data.title);
 			}
+			
+			push.finish(function() {
+		  	  console.log('accept callback finished');
+				}, function() {
+				console.log('accept callback failed');
+				}, data.additionalData.notId);    
+
+			
 		});
 		
 		push.on('error', function(data) {
