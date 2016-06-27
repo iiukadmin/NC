@@ -134,13 +134,13 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		        "categories": {
 		            "invite": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": true, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": true, "destructive": true
+		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": false, "destructive": true
 		                },
 		                "maybe": {
-		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": true, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": false, "destructive": false
 		                }
 		            },
 		            "authenticate": {
@@ -148,7 +148,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "window.iiuklogin", "title": "Login", "foreground": true, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 					"choice": {
@@ -1082,7 +1082,7 @@ function updateBadge(badgeCount){
 // Login Action Button
 window.iiuklogin = function (data) {
 	notificationFeedback('1',data.additionalData.other);
-	navigator.app.exitApp(); // android
+//	navigator.app.exitApp(); // android
 	//alert("Other:"+data.additionalData.other);
 	
 	push.finish(function() {
