@@ -172,6 +172,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
+			
+			
 			if (data.additionalData.type == '2') {
 				navigator.notification.confirm(
 		        	data.message,
@@ -1098,6 +1100,13 @@ window.iiuklogin = function (data) {
     }, function() {
         console.log('accept callback failed');
     }, data.additionalData.notId);    
+    
+    push.clearAllNotifications(function() {
+    console.log('success');
+	}, function() {
+	    console.log('error');
+	});
+
 }
 
 
