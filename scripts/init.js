@@ -127,20 +127,31 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			 },
 			 
 			 "ios": {
-				 "alert": true, 
-				 "badge": true, 
-				 "vibration": true,
-				 "sound": true,
-				 "categories": {
-					 "authenticate": {
-						 "login": {
-							 "callback": "window.iiuklogin", "title": "Login", "foreground": true, "destructive": false
-						 },
-						 "cancel": {
-							 "callback": "", "title": "Cancel", "foreground": true, "destructive": false
-						 }
-					 }
-				 }
+				"alert": true, 
+				"badge": true, 
+				"vibration": true,
+				"sound": true,
+		        "categories": {
+		            "invite": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": true, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": true, "destructive": false
+		                },
+		                "maybe": {
+		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": true, "destructive": false
+		                }
+		            },
+		            "delete": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Delete", "foreground": true, "destructive": true
+		                },
+		                "no": {
+		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": true, "destructive": false
+		                }
+		            }
+		        }
 			 }, 
 			 
 			 "windows": {}
@@ -1065,6 +1076,12 @@ window.iiuklogin = function (data) {
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
 	//alert("Other:"+data.additionalData.other);
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
 }
 
 
