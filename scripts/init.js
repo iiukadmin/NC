@@ -177,7 +177,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);
 				
-				if (data.additionalData.coldstart == true) {
+			/*
+					if (data.additionalData.coldstart == true) {
 					alert('coldstart - true');
 				} else {
 					alert('coldstart - false');				
@@ -191,7 +192,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				}
 			
 				alert(data.additionalData.notId);
-				
+			*/	
 					if (data.additionalData.type == '2') {
 						navigator.notification.confirm(
 				        	data.message,
@@ -1120,12 +1121,13 @@ window.iiuklogin = function (data) {
         console.log('accept callback failed');
     }, data.additionalData.notId);    
     
+/*
     push.clearAllNotifications(function() {
     console.log('success');
 	}, function() {
 	    console.log('error');
 	});
-
+*/
 }
 
 
