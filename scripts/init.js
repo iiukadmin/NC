@@ -194,6 +194,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				alert(data.additionalData.notId);
 			*/	
 					if (data.additionalData.type == '2') {
+						alert("There"+FARID);
+
+						
 						navigator.notification.confirm(
 				        	data.message,
 				        	function(buttonIndex) {
@@ -1111,6 +1114,8 @@ function updateBadge(badgeCount){
 
 // Login Action Button
 window.iiuklogin = function (data) {
+	var FARID = 'asdf';
+	alert("HEAR"+FARID);
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
 	//alert("Other:"+data.additionalData.other);
