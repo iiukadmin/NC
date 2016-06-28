@@ -148,7 +148,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 					"choice": {
@@ -194,7 +194,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				alert(data.additionalData.notId);
 			*/	
 					if (data.additionalData.type == '2') {
-						alert("There"+FARID);
+						alert("There");
 
 						
 						navigator.notification.confirm(
