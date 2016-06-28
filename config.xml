@@ -109,8 +109,11 @@
 	<gap:plugin name="org.apache.cordova.network-information" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="org.apache.cordova.vibration" />
-	<gap:plugin name="org.apache.cordova.statusbar" />-->
-	<!--
+	<gap:plugin name="org.apache.cordova.statusbar" />
+	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
+		<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	-->
+		<!--
 	Don't need this one
 	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>-->
 
@@ -123,12 +126,9 @@
 	<plugin name="cordova-plugin-splashscreen" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-statusbar" />
-	<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />	
-	<!--<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
-		<gap:plugin name="de.appplant.cordova.plugin.badge" />
-	-->
+	<plugin name="net.bgta.phonegap.plugin.appversion" />	
+	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />-->
 	<plugin name="de.appplant.cordova.plugin.badge" spec="0.6.4" source="pgb" />
-
 	
 	<plugin name="cordova-plugin-calendar" />
 	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->
