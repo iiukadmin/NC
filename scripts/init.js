@@ -283,6 +283,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
 module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
     var scope = $scope;
     scope.nomessages  = true;
+    scope.realmessages  = false;
     scope.nav =  $templateCache.get('navigation');
     scope.messages = [];
     scope.menuClick = function(){
@@ -301,7 +302,11 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
         }) 
     }
     
-    var faridTest = $rootScope.messageCount;
+    var faridTest = DB.getMessageCount(function(err,count){
+             $scope.$apply( function() {
+                $scope.hasMessage = count > 0;
+            });
+        });
     
 
     if(Auth.isNetworkConnected()){
