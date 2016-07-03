@@ -964,10 +964,17 @@ $(document).on('click','a',function(e){
 	            /*
 		           <a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T18:30","endDate":"2015-02-15T19:30"}'>Event at a time</a><a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T00:00","endDate":"2015-02-16T00:00"}'>All Day Event</a>
 		        */
+	            
+	            var start = event['startDate'];
+	            var end = event['endDate'];
 	            	
 				var event = JSON.parse($href.substring(9));
-				var startDate = new Date(event['startDate']+ " UTC"); 
-				var endDate = new Date(event['endDate']+ " UTC");
+				//var startDate = new Date(event['startDate']); 
+				//var endDate = new Date(event['endDate']);
+				
+				var startDate = new Date(start.substring(0, 4)+","+(start.substring(5, 7)-1)+","+start.substring(8, 10)+","+start.substring(11,13)+","+start.substring(14,16)+",0,0,0"); 
+				var endDate = new Date(end.substring(0, 4)+","+(end.substring(5, 7)-1)+","+end.substring(8, 10)+","+end.substring(11,13)+","+end.substring(14,16)+",0,0,0");
+				
 				//var startDate = new Date(2016,2,27,18,30,0,0,0); 
 				//var endDate = new Date(2016,2,27,19,30,0,0,0);
 				var title = event['title'];
