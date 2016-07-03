@@ -4,7 +4,6 @@
                     <ons-toolbar-button ng-click="menuClick()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
                 </div>
                 <div class="center" >{{nav.title}}</div>
-  
             </ons-toolbar>
             <ons-list id="list-message" class="plan-list">
                 <ons-list-item class="plan" ng-repeat="msg in messages" ng-click="openMessageDetail(msg,$event)" ng-show="msg.status<2">
