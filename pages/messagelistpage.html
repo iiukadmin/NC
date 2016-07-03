@@ -37,5 +37,6 @@
 			<div class="article-content"  ng-show="nomessages">There are currently no messages for you (nomessages).</div>
 			<div class="article-content"  ng-show="realmessages">There are currently no messages for you (realmessages)
 				.</div>
-			<div class="article-content"  ng-show="faridTest">There are currently messages for you.</div>
+			<div class="article-content" ng-disabled="messages">There are currently messages for you - one.</div>
+			<div class="article-content" ng-disabled="!messages">There are currently messages for you - two.</div>
         </ons-page> 
