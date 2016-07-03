@@ -300,6 +300,9 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
             });
         }) 
     }
+    
+    var faridTest = $rootScope.messageCount;
+    
 
     if(Auth.isNetworkConnected()){
         DBSync.runMessageSync(loadMessage,true);
