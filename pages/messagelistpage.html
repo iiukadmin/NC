@@ -41,4 +41,11 @@
 			<div class="article-content" ng-show="isEmpty(messages)">There are currently messages for you - four.</div>
 			<div class="article-content" ng-disabled="messages">There are currently messages for you - one.</div>
 			<div class="article-content" ng-disabled="!messages">There are currently messages for you - two.</div>
+			<div ng-if="!equals({}, messages)">
+				Test Object is not empty
+				</div>
+				<div ng-if="equals({}, messages)">
+				Test Object is empty
+				</div>
+			
         </ons-page> 
