@@ -282,6 +282,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
 
 module.controller('MessageListController',['$scope','$rootScope','$templateCache',function($scope,$rootScope,$templateCache){
     var scope = $scope;
+    scope.nomessages  = true;
     scope.nav =  $templateCache.get('navigation');
     scope.messages = [];
     scope.menuClick = function(){
