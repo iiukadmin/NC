@@ -302,6 +302,12 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
         }) 
     }
     
+    $scope.isEmpty = function (obj) {
+		for (var i in obj) if (obj.hasOwnProperty(i)) return false;
+		return true;
+	};
+
+    
     var faridTest = DB.getMessageCount(function(err,count){
              $scope.$apply( function() {
                 $scope.hasMessage = count > 0;
