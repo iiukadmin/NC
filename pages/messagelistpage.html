@@ -33,19 +33,5 @@
                         </ons-row>
                 </ons-list-item>
             </ons-list>
-			<div class="article-content"  ng-show="">{{faridTest}}</div>
-			<div class="article-content"  ng-show="nomessages">There are currently no messages for you (nomessages).</div>
-			<div class="article-content"  ng-show="realmessages">There are currently no messages for you (realmessages)
-				.</div>
-			<div class="article-content" ng-show="!isEmpty(messages)">There are currently messages for you - three.</div>
-			<div class="article-content" ng-show="isEmpty(messages)">There are currently messages for you - four.</div>
-			<div class="article-content" ng-disabled="messages">There are currently messages for you - one.</div>
-			<div class="article-content" ng-disabled="!messages">There are currently messages for you - two.</div>
-			<div ng-if="!equals({}, messages)">
-				Test Object is not empty
-				</div>
-				<div ng-if="equals({}, messages)">
-				Test Object is empty
-				</div>
-			
-        </ons-page> 
+			<div class="article-content" ng-show="isEmpty(messages)">There are currently no messages for you.</div>
+        </ons-page>
