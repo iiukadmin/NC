@@ -3,7 +3,7 @@
        <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">{{message.title}}</div>
         <div class="right">
-            <i ng-show="hasMessage" class="fa fa-trash-o  Editeve" onclick="deleteMessage()"></i>
+            <i class="fa fa-trash-o" onclick="deleteMessage()"></i>
         </div>
     </ons-toolbar>
     <div class="article-content"  ng-bind-html="message.content | trustHtml">
