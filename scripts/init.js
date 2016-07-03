@@ -969,15 +969,15 @@ $(document).on('click','a',function(e){
 	           // var end = event['endDate'];
 	            	
 				var event = JSON.parse($href.substring(9));
-				//var startDate = new Date(event['startDate']); 
-				//var endDate = new Date(event['endDate']);
+				var startDate = new Date(event['startDate']); 
+				var endDate = new Date(event['endDate']);
 				
 //				var startDate = new Date(start.substring(0, 4)+","+(start.substring(5, 7)-1)+","+start.substring(8, 10)+","+start.substring(11,13)+","+start.substring(14,16)+",0,0,0"); 
 				//var startDate = new Date(2016,2,27,19,30,0,0,0); 
 				//var endDate = new Date(2016,2,27,19,30,0,0,0);
 				
-				var startDate = new Date(2016,2,27,18,30,0,0,0); 
-				var endDate = new Date(2016,2,27,19,30,0,0,0);
+				//var startDate = new Date(2016,2,27,18,30,0,0,0); 
+				//var endDate = new Date(2016,2,27,19,30,0,0,0);
 				var title = event['title'];
 				var eventLocation = event['eventLocation'];
 				var notes = event['notes'];
