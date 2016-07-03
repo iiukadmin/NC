@@ -247,7 +247,7 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
         if(nav.type==2){
             AKHB.openContentPage(nav,$templateCache);
         }else if(nav.type==3){
-            app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+            app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==4){
@@ -504,7 +504,7 @@ module.controller('MenuController',['$scope','$rootScope','$http','$templateCach
             if(nav.type==2){
                 AKHB.openContentPage(nav,$templateCache);
             }else if(nav.type==3){
-                app.slidingMenu.setMainPage('pages/messagelistpage_'+window.AKHB.config.application+'.html', { closeMenu: true })
+                app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
             }else if(nav.type==5){
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
             }else if(nav.type==4){
