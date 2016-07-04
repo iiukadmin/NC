@@ -7,7 +7,7 @@ window.AKHB ={
 		// SenderID IIUK: 31742222780
 		// SenderID myAKHB: 824841663931
 		// Application: iiuk / akhb
-		remoteAddress : 'http://stage.iiuk.homeip.net/Pages/App/webservice2.php',
+		remoteAddress : 'https://www.iiuk.org/Pages/App/webservice2.php',
 		debug:true,
 		version:null,
 		timeout:60*1000*30,
