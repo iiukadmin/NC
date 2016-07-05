@@ -118,13 +118,6 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
-	    
-	    getAppVersion(function(version) {
-	        AKHB.user.appVersion = version;
-	        alert('Native App Version_DeviceReady: ' + version);
-	    });
-     
-
 
     if(!window.plugins || !window.plugins.pushNotification) return;
     try{
@@ -336,13 +329,12 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 AKHB.user.deviceid = device.uuid;
                 AKHB.user.os = device.version;
                 AKHB.user.deviceName = device.model;
-            //    if(typeof getAppVersion == 'function'){
+                if(typeof getAppVersion == 'function'){
                     getAppVersion(function(version) {
                         AKHB.user.appVersion = version;
                         console.log('Native App Version: ' + version);
-                        alert('Native App Version_Login: ' + version);
                     });
-              //  }
+                }
             };
             scope.isready = true;  
               
