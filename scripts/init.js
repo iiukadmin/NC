@@ -412,6 +412,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
                     var user = JSON.parse(Auth.getCachedAuthentication());
                     AKHB.user = user;
+                    alert(AKHB.user.version);
                     
                     if(typeof device == 'undefined'){
 		                AKHB.user.deviceid = '00000000000000031';
@@ -428,7 +429,8 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 		                    });
 		                }
 		            };
-                    
+                    alert(AKHB.user.version);
+
                     
                     DBSync.runInBackGround(function(err){
                         //$rootScope.$emit("BUSY");
