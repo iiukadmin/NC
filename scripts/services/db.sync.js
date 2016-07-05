@@ -27,7 +27,6 @@ AKHB.services.db.DBSync =  (function(){
 	Request = function(table,user,lastModified){
 		getAppVersion(function(version) {
                         var appVersion_Live = version;
-                        alert(appVersion_Live);
         });
 		
 		return {
