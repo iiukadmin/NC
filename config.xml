@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
         versionCode = "17" 
-        version     = "1.0.9" >
+        version     = "1.0.8 >
 
     <name>IIUK</name>
 
