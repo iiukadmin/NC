@@ -25,18 +25,14 @@ AKHB.services.db.DBSync =  (function(){
 	}
 
 	Request = function(table,user,lastModified){
-		getAppVersion(function(version) {
-                        var appVersion_Live = version;
-        });
-		
 		return {
 			type:2,
 			table:table,
 			uuid:user.id,
 			os:user.os,
 			device:user.deviceName,
-//			version:user.appVersion,
-			version:appVersion_Live,
+			version:user.appVersion,
+//			version:getAppVersion(function(version) { }),
 			last_content_synced:moment(lastModified).format('YYYY-MM-DD')
 		}
 	};
