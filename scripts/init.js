@@ -412,6 +412,24 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                     app.slidingMenu.setMainPage('pages/landingpage_'+window.AKHB.config.application+'.html');
                     var user = JSON.parse(Auth.getCachedAuthentication());
                     AKHB.user = user;
+                    
+                    if(typeof device == 'undefined'){
+		                AKHB.user.deviceid = '00000000000000031';
+		                AKHB.user.os = 'ios';
+		                AKHB.user.deviceName = 'browser test';
+		            }else{
+		                AKHB.user.deviceid = device.uuid;
+		                AKHB.user.os = device.version;
+		                AKHB.user.deviceName = device.model;
+		                if(typeof getAppVersion == 'function'){
+		                    getAppVersion(function(version) {
+		                        AKHB.user.appVersion = version;
+		                        console.log('Native App Version: ' + version);
+		                    });
+		                }
+		            };
+                    
+                    
                     DBSync.runInBackGround(function(err){
                         //$rootScope.$emit("BUSY");
                         syncBackGround();

@@ -31,8 +31,8 @@ AKHB.services.db.DBSync =  (function(){
 			uuid:user.id,
 			os:user.os,
 			device:user.deviceName,
-//			version:user.appVersion,
-			version:getAppVersion(),
+			version:user.appVersion,
+//			version:getAppVersion(),
 			last_content_synced:moment(lastModified).format('YYYY-MM-DD')
 		}
 	};
