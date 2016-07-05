@@ -119,6 +119,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     }
     document.addEventListener('deviceready', function(){
 
+	alert(getAppVersion());
     if(!window.plugins || !window.plugins.pushNotification) return;
     try{
        
