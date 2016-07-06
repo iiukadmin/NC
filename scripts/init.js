@@ -981,8 +981,8 @@ $(document).on('click','a',function(e){
 		        */
 	            	
 				var event = JSON.parse($href.substring(9));
-				var startDate = new Date(event['startDate']); 
-				var endDate = new Date(event['endDate']);
+				var startDate = new Date(Date.UTC(event['startDate'])); 
+				var endDate = new Date(Date.UTC(event['endDate']));
 				var title = event['title'];
 				var eventLocation = event['eventLocation'];
 				var notes = event['notes'];
