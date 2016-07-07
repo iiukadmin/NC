@@ -1,0 +1,31 @@
+﻿<ons-page class="theme-blue"  ng-controller="LandingPageController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+        </div>
+        <div class="center">HOME</div>
+        <div class="right">
+            <i ng-show="hasMessage" class="fa fa-envelope-o  Editeve" onclick="app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })"></i><span class="Editeve" ng-show="hasMessage">{{messageCount}}</span>
+        </div>
+    </ons-toolbar>
+    <div id="LandingPageContainer">
+        <div class ="landingPage_logo">
+            <img src="icons_iiuk/icon.png" />
+        </div>
+        
+        <div class="landingP_title">{{title}}</div>
+        <div class="landingContent" ng-bind-html="article">
+        </div>
+
+        <ul id="home_page_icons">
+            <ons-list-item ng-repeat-start="navigation in navigations"  ng-repeat-end ng-show="navigation.home_page==1"
+            class="list__item__line-height"  ng-model="navigation" ng-click="openPage(navigation)">
+            
+            <p><i ng-class="{true:'fa',false:'fa fa-'+navigation.icon+' fa-fw'}[navigation.icon =='']"></i>{{navigation.title}}</p>
+            </ons-list-item> 
+        </ul>
+    </div>
+</ons-page>
+
+
+<!--<ons-button ng-click="app.slidingMenu.toggleMenu()">Toggle Menu</ons-button>  跳转到菜单-->
