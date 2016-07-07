@@ -11,7 +11,7 @@
 	border-bottom:1px solid #193D88;
 }
 .navigation-bar__left,.navigation-bar__right,.navigation-bar__center,.navigation-bar__title,.toolbar-button, .toolbar-button--outline, .toolbar-button--quiet{
-	color:#fff;
+	color:#193D88;
 }
 .landingPage_logo img{
 	width: 100px;
@@ -225,10 +225,10 @@ span.Editeve{
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color:#fff;
+    color:#193D88;
 }
 .landingContent p{
-	color: #fff;
+	color: #193D88;
 	text-align: center;
 	font-size: normal;
 }
@@ -242,7 +242,7 @@ span.Editeve{
 	bottom: 20px;
 }
  #login_container .login_content,.login_foot{
-	color:#fff;
+	color:#193D88;
 	text-align:  center;
 	}
 
