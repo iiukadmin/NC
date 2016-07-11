@@ -1,21 +1,19 @@
-
-
 .navigation-bar{
     background-color: #193D88;
 }
 
-.theme-blue .navigation-bar,.theme-blue .page__background{
-	background: #193D88;
+.theme-blue .theme-blue .page__background{
+	background: #fff;
 }
 .theme-blue .navigation-bar{
-	border-bottom:1px solid #193D88;
+	border-bottom:1px solid #fff;
 }
 .navigation-bar__left,.navigation-bar__right,.navigation-bar__center,.navigation-bar__title,.toolbar-button, .toolbar-button--outline, .toolbar-button--quiet{
-	color:#193D88;
+	color:#fff;
 }
 .landingPage_logo img{
 	width: 100px;
-/*	margin: 10px;*/
+	margin: 10px;
 }
 
 .articlesAndAd_Logo{
@@ -129,6 +127,7 @@ iframe,.article-iframe{
 	padding: 0;
 }
 #home_page_icons ons-list-item{
+//	background: #086FB6;
 	background: #193D88;
 	border-radius: 5px;
 	color: #fff;
@@ -225,14 +224,11 @@ span.Editeve{
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color:#193D88;
 }
 .landingContent p{
-	color: #193D88;
-	text-align: center;
+	text-align: justify;
 	font-size: normal;
 }
-
 .login_content{
 	padding-top: 20px;
 }
@@ -242,10 +238,8 @@ span.Editeve{
 	bottom: 20px;
 }
  #login_container .login_content,.login_foot{
-	color:#193D88;
 	text-align:  center;
-	}
-
+}
 .directory-description>p,.committees>p{
     line-height: 160%;
     margin: 10px;
