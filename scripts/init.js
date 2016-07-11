@@ -46,7 +46,18 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 	                    $('div.loading').addClass('ng-hide');
 					});
 				}                     
-             } else { // Pure content or an iFrame view of a web page (1,2)
+             }else if(article.type == 6){ // Internal Browser - no widget
+	            if(!Auth.isNetworkConnected()){
+		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
+				}else{	
+					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,closebuttoncaption=Back, toolbar=no,transitionstyle=crossdissolve,presentationstyle=pagesheet, enableViewportScale=yes,toolbarposition=top');
+	                $('div.loading').removeClass('ng-hide');
+					ref.addEventListener('loadstop', function(){
+						ref.show();
+	                    $('div.loading').addClass('ng-hide');
+					});
+				}                
+			} else { // Pure content or an iFrame view of a web page (1,2)
 	            if (article.type == 2 && !Auth.isNetworkConnected()) {
 		            AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 	            }else{ 
