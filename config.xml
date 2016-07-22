@@ -107,12 +107,13 @@
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.statusbar" />
-	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
+<!--	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/> -->
 	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
-	<gap:plugin name="de.appplant.cordova.plugin.badge" />
+<!--	<gap:plugin name="de.appplant.cordova.plugin.badge" /> -->
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
-	<gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.8" />	
+<!--	<gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.8" />	
+	<gap:plugin name="de.appplant.cordova.plugin.local-notification" />	-->
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
