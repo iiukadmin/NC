@@ -233,13 +233,10 @@ module.controller('LandingPageController', ['$scope', '$rootScope', '$sce', '$te
         if (nav.type == 2) {
             AKHB.openContentPage(nav, $templateCache);
         } else if (nav.type == 3) {
-            app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
+            app.slidingMenu.setMainPage('pages/messagelistpage_' + window.AKHB.config.application + '.html', { closeMenu: true })
         } else if (nav.type == 5) {
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
-		} else if (nav.type == 6) {
-                myNavigator.pushPage('pages/medication.html');
-            }
-else if (nav.type == 4) {
+        } else if (nav.type == 4) {
             $scope.signOut();
         } else {
             myNavigator.pushPage('pages/childmenu.html');
@@ -283,7 +280,7 @@ module.controller('MessageListController', ['$scope', '$rootScope', '$templateCa
         app.slidingMenu.toggleMenu();
     };
     scope.openMessageDetail = function(msg, $event) {
-//        if ($event.type != "touchend") return;
+        if ($event.type != "touchend") return;
         $templateCache.put('message', msg);
         myNavigator.pushPage('pages/messagedetail.html');
     };
@@ -294,12 +291,6 @@ module.controller('MessageListController', ['$scope', '$rootScope', '$templateCa
             });
         })
     }
-
-	$scope.isEmpty = function (obj) {
-		for (var i in obj) if (obj.hasOwnProperty(i)) return false;
-		return true;
-	};
-
 
     if (Auth.isNetworkConnected()) {
         DBSync.runMessageSync(loadMessage, true);
@@ -402,8 +393,7 @@ module.controller('LoginController', ['$scope', '$http', '$templateCache', '$roo
             setTimeout(function() {
                 DBSync = new AKHB.services.db.DBSync(AKHB.config, $http);
                 initLogin();
-                //alert('asdf');
-            }, 1);
+            }, 1000);
         });
 
         function initLogin() {
@@ -507,7 +497,7 @@ module.controller('MenuController', ['$scope', '$rootScope', '$http', '$template
             if (nav.type == 2) {
                 AKHB.openContentPage(nav, $templateCache);
             } else if (nav.type == 3) {
-                app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
+                app.slidingMenu.setMainPage('pages/messagelistpage_' + window.AKHB.config.application + '.html', { closeMenu: true })
             } else if (nav.type == 5) {
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
             } else if (nav.type == 4) {
@@ -1027,7 +1017,7 @@ module.controller('MedicationController', ['$scope', '$rootScope', '$http', '$te
 
         if (isFirstVisit) {
             ons.notification.alert({
-                message: 'The medication reminder functionality is intented as supporting tool only. You must not rely on it to remember to take your medication.',
+                message: 'The medication reminder functionality is intented as supporting tool only.You must not rely on myAKHB to remember to take your medication.',
                 title: 'Warning',
                 buttonLabel: 'Accept',
                 callback: function(result) {
@@ -1092,7 +1082,7 @@ module.controller('MedicationSearchController', ['$scope', '$rootScope', '$http'
                 if (index == 0) {
                     filter = new persistence.PropertyFilter('name', 'like', '%' + item + '%');
                 } else {
-                    filter = new persistence.AndFilter(filter, new persistence.PropertyFilter('name', 'like', '%' + item + '%'));
+                    filter = new persistence.OrFilter(filter, new persistence.PropertyFilter('name', 'like', '%' + item + '%'));
                 }
             })
             if (filter) {
@@ -1201,8 +1191,7 @@ module.controller('MedicationEditController', ['$scope', function($scope) {
                 function(err) {
 
                     $scope.$root.$broadcast('MedicationsRefresh');
-					myNavigator.pushPage('pages/medication.html');
-                    //myNavigator.popPage();
+                    myNavigator.popPage();
                 });
         } else if ($scope.isEdit) {
             $scope.options.userMedication.drug_name = $scope.drug_name;
@@ -1217,23 +1206,11 @@ module.controller('MedicationEditController', ['$scope', function($scope) {
             }, function(err) {
 
                 $scope.$root.$broadcast('MedicationsRefresh');
-				myNavigator.pushPage('pages/medication.html');
-            //    myNavigator.popPage();
+                myNavigator.popPage();
             })
         }
 
     };
-    
-    $scope.orderRepeat = function() {
-         ons.notification.alert({
-                message: "Thank you, your prescription reorder request has been receieved.",
-                title: "Prescription Reorder"
-            });
-				myNavigator.pushPage('pages/medication.html');
-            return;
-    };
-
-    
 
 }]);
 
@@ -1266,7 +1243,7 @@ module.controller('RemindersController', ['$scope', '$rootScope', '$http', '$tem
             if (reminder.type == 1) {
                 var days = JSON.parse(reminder.days);
                 if (days.length == 7) {
-                    return 'Daily';
+                    return 'Daliy';
                 }
                 return AKHB.utils.getShortDayString(days);
             } else {
@@ -1656,7 +1633,6 @@ function notificationFeedback(buttonIndex, passedData) {
     var url = window.AKHB.config.remoteAddress + '?type=5&uuid=' + AKHB.user.id + '&other=' + passedData + '&buttonIndex=' + buttonIndex;
     $.get(url, function(data) {})
 }
-
 
 // added badge update function
 function updateBadge(badgeCount) {
