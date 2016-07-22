@@ -1743,3 +1743,91 @@ function onNotificationGCM(e) {
             break;
     }
 }
+
+
+
+
+(function() {
+    'use strict';
+
+    var module = angular.module("AKHB");
+
+
+    /**
+     * Toolbar directive.
+     */
+    module.directive('fixedBar', ['$onsen', 'GenericView', function($onsen, GenericView) {
+        return {
+            restrict: 'E',
+            replace: false,
+
+            // NOTE: This element must coexists with ng-controller.
+            // Do not use isolated scope and template's ng-transclde.
+            scope: false,
+            transclude: false,
+
+            compile: function(element, attrs) {
+                var shouldAppendAndroidModifier = ons.platform.isAndroid() && !element[0].hasAttribute('fixed-style');
+                var modifierTemplater = $onsen.generateModifierTemplater(attrs, shouldAppendAndroidModifier ? ['android'] : []),
+                    inline = typeof attrs.inline !== 'undefined';
+
+                // element.addClass('navigation-bar');
+                // element.addClass(modifierTemplater('navigation-bar--*'));
+
+                if (!inline) {
+                    element.css({
+                        'position': 'absolute',
+                        'z-index': '10000',
+                        'left': '0px',
+                        'width': '100%'
+                    });
+                    if (!attrs.top && !attrs.bottom) {
+                        if (typeof device != undefined && device.platform == 'iOS') {
+                            element.css('top', '64px')
+                        } else {
+                            element.css('top', '44px')
+                        }
+
+                    } else {
+                        if (attrs.top) {
+                            element.css('top', attrs.top + 'px');
+                        }
+                        if (attrs.bottom) {
+                            element.css('bottom', attrs.bottom + 'px');
+                        }
+                    }
+                }
+
+                // ensureToolbarItemElements(element, modifierTemplater);
+
+                return {
+                    pre: function(scope, element, attrs) {
+                        var toolbar = new GenericView(scope, element, attrs);
+
+                        $onsen.declareVarAttribute(attrs, toolbar);
+
+
+                        scope.$on('$destroy', function() {
+                            toolbar._events = undefined;
+                            $onsen.removeModifierMethods(toolbar);
+                            element.data('fixed-bar', undefined);
+                            element = null;
+                        });
+
+                        var pageView = element.inheritedData('ons-page');
+
+                        if (pageView && !inline) {
+                            pageView.registerExtraElement(element);
+                        }
+
+                        element.data('fixed-bar', toolbar);
+                    },
+                    post: function(scope, element, attrs) {
+                        $onsen.fireComponentEvent(element[0], 'init');
+                    }
+                };
+            }
+        };
+    }]);
+
+})();
