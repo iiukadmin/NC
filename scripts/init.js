@@ -25,8 +25,7 @@ $.ajaxSetup({
     }
 });
 
-/*
-	try {
+try {
     document.addEventListener('deviceready', function() {
         // cordova.plugins.notification.local is now available
         cordova.plugins.notification.local.hasPermission(function(granted) {
@@ -74,7 +73,6 @@ $.ajaxSetup({
 } catch (ex) {
     console.log(ex);
 }
-*/
 
 AKHB.openContentPage =  function(navigation,$templateCache){
     if(navigation.type == 1){
