@@ -32,7 +32,10 @@
 	position: relative;
 	top:3px;
 }
-
+.navigation-bar__right .fa-trash-o{
+	position: relative;
+	top:3px;
+}
 .article-content{
 	padding:1em;
 }
