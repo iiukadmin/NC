@@ -20,57 +20,57 @@
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
-    <gap:splash src="splash_boots.png" />
+    <gap:splash src="splash_iiuk.png" />
 
-    <gap:splash src="icons_boots/Default.png"         gap:platform="ios" width="320" height="480" />
-    <gap:splash src="icons_boots/Default@2x.png"      gap:platform="ios" width="640" height="960" />
-    <gap:splash src="icons_boots/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
+    <gap:splash src="icons_iiuk/Default.png"         gap:platform="ios" width="320" height="480" />
+    <gap:splash src="icons_iiuk/Default@2x.png"      gap:platform="ios" width="640" height="960" />
+    <gap:splash src="icons_iiuk/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
 
-    <icon src="icons_boots/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons_boots/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons_boots/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="icons_boots/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="icons_boots/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
-    <icon src="icons_boots/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
+    <icon src="icons_iiuk/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons_iiuk/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons_iiuk/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons_iiuk/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="icons_iiuk/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
+    <icon src="icons_iiuk/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
 
-    <icon src="icons_boots/icon.png" />
+    <icon src="icons_iiuk/icon.png" />
     <!-- iPhone 6 / 6+ -->
-    <icon src="icons_boots/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
+    <icon src="icons_iiuk/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
 
     <!-- iPhone / iPod Touch  -->
-    <icon src="icons_boots/icon-60.png" gap:platform="ios" width="60" height="60" />
-    <icon src="icons_boots/icon-60@2x.png" gap:platform="ios" width="120" height="120" />
+    <icon src="icons_iiuk/icon-60.png" gap:platform="ios" width="60" height="60" />
+    <icon src="icons_iiuk/icon-60@2x.png" gap:platform="ios" width="120" height="120" />
 
     <!-- iPad -->
-    <icon src="icons_boots/icon-76.png" gap:platform="ios" width="76" height="76" />
-    <icon src="icons_boots/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
+    <icon src="icons_iiuk/icon-76.png" gap:platform="ios" width="76" height="76" />
+    <icon src="icons_iiuk/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
 
     <!-- Settings Icon -->
-    <icon src="icons_boots/icon-small.png" gap:platform="ios" width="29" height="29" />
-    <icon src="icons_boots/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons_boots/icon-small@3x.png" gap:platform="ios" width="87" height="87" />
+    <icon src="icons_iiuk/icon-small.png" gap:platform="ios" width="29" height="29" />
+    <icon src="icons_iiuk/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
+    <icon src="icons_iiuk/icon-small@3x.png" gap:platform="ios" width="87" height="87" />
 
     <!-- Spotlight Icon -->
-    <icon src="icons_boots/icon-40.png" gap:platform="ios" width="40" height="40" />
-    <icon src="icons_boots/icon-40@2x.png" gap:platform="ios" width="80" height="80" />
+    <icon src="icons_iiuk/icon-40.png" gap:platform="ios" width="40" height="40" />
+    <icon src="icons_iiuk/icon-40@2x.png" gap:platform="ios" width="80" height="80" />
 
     <!-- iPhone / iPod Touch -->
-    <icon src="icons_boots/icon-57.png" gap:platform="ios" width="57" height="57" />
-    <icon src="icons_boots/icon@2x.png" gap:platform="ios" width="114" height="114" />
+    <icon src="icons_iiuk/icon-57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icons_iiuk/icon@2x.png" gap:platform="ios" width="114" height="114" />
 
     <!-- iPad -->
-    <icon src="icons_boots/icon-72.png" gap:platform="ios" width="72" height="72" />
-    <icon src="icons_boots/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
+    <icon src="icons_iiuk/icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons_iiuk/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
     <!-- iPhone Spotlight and Settings Icon -->    
-    <icon src="icons_boots/icon-small.png" gap:platform="ios" width="29" height="29" />
-    <icon src="icons_boots/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons_boots/icon-40@3x.png" gap:platform="ios" width="120" height="120" />
+    <icon src="icons_iiuk/icon-small.png" gap:platform="ios" width="29" height="29" />
+    <icon src="icons_iiuk/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
+    <icon src="icons_iiuk/icon-40@3x.png" gap:platform="ios" width="120" height="120" />
 
     <!-- iPad Spotlight and Settings Icon -->
-    <icon src="icons_boots/icon-Small-50.png" gap:platform="ios" width="50" height="50" />
-    <icon src="icons_boots/icon-Small-50@2x.png" gap:platform="ios" width="100" height="100" />
-    <icon src="icons_boots/icon-83.5@2x.png" gap:platform="ios" width="167" height="167" />
+    <icon src="icons_iiuk/icon-Small-50.png" gap:platform="ios" width="50" height="50" />
+    <icon src="icons_iiuk/icon-Small-50@2x.png" gap:platform="ios" width="100" height="100" />
+    <icon src="icons_iiuk/icon-83.5@2x.png" gap:platform="ios" width="167" height="167" />
 
     <content src="index.html" />
     <preference name="permissions" value="none" />
