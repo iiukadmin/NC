@@ -6,7 +6,7 @@ window.AKHB ={
 		// http://stage.iiuk.homeip.net/Pages/App/webservice2.php
 		// SenderID IIUK: 31742222780
 		// SenderID myAKHB: 824841663931
-		// Application: iiuk / akhb
+		// Application: iiuk / akhb / boots / amazon
 		remoteAddress : 'http://messaging.poonja.co.uk/Pages/App/webservice2.php',
 		debug:true,
 		version:null,
@@ -14,6 +14,6 @@ window.AKHB ={
 		taskTimeout:1000*5,
 		messageSyncTimeout:1000*30,
 		senderID:'31742222780',
-		application:'boots'
+		application:'amazon'
 	}
 };
