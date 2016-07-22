@@ -111,6 +111,8 @@
 	<gap:plugin name="de.appplant.cordova.plugin.badge" />
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
+	<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
+    <gap:plugin name="https://github.com/rromerogar/net.bgta.phonegap.appversion.git" source="git" />
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
