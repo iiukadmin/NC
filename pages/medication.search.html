@@ -1,0 +1,39 @@
+<ons-page ng-controller="MedicationSearchController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">Medicines</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <fixed-bar style="width: 100%; background-color: #fff">
+        <div class="navigation-bar__center" style="margin: 0px;height: 66px">
+            <input type="search" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Medication Search" ng-model="key" ng-change="search($event,key)">
+            <a ng-show="!emptySearch" class="btn-empty-search" href="javascript:void(0)" ng-click="clearInput()" style="top:0;">
+                <i class="fa fa-times"></i>
+            </a>
+            <div style="width: 100%;color: #ddd;    padding: 0 14px;    width: 100%;    margin: 0;    font-size : 14px;    text-align: left;    height: 22px;    line-height: 22px;">Hint: Use multiple words eg. Para 500 Tab</div>
+        </div>
+    </fixed-bar>
+    <ons-scroller infinit-scroll-enable="canWeLoadMoreContent()" can-load="true" on-scrolled="populateList()" style="padding-top: 76px;">
+        <ons-list-item modifier="chevron" ng-repeat="item in data  track by $index" ng-click="addMedication(item,$event);">
+            <ons-row>
+                <ons-col class="person-name">
+                    {{item.name}}
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+        <ons-list-item ng-show="isLoaded && !isLoading && data.length == 0">
+            Not found data.             <a href="javascript:void(0)" ng-click="addNewMedication(key)"> Add medication {{key}} ?</a>
+        </ons-list-item>
+        <ons-list-item ng-show="isLoading">
+            <ons-row style="text-align: center;">
+                <ons-col>
+                    <i class="fa fa-spin fa-spinner fa-lg"></i> Loading...
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-scroller>
+    
+</ons-page>
