@@ -1,28 +1,78 @@
 //ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by  
-var MSG_RETUIREDNETWORK = {title:'Internet Connection',content:'Sorry, a network connection is required, please try later.'};
-var MSG_LOGINFAILED = {title:'Incorrect Password',content:'Please check password and try again.'};
-var MSG_SYSTEMERROR = {title:'System Error',content:'Please check you have a network connection. If issues persist, please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:100'};
+var MSG_RETUIREDNETWORK = { title: 'Internet Connection', content: 'Sorry, a network connection is required, please try later.' };
+var MSG_LOGINFAILED = { title: 'Incorrect Password', content: 'Please check password and try again.' };
+var MSG_SYSTEMERROR = { title: 'System Error', content: 'Please check you have a network connection. If issues persist, please contact <a href="mailto:enquiries@iiuk.org">enquiries@iiuk.org</a>. <br /> Error Code:100' };
 
 var pushNotification;
-var module = ons.bootstrap('AKHB', ['onsen','ngTouch']);
+var module = ons.bootstrap('AKHB', ['onsen', 'ngTouch']);
 var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
 window.DB = null;
 
-AKHB.user = { id:null, authcode:null,appVersion:'1.0'};
+AKHB.user = { id: null, authcode: null, appVersion: '1.0' };
 AKHB.xhr = [];
 $.ajaxSetup({
-    beforeSend :function(xhr){
+    beforeSend: function(xhr) {
         AKHB.xhr.push(xhr);
-    },complete:function(xhr){
+    },
+    complete: function(xhr) {
         var tmp = [];
-        for(var _index in AKHB.xhr){
-            if(AKHB.xhr[_index].readyState == 4){
+        for (var _index in AKHB.xhr) {
+            if (AKHB.xhr[_index].readyState == 4) {
                 AKHB.xhr.pop(AKHB.xhr[_index]);
             }
         }
     }
 });
+
+try {
+    document.addEventListener('deviceready', function() {
+        // cordova.plugins.notification.local is now available
+        cordova.plugins.notification.local.hasPermission(function(granted) {
+            console.log("hasPermission", granted);
+            // console.log('Permission has been granted: ' + granted);
+            if (granted) return;
+            cordova.plugins.notification.local.registerPermission(function(granted) {
+                // console.log('Permission has been granted: ' + granted);
+                console.log("registerPermission", granted);
+            });
+        });
+
+        cordova.plugins.notification.local.on("click", function(notification) {
+            if (typeof myNavigator == undefined) {
+                window.isFromLocalNotification = true;
+            } else {
+                myNavigator.pushPage('pages/schedules.html');
+            }
+        });
+        cordova.plugins.notification.local.on("trigger", function(notification) {
+            console.log("trigger notification:", notification);
+            var data = JSON.parse(notification.data);
+            var schedule = data.schedule;
+            schedules.load(schedule.id, function(data) {
+                data.triggered = 1;
+                setTimeout(function() {
+                    schedules.all()
+                        .filter("reminder_id", "=", schedule.reminder_id)
+                        .and(new persistence.PropertyFilter('id', '!=', schedule.id))
+                        .and(new persistence.PropertyFilter('triggered', '=', 0))
+                        .order("trigger_at", true)
+                        .one(function(scheduleNext) {
+                            AKHB.utils.addLocalNotification(scheduleNext);
+                            console.log("register next notification:", scheduleNext);
+                        });
+                }, 500);
+
+            })
+
+        });
+
+    }, false)
+
+
+} catch (ex) {
+    console.log(ex);
+}
 
 AKHB.openContentPage =  function(navigation,$templateCache){
     if(navigation.type == 1){
