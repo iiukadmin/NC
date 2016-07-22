@@ -969,99 +969,636 @@ module.controller('DirectorySearchController', ['$scope', '$rootScope', '$http',
     }
 ]);
 
-$(document).on('click','a',function(e){
+module.controller('MedicationController', ['$scope', '$rootScope', '$http', '$templateCache', '$sce',
+    function($scope, $rootScope, $http, $templateCache, $sce) {
+
+        $scope.data = [];
+        var isFirstVisit = window.localStorage.getItem('isFirstVisit');
+        isFirstVisit = isFirstVisit == null || isFirstVisit == undefined ? true : false;
+        $scope.initalCompleted = isFirstVisit ? false : true;
+        $scope.accept = isFirstVisit ? false : true;
+
+        var firstMedicationDataSync = function(callback) {
+            persistence.schemaSync(function() {
+
+                medications.all().count(function(count) {
+                    if (count > 0) {
+                        return;
+                    }
+
+                    $http({
+                        url: 'data/medications.json',
+                        method: 'get'
+                    }).success(function(data, status, headers, config) {
+                        angular.forEach(data, function(item, index, arr) {
+
+                            persistence.add(new medications({
+                                server_id: item.server_id,
+                                name: item.name,
+                                flag: item.flag,
+                                is_local: false,
+                                last_modified: item.last_modified
+                            }));
+                        });
+                        persistence.flush(callback);
+                        window.isInitMedicines = true;
+                        $scope.initalCompleted = true;
+                    }).error(function(data, status) {
+
+                    })
+                });
+            });
+        }
+
+        $scope.openEditMedication = function(item) {
+            myNavigator.pushPage("pages/medication.edit.html", { userMedication: item });
+        }
+        var loadUserMedication = function() {
+            DB.getUserMedications(function(list) {
+                $scope.$apply(function() {
+                    $scope.data = list;
+                })
+            })
+        }
+        $scope.$on('MedicationsRefresh', function() {
+            $scope.pageIndex = 0;
+            loadUserMedication();
+        });
+
+        if (isFirstVisit) {
+            ons.notification.alert({
+                message: 'The medication reminder functionality is intented as supporting tool only. You must not rely on it to remember to take your medication.',
+                title: 'Warning',
+                buttonLabel: 'Accept',
+                callback: function(result) {
+                    $scope.accept = true;
+                    firstMedicationDataSync(function() {
+                        window.localStorage.setItem('isFirstVisit', false);
+                    });
+                }
+            })
+        } else {
+            loadUserMedication();
+        }
+
+
+    }
+]);
+
+module.controller('MedicationSearchController', ['$scope', '$rootScope', '$http', '$templateCache', '$sce', '$timeout',
+    function($scope, $rootScope, $http, $templateCache, $sce, $timeout) {
+        $scope.dataCount = 0;
+        $scope.query = null;
+
+        $scope.pageIndex = 0;
+        $scope.pageSize = 20;
+        $scope.data = [];
+        $scope.isLoaded = false;
+
+
+
+        var timer = null;
+
+        $scope.search = function($event, key) {
+
+            $scope.key = key;
+            if (timer) $timeout.cancel(timer);
+
+            timer = $timeout(function() {}, 1000);
+            timer.then(
+                function() {
+                    $scope.doSearch($scope.key, $scope.populateList);
+                    //console.log("Timer resolved!", Date.now());
+                },
+                function() {
+                    //console.log("Timer rejected!", Date.now());
+                }
+            );
+        }
+
+        var now = null;
+        $scope.doSearch = function(key, callback) {
+
+            $scope.pageIndex = 0;
+            now = new Date();
+            $scope.isLoading = true;
+
+            $scope.data = [];
+            $scope.query = medications.all();
+            var keys = key.replace(/\s+/g, ' ').split(' ');
+            var filter = null;
+            angular.forEach(keys, function(item, index, arr) {
+
+                if (index == 0) {
+                    filter = new persistence.PropertyFilter('name', 'like', '%' + item + '%');
+                } else {
+                    filter = new persistence.AndFilter(filter, new persistence.PropertyFilter('name', 'like', '%' + item + '%'));
+                }
+            })
+            if (filter) {
+                $scope.query = $scope.query.and(filter);
+            }
+            $scope.query.count(function(result) {
+                $scope.dataCount = result;
+                $scope.isLoaded = true;
+                //console.log(moment().diff(now), "millisecond");
+                callback();
+
+            });
+
+        }
+
+
+        $scope.clearInput = function() {
+            $scope.key = "";
+        }
+
+
+
+        $scope.canWeLoadMoreContent = function() {
+            return true;
+        }
+
+        $scope.populateList = function() {
+
+            if (!$scope.query) return;
+            now = new Date();
+            $scope.query.limit($scope.pageSize).skip($scope.pageIndex * $scope.pageSize).list(function(data) {
+                $scope.$apply(function() {
+                    $scope.data = $scope.data.concat(data);
+                    $scope.isLoading = false;
+                    console.log(moment().diff(now), "millisecond");
+                });
+            })
+            $scope.pageIndex++;
+        };
+
+
+        $scope.load = function($done) {
+            $timeout(function() {
+                $scope.latestRefreshDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                $done();
+
+                if (!$scope.isLoading) {
+                    $scope.populateList();
+                }
+            }, 50);
+        }
+        $scope.dialogs = {};
+        $scope.addMedication = function(item, $event) {
+            var dlg = "add.html";
+            myNavigator.pushPage("pages/medication.edit.html", { medication: item });
+        };
+        $scope.addNewMedication = function(name, $event) {
+            myNavigator.pushPage("pages/medication.edit.html", { name: name, isNew: true });
+        };
+    }
+]);
+
+
+module.controller('MedicationEditController', ['$scope', function($scope) {
+    $scope.options = $scope.myNavigator.getCurrentPage().options;
+    $scope.isEdit = false;
+    if ($scope.options.isNew) {
+        $scope.drug_name = $scope.options.name;
+        $scope.isNew = $scope.options.isNew;
+    } else if (!$scope.options.medication) {
+        $scope.drug_name = $scope.options.userMedication.drug_name;
+        $scope.directions = $scope.options.userMedication.directions;
+        $scope.isEdit = true;
+    } else {
+        $scope.drug_name = $scope.options.medication.name;
+        $scope.directions = "";
+    }
+    $scope.deleteUserMedication = function() {
+        ons.notification.confirm({
+            message: "Do you want delete the Medication?",
+            callback: function(result) {
+                if (result) {
+                    $scope.options.userMedication.status = 1;
+                    $scope.options.userMedication.last_amend_date = new Date();
+                    persistence.flush(function() {});
+                    $scope.$root.$broadcast('MedicationsRefresh');
+                    myNavigator.popPage();
+                }
+            }
+        })
+
+    }
+    $scope.addClicked = function($event) {
+        if ($.trim($scope.directions) == '') {
+            ons.notification.alert({
+                message: "Please add description.",
+                title: "Warning"
+            });
+            return;
+        }
+        if ($scope.options.isNew) {
+            DB.addNewUserMedication({
+                    drug_name: $scope.drug_name,
+                    directions: $scope.directions
+                },
+                function(err) {
+
+                    $scope.$root.$broadcast('MedicationsRefresh');
+					myNavigator.pushPage('pages/medication.html');
+                    //myNavigator.popPage();
+                });
+        } else if ($scope.isEdit) {
+            $scope.options.userMedication.drug_name = $scope.drug_name;
+            $scope.options.userMedication.description = $scope.directions;
+            persistence.flush(function() {});
+            myNavigator.popPage();
+        } else {
+            DB.addUserMedication($scope.options.medication, {
+                drug_name: $scope.drug_name,
+                directions: $scope.directions,
+                server_id: $scope.options.medication.server_id,
+            }, function(err) {
+
+                $scope.$root.$broadcast('MedicationsRefresh');
+				myNavigator.pushPage('pages/medication.html');
+            //    myNavigator.popPage();
+            })
+        }
+
+    };
+    
+    $scope.orderRepeat = function() {
+         ons.notification.alert({
+                message: "Thank you, your prescription reorder request has been receieved.",
+                title: "Prescription Reorder"
+            });
+				myNavigator.pushPage('pages/medication.html');
+            return;
+    };
+
+    
+
+}]);
+
+
+module.controller('RemindersController', ['$scope', '$rootScope', '$http', '$templateCache', '$sce',
+    function($scope, $rootScope, $http, $templateCache, $sce) {
+        $scope.data = [];
+        var loadReminders = function() {
+            $scope.data = [];
+            DB.getReminders(function(list) {
+                async.each(list, function(reminder, callback) {
+                    reminder.userMedications.list(null, function(meds) {
+                        reminder.dataMedications = meds;
+                        callback(null);
+                    })
+                }, function(err) {
+                    $scope.$apply(function() {
+                        $scope.data = list;
+                    })
+                })
+
+            });
+        }
+        $scope.$on('RemindersRefresh', function() {
+            loadReminders();
+        });
+        loadReminders();
+
+        $scope.getTitle = function(reminder) {
+            if (reminder.type == 1) {
+                var days = JSON.parse(reminder.days);
+                if (days.length == 7) {
+                    return 'Daily';
+                }
+                return AKHB.utils.getShortDayString(days);
+            } else {
+                return 'Periodic';
+            }
+        }
+        $scope.openReminder = function(reminder) {
+            myNavigator.pushPage('pages/reminders.edit.html', { reminder: reminder });
+        };
+
+        $scope.addButtonClick = function() {
+
+            ons.createDialog('pages/popover-reminder-list.html').then(function(dialog) {
+                dialog.addReminder = function(type) {
+                    myNavigator.pushPage('pages/reminders.edit.html', { type: type });
+                    dialog.destroy();
+                }
+                dialog.on("posthide", function($event) {
+                    $event.dialog.destroy();
+                });
+                dialog.show();
+            });
+        }
+    }
+]);
+
+
+module.controller('ReminderEditController', ['$scope', '$sce', '$timeout',
+    function($scope, $sce, $timeout) {
+        $scope.options = $scope.myNavigator.getCurrentPage().options;
+        if ($scope.options.reminder) {
+            $scope.isEdit = true;
+        } else {
+            $scope.options.reminder = new reminders();
+        }
+        var now = moment();
+        $scope.remind_for = 21;
+        $scope.skip_for = 7;
+        $scope.daysString = AKHB.utils.daysString;
+        $scope.day = new Array(7);
+        $scope.checkedMedications = new Array();
+        $scope.reminder = {
+            start: now.format('YYYY-MM-DD'),
+            end: now.add('d', 20).format('YYYY-MM-DD'),
+            time: now.add('h', 1)
+        };
+        if ($scope.isEdit) {
+            $scope.remind_for = $scope.options.reminder.remind_for;
+            $scope.skip_for = $scope.options.reminder.skip_for;
+            $scope.reminder = {
+                start: moment($scope.options.reminder.start_date).format('YYYY-MM-DD'),
+                end: moment($scope.options.reminder.end_date).format('YYYY-MM-DD'),
+                time: moment('1988-01-01 ' + $scope.options.reminder.reminder_time)
+            };
+            $scope.options.type = $scope.options.reminder.type;
+            angular.forEach($scope.options.reminder.days, function(item, index, arr) {
+                $scope.day[item] = true;
+            });
+
+            $scope.options.reminder.userMedications.list(null, function(meds) {
+                angular.forEach(meds, function(med, index) {
+                    $scope.checkedMedications.push(med);
+                });
+
+                DB.getUserMedications(function(list) {
+                    $scope.$apply(function() {
+                        $scope.medications = list;
+                    })
+                });
+            })
+
+
+        } else {
+            DB.getUserMedications(function(list) {
+                $scope.$apply(function() {
+                    $scope.medications = list;
+                })
+            });
+        }
+
+
+        $scope.dayClick = function(index) {
+            if (!$scope.day[index]) {
+                $scope.day[index] = true;
+            } else {
+                $scope.day[index] = false;
+            }
+        };
+
+        $scope.medicationClick = function(item) {
+            var existIndex = $scope.checkedMedications.indexOf(item);
+
+            if (existIndex > -1) {
+                //$scope.options.reminder.medications.remove(item);
+                //$scope.checkedMedications.remove(item);
+                if (existIndex == $scope.checkedMedications.length - 1) {
+                    $scope.checkedMedications = $scope.checkedMedications.slice(0, existIndex);
+                } else {
+                    $scope.checkedMedications = $scope.checkedMedications.slice(0, existIndex).concat(
+                        $scope.checkedMedications.slice(existIndex + 1)
+                    );
+                }
+            } else {
+                //$scope.options.reminder.medications.add(item);
+                $scope.checkedMedications.push(item);
+            }
+        };
+        $scope.medicationCheck = function(item) {
+            return $scope.checkedMedications.indexOf(item) > -1;
+        }
+
+        $scope.getReminderTime = function() {
+            return moment($scope.reminder.time).format('HH:mm');
+        }
+        $scope.DatePicker = function($event, originDate) {
+            var options = {
+                date: moment($scope.reminder[originDate]).toDate(),
+                mode: 'date'
+            };
+            if (originDate == 'time') {
+                options.mode = 'time';
+            }
+
+            function onSuccess(date) {
+                switch (originDate) {
+                    case 'start':
+                        if (moment($scope.reminder.start).toDate() < date) {
+                            $scope.reminder.end = moment(date).format('YYYY-MM-DD');
+                        }
+                        break;
+                    case 'end':
+                        if (moment($scope.reminder.start).toDate() > date) {
+                            $scope.reminder.start = moment(date).format('YYYY-MM-DD');
+                        }
+                        break;
+                    case 'time':
+                        $scope.$apply(function() {
+                            $scope.reminder.time = moment(date).toDate();
+                        });
+
+                        return;
+                    default:
+                        break;
+                }
+                $scope.$apply(function() {
+                    $scope.reminder[originDate] = moment(date).format('YYYY-MM-DD');
+                });
+
+            }
+
+            function onError(error) { // Android only 
+                console.log(error);
+            }
+            if (typeof datePicker !== 'undefined') {
+                datePicker.show(options, onSuccess, onError);
+            }
+        };
+        $scope.save = function($event) {
+            var checkedDays = [];
+            angular.forEach($scope.day, function(item, index, arr) {
+                if (item) {
+                    checkedDays.push(index);
+                }
+            })
+
+            if (checkedDays.length < 1 && $scope.options.type == 1) {
+                ons.notification.alert({
+                    title: 'Warning',
+                    message: 'Please checked a day.'
+                });
+                return;
+            }
+
+            if ($scope.checkedMedications.length < 1) {
+
+                ons.notification.alert({
+                    title: 'Warning',
+                    message: 'Please checked a medication.'
+                });
+                return;
+            }
+
+
+            $scope.options.reminder.days = $scope.options.type == 1 ? JSON.stringify(checkedDays) : null;
+            $scope.options.reminder.start_date = $scope.reminder.start;
+            $scope.options.reminder.end_date = $scope.reminder.end;
+            $scope.options.reminder.reminder_time = moment($scope.reminder.time).format("HH:mm");
+            $scope.options.reminder.remind_for = $scope.options.type == 2 ? $scope.remind_for : null;
+            $scope.options.reminder.skip_for = $scope.options.type == 2 ? $scope.skip_for : null;
+            $scope.options.reminder.last_amend_date = new Date();
+            $scope.options.reminder.description = JSON.stringify($scope.checkedMedicationsDescription);
+
+            if (!$scope.isEdit) {
+
+
+                $scope.options.reminder.type = $scope.options.type;
+                $scope.options.reminder.status = 0;
+
+                DB.addReminder($scope.checkedMedications, $scope.options.reminder, function() {
+                    $scope.$root.$broadcast('RemindersRefresh');
+                    myNavigator.popPage();
+                });
+
+
+            } else {
+
+                DB.updateReminder($scope.checkedMedications, $scope.options.reminder, function() {
+                    $scope.$root.$broadcast('RemindersRefresh');
+                    myNavigator.popPage();
+                })
+            }
+
+        }
+        $scope.deleteReminder = function() {
+            if ($scope.isEdit) {
+                ons.notification.confirm({
+                    message: "Delete this reminder?",
+                    callback: function(result) {
+                        if (result) {
+                            DB.deleteReminder($scope.options.reminder, function() {
+                                $scope.$root.$broadcast('RemindersRefresh');
+                                myNavigator.popPage();
+                            })
+                        }
+                    }
+                })
+            }
+        }
+
+        //  $scope.generateLocalNotification = AKHB.utils.generateLocalNotification;
+    }
+]);
+
+module.controller('ScheduleController', ['$scope', '$rootScope', '$http', '$templateCache', '$sce',
+    function($scope, $rootScope, $http, $templateCache, $sce) {
+        DB.getTodaySchedules(function(list) {
+            $scope.$apply(function() {
+                $scope.data = list;
+                window.isFromLocalNotification = false;
+            })
+        });
+
+        $scope.isActive = function(item) {
+            return Math.abs(moment().diff(item.trigger_at, 'm')) <= 30;
+        }
+
+        $scope.getTime = function(item) {
+            return moment(item.trigger_at).format('hh:mm A');
+        };
+    }
+]);
+
+module.controller('SurveyController', ['$scope', '$rootScope', '$http', '$templateCache', '$sce',
+    function($scope, $rootScope, $http, $templateCache, $sce) {
+
+    }
+]);
+
+
+
+$(document).on('click', 'a', function(e) {
 
         var $this = $(this);
         var $href = $this.attr('href');
         var $target = $this.attr('target');
-        if ($target != '_blank') { $target = '_self' ;}
-        if($href != ''){
+        if ($target != '_blank') { $target = '_self'; }
+        if ($href != '') {
             e.preventDefault();
-            
-            if($href.toLowerCase().indexOf('http') == 0){
-	            
-	            if ($target == '') { 
-		        	if(!Auth.isNetworkConnected()){
-		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
-				 	}else{	
-						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-		                $('div.loading').removeClass('ng-hide');
-						ref.addEventListener('loadstop', function(){
-							ref.show();
-		                    $('div.loading').addClass('ng-hide');
-						});
-					}                     
-	            }
-	            if ($target.toLowerCase().indexOf('_blank') == 0) {
-	            
-		            navigator.notification.confirm(
-	                    "Would you like to open this link in your browser?",
-	                    function(buttonIndex) {
-	                        if(buttonIndex == 1){
-		                        window.open($href, '_system');
-	                        }
-	                    },
-	                    'External Link',
-	                    ["Open","Cancel"]
-	                );
-		        }else if($target.toLowerCase().indexOf('_self') == 0){
-		        	if(!Auth.isNetworkConnected()){
-		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
-				 	}else{	
-						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-		                $('div.loading').removeClass('ng-hide');
-						ref.addEventListener('loadstop', function(){
-							ref.show();
-		                    $('div.loading').addClass('ng-hide');
-						});
-					}                     
-		        }    
-                
-            }else if($href.toLowerCase().indexOf('tel') == 0){
+
+            if ($href.toLowerCase().indexOf('http') == 0) {
+
+                if ($target == '') {
+                    if (!Auth.isNetworkConnected()) {
+                        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+                    } else {
+                        ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+                        $('div.loading').removeClass('ng-hide');
+                        ref.addEventListener('loadstop', function() {
+                            ref.show();
+                            $('div.loading').addClass('ng-hide');
+                        });
+                    }
+                }
+                if ($target.toLowerCase().indexOf('_blank') == 0) {
+
+                    navigator.notification.confirm(
+                        "Would you like to open this link in your browser?",
+                        function(buttonIndex) {
+                            if (buttonIndex == 1) {
+                                window.open($href, '_system');
+                            }
+                        },
+                        'External Link', ["Open", "Cancel"]
+                    );
+                } else if ($target.toLowerCase().indexOf('_self') == 0) {
+                    if (!Auth.isNetworkConnected()) {
+                        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+                    } else {
+                        ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+                        $('div.loading').removeClass('ng-hide');
+                        ref.addEventListener('loadstop', function() {
+                            ref.show();
+                            $('div.loading').addClass('ng-hide');
+                        });
+                    }
+                }
+
+            } else if ($href.toLowerCase().indexOf('tel') == 0) {
                 navigator.notification.confirm(
                     "",
                     function(buttonIndex) {
-                        if(buttonIndex == 1){
-                           window.open( $href, '_system', 'location=yes');
+                        if (buttonIndex == 1) {
+                            window.open($href, '_system', 'location=yes');
                         }
                     },
-                    $(this).text(),
-                    ["Call","Cancel"]
+                    $(this).text(), ["Call", "Cancel"]
                 );
-               
-            }else if($href.toLowerCase().indexOf('mailto') == 0){
+
+            } else if ($href.toLowerCase().indexOf('mailto') == 0) {
                 window.plugin.email.open({
-                    to:[$href.substring(7)]
+                    to: [$href.substring(7)]
                 });
-            }else if($href.toLowerCase().indexOf('calendar') == 0){
-	            /*
-		           <a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T18:30","endDate":"2015-02-15T19:30"}'>Event at a time</a><a href='calendar:{"title":"This is the Title","eventLocation":"This is the location","notes":"This is the notes","startDate":"2015-02-15T00:00","endDate":"2015-02-16T00:00"}'>All Day Event</a>
-		        */
-	            	
-				var event = JSON.parse($href.substring(9));
-				var startDate = new Date(event['startDate']); 
-				var endDate = new Date(event['endDate']);
-				var title = event['title'];
-				var eventLocation = event['eventLocation'];
-				var notes = event['notes'];
-				//var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-				var success = function(message) { };
-				var error = function(message) { alert("Error: " + message); };
-			  
-				var calOptions = window.plugins.calendar.getCalendarOptions();
-				calOptions.firstReminderMinutes = null; //minutes
-				calOptions.url = event['url'];
-			window.plugins.calendar.createEventInteractivelyWithOptions(title,eventLocation,notes,startDate,endDate,calOptions,success,error);
-			}else{
-                 window.open( $href, '_system', 'location=yes');
+            } else {
+                window.open($href, '_system', 'location=yes');
             }
-            
-        } 
-})
-/*.on('swipe','ons-list-item.swipe',function(e){
-    console.log('left',e);
-    //$(this).
-})*/
+
+        }
+    })
+    /*.on('swipe','ons-list-item.swipe',function(e){
+        console.log('left',e);
+        //$(this).
+    })*/
 ;
 
 
