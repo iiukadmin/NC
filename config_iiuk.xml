@@ -97,21 +97,20 @@
 	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
-	<gap:plugin name="cordova-plugin-device" />
-	<gap:plugin name="cordova-plugin-device-orientation" />
-	<gap:plugin name="cordova-plugin-dialogs" />
-	<gap:plugin name="cordova-plugin-globalization" />
-	<gap:plugin name="cordova-plugin-inappbrowser" />
-	<gap:plugin name="cordova-plugin-network-information" />
-	<gap:plugin name="cordova-plugin-splashscreen" />
-	<gap:plugin name="cordova-plugin-vibration" />
-	<gap:plugin name="cordova-plugin-statusbar" />
-    <gap:plugin name="cordova-plugin-datepicker" source="npm"/>
-	<gap:plugin name="cordova-plugin-email-composer"/>
-	<gap:plugin name="cordova-plugin-badge" />
+	<gap:plugin name="org.apache.cordova.device" />
+	<gap:plugin name="org.apache.cordova.device-orientation" />
+	<gap:plugin name="org.apache.cordova.dialogs" />
+	<gap:plugin name="org.apache.cordova.globalization" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" />
+	<gap:plugin name="org.apache.cordova.network-information" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	<gap:plugin name="org.apache.cordova.statusbar" />
+	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
+	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
+	<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
-	<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
-    <gap:plugin name="https://github.com/rromerogar/net.bgta.phonegap.appversion.git" source="git" />
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
