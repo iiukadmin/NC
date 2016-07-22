@@ -1604,148 +1604,142 @@ $(document).on('click', 'a', function(e) {
 
 
 //define filter
-module.filter('safePhone', function ($sce) {
-    return function (input) {
-        if(input) 
-            return input.replace(/\ +/g,"");
+module.filter('safePhone', function($sce) {
+    return function(input) {
+        if (input)
+            return input.replace(/\ +/g, "");
         else
             return '';
     }
 });
-module.filter('trustHtml', function ($sce) {
-    return function (input) {
+module.filter('trustHtml', function($sce) {
+    return function(input) {
         return $sce.trustAsHtml(input);
     }
 });
-module.filter('trustHtmlA', function ($sce) {
-    return function (input) {
-        return $sce.trustAsHtml(input.replace(/<[^>]+>/g,""));
+module.filter('trustHtmlA', function($sce) {
+    return function(input) {
+        return $sce.trustAsHtml(input.replace(/<[^>]+>/g, ""));
     }
 });
-module.filter('formatTime', function ($sce) {
-    return function (input) {
-        if(input)
+module.filter('formatTime', function($sce) {
+    return function(input) {
+        if (input)
             return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
         return "";
     }
 });
 
 
-function tokenHandler (result) {
+function tokenHandler(result) {
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
     //alert('device token = ' + result);
     sendRegistionId(result);
 }
 // result contains any message sent from the plugin call
-function successHandler (result) {
-   //sendRegistionId(result);
+function successHandler(result) {
+    //sendRegistionId(result);
 }
 // result contains any error description text returned from the plugin call
-function errorHandler (error) {
-    navigator.notification.alert('error = ' + error,null,'Error');
+function errorHandler(error) {
+    navigator.notification.alert('error = ' + error, null, 'Error');
 }
-function sendRegistionId(id){
-    var url = window.AKHB.config.remoteAddress+'?type=4&version='+AKHB.user.appVersion+'&os='+AKHB.user.os+'&device='+AKHB.user.deviceName+'&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
-    $.get(url,function(data){
-    })
+
+function sendRegistionId(id) {
+    var url = window.AKHB.config.remoteAddress + '?type=4&version=' + AKHB.user.appVersion + '&os=' + AKHB.user.os + '&device=' + AKHB.user.deviceName + '&deviceid=' + AKHB.user.deviceid + '&notificationid=' + id;
+    $.get(url, function(data) {})
 }
 
 // notificationFeedback Service
-function notificationFeedback(buttonIndex,passedData) {
-	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
-	$.get(url,function(data){
-	})
+function notificationFeedback(buttonIndex, passedData) {
+    var url = window.AKHB.config.remoteAddress + '?type=5&uuid=' + AKHB.user.id + '&other=' + passedData + '&buttonIndex=' + buttonIndex;
+    $.get(url, function(data) {})
 }
 
+
 // added badge update function
-function updateBadge(badgeCount){
+function updateBadge(badgeCount) {
     var pushNotification = window.plugins.pushNotification;
-    pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
+    pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount);
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
 // iOS
-function onNotificationAPN (event) {
-    if ( event.alert )
-    {
-		if (event.type == '2') { 
-			navigator.notification.confirm(
-	        	event.alert,
-	        	function(buttonIndex) {
-		       	 notificationFeedback(buttonIndex,event.other);
-			   	},
-			   	event.title,
-			   	event.buttons
-			);
+function onNotificationAPN(event) {
+    if (event.alert) {
+        if (event.type == '2') {
+            navigator.notification.confirm(
+                event.alert,
+                function(buttonIndex) {
+                    notificationFeedback(buttonIndex, event.other);
+                },
+                event.title,
+                event.buttons
+            );
 
-		} else {
-	        navigator.notification.alert(event.alert,null,event.title);
-		}
+        } else {
+            navigator.notification.alert(event.alert, null, event.title);
+        }
     }
 
-    if ( event.sound )
-    {
+    if (event.sound) {
         var snd = new Media(event.sound);
         snd.play();
     }
 
-    if ( event.badge )
-    {
+    if (event.badge) {
         pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
     }
 }
 
 //Android and Amazon Fire OS 
 function onNotificationGCM(e) {
-   //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-    switch( e.event )
-    {
-    case 'registered':
-        if ( e.regid.length > 0 )
-        {
-            sendRegistionId(e.regid);
-        }
-    break;
+    //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+    switch (e.event) {
+        case 'registered':
+            if (e.regid.length > 0) {
+                sendRegistionId(e.regid);
+            }
+            break;
 
-    case 'message':
-        // if this flag is set, this notification happened while we were in the foreground.
-        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-        if ( e.foreground )
-        {
+        case 'message':
+            // if this flag is set, this notification happened while we were in the foreground.
+            // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+            if (e.foreground) {
 
-            // on Android soundname is outside the payload.
-            // On Amazon FireOS all custom attributes are contained within payload
-            var soundfile = e.soundname || e.payload.sound;
-            // if the notification contains a soundname, play it.
-            var my_media = new Media("/android_asset/www/"+ soundfile);
-            my_media.play();
-        }
-//        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
-        
-        if (e.payload.type == '2') { 
-			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
-			 navigator.notification.confirm(
-	        	e.message,
-	        	function(buttonIndex) {
-		       	 notificationFeedback(buttonIndex,e.payload.other);
-			   	},
-			   	e.payload.title,
-			   	e.payload.buttons
-			);
-      
-        } else {
-	        navigator.notification.alert(e.message,null,e.payload.title);
-		}
+                // on Android soundname is outside the payload.
+                // On Amazon FireOS all custom attributes are contained within payload
+                var soundfile = e.soundname || e.payload.sound;
+                // if the notification contains a soundname, play it.
+                var my_media = new Media("/android_asset/www/" + soundfile);
+                my_media.play();
+            }
+            //        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
 
-    break;
+            if (e.payload.type == '2') {
+                //navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
+                navigator.notification.confirm(
+                    e.message,
+                    function(buttonIndex) {
+                        notificationFeedback(buttonIndex, e.payload.other);
+                    },
+                    e.payload.title,
+                    e.payload.buttons
+                );
 
-    case 'error':
-       navigator.notification.alert('GCM error = '+e.msg,null,'Error');
-    break;
+            } else {
+                navigator.notification.alert(e.message, null, e.payload.title);
+            }
 
-    default:
-        navigator.notification.alert('An unknown GCM event has occurred',null,'Error');
-    break;
-  }
+            break;
+
+        case 'error':
+            navigator.notification.alert('GCM error = ' + e.msg, null, 'Error');
+            break;
+
+        default:
+            navigator.notification.alert('An unknown GCM event has occurred', null, 'Error');
+            break;
+    }
 }
