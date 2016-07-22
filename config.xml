@@ -111,8 +111,9 @@
 	<gap:plugin name="de.appplant.cordova.plugin.badge" />
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
-	<gap:plugin name="de.appplant.cordova.plugin.local-notification" />
+	<!--<gap:plugin name="cordova-plugin-local-notifications-mm" source="npm" />-->
 	
+
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
