@@ -17,12 +17,12 @@
         <ons-list-item class="list-medication" ng-repeat="item in data" modifier="chevron" ng-click="openEditMedication(item);">
             <ons-row>
 
-            <ons-col width="20%" class="plan-center"><strong>Reorder Due</strong>
+            <ons-col width="20%" class="plan-center reorder"><strong>Reorder Due</strong>
             </ons-col>
            
             <ons-col width="2%" class="plan-center" ng-style="{ backgroundColor:'#3399ff' }">
             </ons-col>
-                <ons-col width="78%" class="plan-right list-message" style="position:relative;"><strong>{{item.drug_name}}</strong><p>{{item.directions}}</p></ons-col>
+                <ons-col width="78%" class="plan-right list-message" style="position:relative;"><strong><p>{{item.drug_name}}</p></strong><p>{{item.directions}}</p></ons-col>
 
 
 

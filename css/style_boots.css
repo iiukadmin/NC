@@ -185,6 +185,8 @@ ons-list-item.swipe{
    	transform: translateX(-30%);
    	-webkit-transition:0.2s all ease;
    	transition:0.2s all ease;
+	text-overflow:ellipsis;
+
 }
 
 #list-message ons-list-item{
@@ -192,6 +194,8 @@ ons-list-item.swipe{
    	transform: translateX(-0%);
    	-webkit-transition:0.2s all ease;
    	transition:0.2s all ease;
+	text-overflow:ellipsis;
+
 }
 .col-delete{
 	width:100px !important;
@@ -290,6 +294,14 @@ ons-list-header,.item-name{
 }
 #list-message{
 	transition: transform 0.4s linear 0s; 
+		text-overflow:ellipsis;
+}
+
+.reorder{
+  text-align: center;
+  font-family:"Times New Roman",Georgia,Serif;
+  padding-top: 8px;
+  padding-right: 8px;
 }
 
 #wrapper {
