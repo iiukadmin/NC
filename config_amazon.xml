@@ -112,6 +112,7 @@
 <!--	<gap:plugin name="de.appplant.cordova.plugin.badge" /> -->
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
+    <gap:plugin name="cordova-plugin-datepicker" source="npm"/>
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" />	
 
     <access origin="*" />
