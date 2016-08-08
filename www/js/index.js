@@ -1,36 +1,35 @@
 var app = {
   startCamera: function(){
-    CameraPreview.startCamera({x: 0, y: 0});
+    cordova.plugins.camerapreview.startCamera({x: 0, y: 0});
   },
 
   startCameraAnotherPos: function(){
-    CameraPreview.startCamera({x: 50, y: 100, width: 300, height:300, camera: "back", tapPhoto: true, previewDrag: true, toBack: false});
-
+    cordova.plugins.camerapreview.startCamera({x: 50, y: 100, width: 300, height:300, camera: "back", tapPhoto: true, previewDrag: true, toBack: false});
   },
 
   stopCamera: function(){
-    CameraPreview.stopCamera();
+    cordova.plugins.camerapreview.stopCamera();
   },
 
   takePicture: function(){
-    CameraPreview.takePicture({maxWidth: window.device.width, maxHeight: window.device.height});
+    cordova.plugins.camerapreview.takePicture({maxWidth: window.device.width, maxHeight: window.device.height});
   },
 
   switchCamera: function(){
-    CameraPreview.switchCamera();
+    cordova.plugins.camerapreview.switchCamera();
   },
 
   show: function(){
-    CameraPreview.show();
+    cordova.plugins.camerapreview.show();
   },
 
   hide: function(){
-    CameraPreview.hide();
+    cordova.plugins.camerapreview.hide();
   },
 
   colorEffectChanged: function(){
     var effect = document.getElementById('colorEffectCombo').value;
-    CameraPreview.setColorEffect(effect);
+    cordova.plugins.camerapreview.setColorEffect(effect);
   },
 
   init: function(){
@@ -45,13 +44,13 @@ var app = {
     document.getElementById('colorEffectCombo').addEventListener('change', this.colorEffectChanged, false);
     //window.addEventListener('orientationchange', this.onStopCamera, false);
     
-    CameraPreview.setOnPictureTakenHandler(function(result){
+    cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
       document.getElementById('originalPicture').src = result[0]; //originalPicturePath;
       document.getElementById('previewPicture').src = result[1]; //previewPicturePath;
     });
   }
 };
 
-document.addEventListener('deviceready', function(){	
+document.addEventListener('deviceready', function(){
   app.init();
 }, false);
