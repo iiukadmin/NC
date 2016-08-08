@@ -4,8 +4,8 @@
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
-	<plugin spec="https://github.com/westonganger/cordova-plugin-camera-preview/tree/skanygin">
-    
+	<plugin spec="https://github.com/westonganger/cordova-plugin-camera-preview/tree/skanygin" />
+
     <content src="index.html" />
     <access origin="*" />
 </widget>
