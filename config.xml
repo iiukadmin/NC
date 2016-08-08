@@ -4,7 +4,7 @@
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
-	<plugin name="org.apache.cordova.file" spec="1.0.1" source="pgb" />
+	<gap:plugin name="org.apache.cordova.file" />
 	<gap:plugin name="cordova-plugin-preview-camera" source="npm" />
 
     <content src="index.html" />
