@@ -45,8 +45,11 @@ var app = {
     //window.addEventListener('orientationchange', this.onStopCamera, false);
     
     cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
+	  alert('Hi');
       document.getElementById('originalPicture').src = result[0]; //originalPicturePath;
+      alert(result[0]);
       document.getElementById('previewPicture').src = result[1]; //previewPicturePath;
+      alert(result[1]);
     });
   }
 };
