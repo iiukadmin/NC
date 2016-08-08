@@ -1,0 +1,34 @@
+ <ons-page  ng-controller="DirectorySearchController">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button>Back</ons-back-button>
+            </div>
+          <div class="center">
+            Search Directories
+          </div>
+        </ons-toolbar>
+        <div class="navigation-bar">
+          <div class="navigation-bar__center">
+
+            <input type="search" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Search" ng-model="key" ng-change="triggerSearch()">
+
+          </div>
+        </div>       
+
+        <ons-list>
+        <ons-list-item  ng-show="loaddata" style="padding: 0;height: 70px;">
+            <div class="loading"> 
+                <p><i class="fa fa-spin fa-spinner fa-lg"></i><br />
+                    <span>loading ...</span>
+                </p>
+            </div>
+        </ons-list-item>
+          <ons-list-item class="person" modifier="tappable" ng-repeat="item in directories">
+            <ons-row>
+              <ons-col class="person-name" modifier="chevron" ng-click="OpenDirectoryDetail(item)">
+                {{item.title}}
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+        </ons-list>
+      </ons-page>

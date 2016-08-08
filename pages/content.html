@@ -1,0 +1,15 @@
+<ons-page ng-controller="ContentController">
+
+<ons-toolbar>
+    <div class="left">
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+    </div>
+    <div class="center">{{nav.title}}</div>
+    <div class="right">
+ 
+    </div>
+</ons-toolbar>
+<div ng-bind-html="contentHTML" ng-if="article.type==1" class="article-content"></div>
+<div ng-bind-html="contentHTML" ng-if="article.type==2" class="article-iframe"></div>
+
+</ons-page>

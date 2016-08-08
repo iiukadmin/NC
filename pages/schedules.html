@@ -1,0 +1,27 @@
+<ons-page ng-controller="ScheduleController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">Today's Schedules</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <ons-list style="width:100%;">
+        <ons-list-item ng-class="{true: 'schedule-active'}[isActive(item)]" class="list-schedule" ng-repeat="item in data">
+            <ons-row>
+                <ons-col>
+                    {{getTime(item)}}
+                </ons-col>
+            </ons-row>
+            <ons-row ng-repeat="med in item.medications">
+                <ons-col>
+                    <label style="color:#333"><strong>{{med.drug_name}}</strong></label>
+                     <ul>
+                        <li><i>{{med.directions}}</i></li>
+                    </ul>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
+</ons-page>
