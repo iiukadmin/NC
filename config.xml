@@ -4,11 +4,9 @@
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
-<<<<<<< HEAD
-<gap:plugin name="cordova-plugin-camerapreview" version="0.9.0" source="plugins.cordova.io" />
+    <gap:plugin name="cordova-plugin-camerapreview" version="0.9.0" source="plugins.cordova.io" />
+
     
-=======
->>>>>>> parent of 62b18fb... add plugin
     <content src="index.html" />
     <access origin="*" />
 </widget>
