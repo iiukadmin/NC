@@ -32,14 +32,6 @@ var app = {
     cordova.plugins.camerapreview.setColorEffect(effect);
   },
 
-   cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
-	  alert('Hi');
-      document.getElementById('originalPicture').src = result[0]; //originalPicturePath;
-      alert(result[0]);
-      document.getElementById('previewPicture').src = result[1]; //previewPicturePath;
-      alert(result[1]);
-    });
-
   init: function(){
     document.getElementById('startCameraButton').addEventListener('click', this.startCamera, false);
     document.getElementById('startCameraAnotherPosButton').addEventListener('click', this.startCameraAnotherPos, false);
