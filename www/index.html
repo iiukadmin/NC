@@ -9,13 +9,11 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <title>Hello World</title>
     </head>
-    <body background="img/logo.png">
-	    <div>
-    <div style="float: left; width: 50%; height: 400;">I'm on the left</div>
-    <div style="float: right; width: 50%; height: 400;">I'm on the right</div>
-	</div>
+    <body >
         <div class="app">
-            <h2 onclick="onChangeDevicePosition();">Camera Position </h2>
+		    <div>
+			    <div style="float: left; width: 50%; height: 400;" onclick="onChangeDevicePosition();"><h2>Swap Camera<BR></BR></h2></div>
+				<div style="float: right; width: 50%; height: 400;"><h2>Take Camera<BR></BR></h2></div>
             <input type="radio" name="deviceposition" id="deviceposition_back" value="Back" onclick="onChangeDevicePosition();"/>
             <label for="deviceposition_back">Back</label>
             <br/>
@@ -66,9 +64,18 @@
                                       });
 
             function onChangeDevicePosition() {
-				alert(window.plugin.CanvasCamera.CameraPosition.BACK);
+				var newDevicePositionCurrent = window.plugin.CanvasCamera.CameraPosition.BACK;
+				if (newDevicePositionCurrent == 1) {
+					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
+				} else {
+					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;	
+				}
+                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
+
+				/*
+					alert(window.plugin.CanvasCamera.CameraPosition.BACK);
               
-	                var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+	            var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 if (document.getElementById("deviceposition_back").checked)
                 {
                     newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
@@ -79,6 +86,7 @@
                 }
                 //
                 window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
+                */
                 
             }
 
