@@ -39,7 +39,7 @@
         </div>
 
     <!— camera preview canvas —>
-        <div style="width:50%;"><canvas id="camera" width="10" height="20" style="border:2px"></canvas></div>
+        <div style="width:50%;" hidden="true"><canvas id="camera" hidden="true" width="10" height="20" style="border:2px"></canvas></div>
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -65,7 +65,7 @@
                                       });
 
             function onChangeDevicePosition() {              
-				var newDevicePositionCurrent = window.plugin.CanvasCamera.CameraPosition
+				var newDevicePositionCurrent = window.plugin.CanvasCamera.CameraPosition.val()
 				if (newDevicePositionCurrent == 1) {
 					alert("1");
 					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
