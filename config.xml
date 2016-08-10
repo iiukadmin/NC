@@ -4,6 +4,9 @@
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
+        <preference name="phonegap-version" value="cli-5.2.0" />
+
+    
     <plugin name="cordova-plugin-file" />
     <plugin name="cordova-plugin-camera" />
     <plugin name="cordova-plugin-media-capture" />
