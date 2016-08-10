@@ -11,20 +11,14 @@
     </head>
     <body>
         <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-
-            <h2> Camera Position </h2>
+            <h2 onclick="onChangeDevicePosition();">Camera Position </h2>
             <input type="radio" name="deviceposition" id="deviceposition_back" value="Back" onclick="onChangeDevicePosition();"/>
             <label for="deviceposition_back">Back</label>
             <br/>
             <input type="radio" name="deviceposition" id="deviceposition_front" value="Front" onclick="onChangeDevicePosition();"/>
             <label for="deviceposition_front">Front</label>
 
-
+			<!--
             <h2> Flash Mode </h2>
             <input type="radio" name="flashmode" id="flashmode_off" value="Off" onclick="onChangeFlashMode();"/>
             <label for="flashmode_off">Off</label>
@@ -35,7 +29,7 @@
             <input type="radio" name="flashmode" id="flashmode_auto" value="Auto" onclick="onChangeFlashMode();"/>
             <label for="flashmode_auto">Auto</label>
             <br/>
-
+			-->
             <input type="button" value="Take a picture" onclick="onTakePicture();" />
 
 
@@ -102,12 +96,11 @@
             }
 
             function onTakePicture() {
-	            alert('1');
                 window.plugin.CanvasCamera.takePicture(onTakeSuccess);
             }
 
             function onTakeSuccess(data) {
-                //
+	            alert(data);
             }
         </script>
     </body>
