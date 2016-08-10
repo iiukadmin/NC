@@ -64,13 +64,13 @@
                                           window.plugin.CanvasCamera.start(opt);
                                       });
 
-            function onChangeDevicePosition() {
-				alert(window.plugin.CanvasCamera.CameraPosition);
-              
+            function onChangeDevicePosition() {              
 				var newDevicePositionCurrent = window.plugin.CanvasCamera.CameraPosition
 				if (newDevicePositionCurrent == 1) {
+					alert("1");
 					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
 				} else {
+					alert("2");
 					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;	
 				}
                 window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
