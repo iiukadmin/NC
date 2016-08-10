@@ -9,7 +9,11 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <title>Hello World</title>
     </head>
-    <body>
+    <body background="img/background.png">
+	    <div>
+    <div style="float: left; width: 50%; height: 400;">I'm on the left</div>
+    <div style="float: right; width: 50%; height: 400;">I'm on the right</div>
+	</div>
         <div class="app">
             <h2 onclick="onChangeDevicePosition();">Camera Position </h2>
             <input type="radio" name="deviceposition" id="deviceposition_back" value="Back" onclick="onChangeDevicePosition();"/>
@@ -55,15 +59,16 @@
                                               encodingType: window.plugin.CanvasCamera.EncodingType.JPEG,
                                               saveToPhotoAlbum:true,
                                               correctOrientation:true,
-                                              width:640,
-                                              height:480
+                                              width:160,
+                                              height:120
                                           };
                                           window.plugin.CanvasCamera.start(opt);
                                       });
 
             function onChangeDevicePosition() {
-
-                var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+				alert(window.plugin.CanvasCamera.CameraPosition.FRONT);
+              
+	                var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 if (document.getElementById("deviceposition_back").checked)
                 {
                     newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
@@ -74,6 +79,7 @@
                 }
                 //
                 window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
+                
             }
 
             function onChangeFlashMode() {
