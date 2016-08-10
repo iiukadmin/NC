@@ -4,14 +4,15 @@
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
-<!--	<gap:plugin name="org.apache.cordova.file" /> -->
     <plugin name="cordova-plugin-file" />
     <plugin name="cordova-plugin-camera" />
     <plugin name="cordova-plugin-media-capture" />
     <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-file-transfer" />
-	<gap:plugin name="cordova-plugin-preview-camera" source="npm" />
+<!--	<gap:plugin name="cordova-plugin-preview-camera" source="npm" /> -->
+<gap:plugin name="com.keith.cordova.plugin.canvascamera" />
+
 
     <content src="index.html" />
     <access origin="*" />
