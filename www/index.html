@@ -39,7 +39,7 @@
         </div>
 
     <!— camera preview canvas —>
-        <canvas id="camera" width="10" height="20" style="border:2px"></canvas>
+        <div style="width:50%;"><canvas id="camera" width="10" height="20" style="border:2px"></canvas></div>
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -73,10 +73,10 @@
 					alert("2");
 					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;	
 				}
-                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
+//                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
 
-				/*
-					alert(window.plugin.CanvasCamera.CameraPosition.BACK);
+				
+			//		alert(window.plugin.CanvasCamera.CameraPosition.BACK);
               
 	            var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 if (document.getElementById("deviceposition_back").checked)
@@ -89,7 +89,7 @@
                 }
                 //
                 window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
-                */
+                
                 
             }
 
