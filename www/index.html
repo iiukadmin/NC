@@ -53,56 +53,57 @@
         <script>
             document.addEventListener("deviceready", function() {
                                           canvasMain = document.getElementById("camera");
-                                          CanvasCamera.initialize(canvasMain);
+                                          window.plugin.CanvasCamera.initialize(canvasMain);
                                           // define options
                                           var opt = {
                                               quality: 75,
-                                              destinationType: CanvasCamera.DestinationType.DATA_URL,
-                                              encodingType: CanvasCamera.EncodingType.JPEG,
+                                              destinationType: window.plugin.CanvasCamera.DestinationType.DATA_URL,
+                                              encodingType: window.plugin.CanvasCamera.EncodingType.JPEG,
                                               saveToPhotoAlbum:true,
                                               correctOrientation:true,
                                               width:640,
                                               height:480
                                           };
-                                          CanvasCamera.start(opt);
+                                          window.plugin.CanvasCamera.start(opt);
                                       });
 
             function onChangeDevicePosition() {
 
-                var newDevicePosition = CanvasCamera.CameraPosition.BACK;
+                var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 if (document.getElementById("deviceposition_back").checked)
                 {
-                    newDevicePosition = CanvasCamera.CameraPosition.BACK;
+                    newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 }
                 else if (document.getElementById("deviceposition_front").checked)
                 {
-                    newDevicePosition = CanvasCamera.CameraPosition.FRONT;
+                    newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
                 }
                 //
-                CanvasCamera.setCameraPosition(newDevicePosition);
+                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
             }
 
             function onChangeFlashMode() {
 
-                var newFlashMode = CanvasCamera.FlashMode.OFF;
+                var newFlashMode = window.plugin.CanvasCamera.FlashMode.OFF;
                 if (document.getElementById("flashmode_off").checked)
                 {
-                    newFlashMode = CanvasCamera.FlashMode.OFF;
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.OFF;
                 }
                 else if (document.getElementById("flashmode_on").checked)
                 {
-                    newFlashMode = CanvasCamera.FlashMode.ON;
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.ON;
                 }
                 else if (document.getElementById("flashmode_auto").checked)
                 {
-                    newFlashMode = CanvasCamera.FlashMode.AUTO;
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.AUTO;
                 }
 
-                CanvasCamera.setFlashMode(newFlashMode);
+                window.plugin.CanvasCamera.setFlashMode(newFlashMode);
             }
 
             function onTakePicture() {
-                CanvasCamera.takePicture(onTakeSuccess);
+	            alert('1');
+                window.plugin.CanvasCamera.takePicture(onTakeSuccess);
             }
 
             function onTakeSuccess(data) {
