@@ -9,28 +9,26 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <title>Hello World</title>
     </head>
-    <body style="background-color: grey;">
-	    <div style="position: absolute; top: 0; left: 0; right: 30%; bottom: 30%; 
-      background: red; border:solid #000; border-width: 0 10px 10px 0;" onclick="alert('one');"></div>
-		<div style="position: absolute; top: 0; left: 70%; right: 0; bottom: 30%; 
-      background: blue; border:solid #000; border-width: 0 0 10px 0;" onclick="alert('two');"></div>
-		<div style="position: absolute; top: 70%; left: 0; right: 30%; bottom: 0; 
-      background: yellow; border:solid #000; border-width: 0 10px 0 0;" onclick="alert('three');"></div>
-		<div style="position: absolute; top: 70%; left: 70%; right: 0; bottom: 0; 
-      background: green;" onclick="alert('four');"></div>
+    <body style="background-color: black;">
+	    <div style="position: absolute; top: 0; left: 0; right: 50%; bottom: 50%;" onclick="onChangeDevicePositionFront();"></div>
+		<div style="position: absolute; top: 0; left: 50%; right: 0; bottom: 50%;" onclick="onTakePicture();"></div>
+		<div style="position: absolute; top: 50%; left: 0; right: 50%; bottom: 0;" onclick="onChangeDevicePositionBACK();"></div>
+		<div style="position: absolute; top: 50%; left: 50%; right: 0; bottom: 0;" onclick="alert('four');"></div>
 	    
-        <div class="app">
+		<!--
+		 <div class="app">
 		    <div>
 			    <div style="float: left; width: 50%; height: 400;" ><h2 onclick="onChangeDevicePosition();">Swap Camera<BR></BR></h2></div>
 				<div style="float: right; width: 50%; height: 400;"><h2>Take Camera<BR></BR></h2></div>
 		    </div>
+		    <h2>Swap Camera</h2>
             <input type="radio" name="deviceposition" id="deviceposition_back" value="Back" onclick="onChangeDevicePosition();"/>
             <label for="deviceposition_back">Back</label>
             <br/>
             <input type="radio" name="deviceposition" id="deviceposition_front" value="Front" onclick="onChangeDevicePosition();"/>
             <label for="deviceposition_front">Front</label>
 
-			<!--
+
             <h2> Flash Mode </h2>
             <input type="radio" name="flashmode" id="flashmode_off" value="Off" onclick="onChangeFlashMode();"/>
             <label for="flashmode_off">Off</label>
@@ -41,8 +39,8 @@
             <input type="radio" name="flashmode" id="flashmode_auto" value="Auto" onclick="onChangeFlashMode();"/>
             <label for="flashmode_auto">Auto</label>
             <br/>
-			-->
             <input type="button" value="Take a picture" onclick="onTakePicture();" />
+			-->
 
 
         </div>
@@ -73,20 +71,21 @@
                                           window.plugin.CanvasCamera.start(opt);
                                       });
 
-            function onChangeDevicePosition() {              
-				var newDevicePositionCurrent = window.plugin.CanvasCamera.CameraPosition.val()
-				if (newDevicePositionCurrent == 1) {
-					alert("1");
-					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
-				} else {
-					alert("2");
-					newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;	
-				}
-//                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
 
-				
-			//		alert(window.plugin.CanvasCamera.CameraPosition.BACK);
-              
+			function onChangeDevicePositionFront() {
+			    var newDevicePosition;
+				newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
+			    window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);	
+			}
+
+			function onChangeDevicePositionBack() {
+			    var newDevicePosition;
+				newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+			    window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);	
+			}
+
+
+            function onChangeDevicePosition() {               
 	            var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
                 if (document.getElementById("deviceposition_back").checked)
                 {
@@ -98,8 +97,6 @@
                 }
                 //
                 window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
-                
-                
             }
 
             function onChangeFlashMode() {
