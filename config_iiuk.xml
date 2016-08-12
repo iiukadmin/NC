@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
-        id          = "org.anzni.connect"
-        versionCode = "01" 
-        version     = "1.0.0" >
+        id          = "com.iiuk.myiiuk"
+        versionCode = "14" 
+        version     = "1.0.6" >
 
-    <name>ANZ Connect</name>
+    <name>IIUK</name>
 
     <description>
-        Developed by Ismaili Council For Australia And New Zealand
+        Developed by Ismaili Council for the UK
     </description>
 
-    <author href="http://www.anzsurvey.org" email="connect@anzni.org">
-        Ismaili Council For Australia And New Zealand
+    <author href="http://www.iiuk.org" email="iiukadmin@iiuk.org">
+        Ismaili Council for the UK
     </author>
 
     <preference name="phonegap-version" value="cli-5.2.0" />

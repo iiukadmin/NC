@@ -1,0 +1,16 @@
+ <ons-page ng-controller="DirectoryDescriptionController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">{{directory.title}}</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <ons-list class="list--inset" style="margin-top:10px;">
+        <ons-list-item >
+        {{directory.description}}
+        </ons-list-item>
+    </ons-list>
+</ons-page>
+
