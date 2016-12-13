@@ -1,0 +1,38 @@
+<ons-page ng-controller="DirectoryDetailController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">{{directory.title}}</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header ng-show="directory.description">{{directory.title}}</ons-list-header>
+        <ons-list-item ng-show="directory.description" class="item-description" ng-bind-html="directory.description | trustHtml">
+        </ons-list-item>
+        <ons-list-header ng-show="directory.email">Email</ons-list-header>
+        <ons-list-item ng-show="directory.email">
+            <a href="mailto:{{directory.email}}">{{directory.email}}</a>
+        </ons-list-item>
+        <ons-list-header ng-repeat-start="member in directory.members">
+            <span ng-if="member.role =='Member'">Members</span>
+            <span ng-if="member.role !='Member'">{{member.role}}</span>
+        </ons-list-header>
+        <ons-list-item class="item-name" ng-repeat-end ng-repeat="name in member.names" ng-click="openIndividual(name)">
+        {{name.title}} {{name.forename}} {{name.Surname}}
+        </ons-list-item>
+        <ons-list-header ng-show="isSync">Members</ons-list-header>
+        <ons-list-item  ng-show="isSync" class="item-name" style="word-break: break-word;white-space: normal;line-height: 160%;">
+        Member details are still downloading, please check back later.
+        </ons-list-item>
+    </ons-list>
+</ons-page>
+
+<!-- 
+
+testing webSQL
+update navigations set status=0,parent_id=6,type=2 where server_id in (9,10);
+update navigations set status=0,type=1 where server_id =6; 
+
+-->

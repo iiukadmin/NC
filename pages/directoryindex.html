@@ -1,0 +1,64 @@
+
+<ons-page ng-controller="DirectoryController">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+        </div>
+        <div class="center">{{nav.title}}</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <div class="navigation-bar search-bar">
+        <div class="navigation-bar__center" style="margin: 0px;">
+        <input type="search" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Search" ng-model="key" ng-change="triggerSearch()">
+        <a ng-show="!emptySearch" class="btn-empty-search" href="javascript:void(0)" ng-click="clearInput()">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>  
+    <ons-list style="width:100%;">
+        <ons-list-item ng-show="emptySearch"  ng-repeat="cate in categories"  modifier="chevron" ng-click="OpenDirectoryPage($event,cate)">
+        {{cate.title}}
+        </ons-list-item>
+        <ons-list-item  ng-show="loaddata" style="padding: 0;height: 600px; opacity:0.7; ">
+            <div class="loading"> 
+                <p><i class="fa fa-spin fa-spinner fa-lg"></i><br />
+                    <span>loading ...</span>
+                </p>
+            </div>
+        </ons-list-item ng-show="loaddata" >
+          <ons-list-header ng-show="directories.length > 0" >Committees</ons-list-header>
+          <ons-list-item class="person" modifier="tappable" ng-repeat="item in directories">
+            <ons-row>
+              <ons-col class="person-name list-search" modifier="chevron" ng-click="OpenDirectoryDetail(item)">
+                {{item.title}}
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+          <ons-list-item class="person" ng-show="!emptySearch && noCommitteesData">
+            <ons-row>
+              <ons-col class="person-name" >
+                No committee found.
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+
+          <ons-list-header ng-show="persons.length > 0" >Persons</ons-list-header>
+          <ons-list-item class="person" modifier="tappable" ng-repeat="item in persons">
+            <ons-row>
+              <ons-col class="person-name list-search" modifier="chevron" ng-click="openIndividual(item)">
+                {{item.name}}
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+          <ons-list-item class="person" ng-show="!emptySearch && noPersonsData">
+            <ons-row>
+              <ons-col class="person-name" >
+                No person found.
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+          
+        </ons-list>
+    </ons-list>
+</ons-page>
