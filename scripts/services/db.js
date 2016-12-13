@@ -224,8 +224,7 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 				var now = moment(_committe.last_changed);
 				var then = moment(dbCommitte.last_changed); 
 											
-//				if(_committe.last_changed  && then.diff(now,'days')>=0 ){
-				if(_committe.last_changed  && now.diff(then)>0 ){
+				if(_committe.last_changed  && then.diff(now,'days')>=0 ){
 					isPullData = true;
 				// console.log(moment(_committe.last_changed) > dbCommitte.last_modified,moment(_committe.last_changed) , dbCommitte.last_modified);
 				// isPullData = moment(_committe.last_changed) > dbCommitte.last_modified;
