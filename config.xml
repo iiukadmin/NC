@@ -125,7 +125,7 @@
 	-->
 	
 	<gap:plugin name="de.appplant.cordova.plugin.badge" source="npm" />
-	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
+	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" source="npm"  />
 	<plugin name="cordova-plugin-calendar" />
 
     <access origin="*" />
