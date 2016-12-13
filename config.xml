@@ -124,7 +124,7 @@
 	Broken
 	-->
 	
-	<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	<gap:plugin name="de.appplant.cordova.plugin.badge" source="npm" />
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
 
