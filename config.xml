@@ -97,6 +97,17 @@
 	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
+	<plugin name="cordova-plugin-device" source="npm" />
+	<plugin name="cordova-plugin-device-orientation" source="npm" />
+	<plugin name="cordova-plugin-dialogs" source="npm" />
+	<plugin name="cordova-plugin-globalization" source="npm" />
+	<plugin name="cordova-plugin-inappbrowser" source="npm" />
+	<plugin name="cordova-plugin-network-information" source="npm" />
+	<plugin name="cordova-plugin-splashscreen" source="npm" />
+	<plugin name="cordova-plugin-vibration" source="npm" />
+	<plugin name="cordova-plugin-statusbar" source="npm" />
+	
+	<!--
 	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.device-orientation" />
 	<gap:plugin name="org.apache.cordova.dialogs" />
@@ -106,6 +117,7 @@
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.statusbar" />
+	-->
 	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
 	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
 	<gap:plugin name="de.appplant.cordova.plugin.badge" />
