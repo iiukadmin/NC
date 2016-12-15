@@ -16,7 +16,7 @@
     </author>
 
     <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
-    <preference name="phonegap-version" value="cli-6.1.0" />
+    <preference name="phonegap-version" value="cli-6.4.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -131,11 +131,10 @@
 	<plugin name="de.appplant.cordova.plugin.badge" />-->
 	
 	<plugin name="cordova-plugin-calendar" />
-	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->
-	<plugin name="phonegap-plugin-push" source="npm">
-	<!--<plugin name="phonegap-plugin-push" spec="1.7.2" source="npm">-->
-	    <param name="SENDER_ID" value="31742222780" />
-	</plugin>
+	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	
+	<plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/tonijn/phonegap-plugin-push#fix-aps-environment">
+        <param name="SENDER_ID" value="31742222780"/>
+    </plugin>
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
