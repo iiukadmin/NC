@@ -132,9 +132,11 @@
 	
 	<plugin name="cordova-plugin-calendar" />
 	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	
-	<plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/tonijn/phonegap-plugin-push#fix-aps-environment">
+	<plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/tonijn/phonegap-plugin-push#master">
         <param name="SENDER_ID" value="31742222780"/>
     </plugin>
+    
+    
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
