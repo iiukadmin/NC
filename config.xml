@@ -129,6 +129,10 @@
 	<plugin name="cordova_app_version_plugin" />	
 	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
 	<plugin name="de.appplant.cordova.plugin.badge" />-->
+
+    <plugin name="cordova-plugin-datepicker"/>
+    <plugin name="cordova-plugin-email-composer"/>
+    <plugin name="cordova-plugin-badge"/>
 	
 	<plugin name="cordova-plugin-calendar" />
 	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
