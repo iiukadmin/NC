@@ -95,8 +95,28 @@
     <preference name="KeepRunning" value="true"/>
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
+	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
+		
+	<!--
+	Swapped to new style	
+	<gap:plugin name="org.apache.cordova.device" />
+	<gap:plugin name="org.apache.cordova.device-orientation" />
+	<gap:plugin name="org.apache.cordova.dialogs" />
+	<gap:plugin name="org.apache.cordova.globalization" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" />
+	<gap:plugin name="org.apache.cordova.network-information" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	<gap:plugin name="org.apache.cordova.statusbar" />
+	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
+		<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	-->
+		<!--
+	Don't need this one
+	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>-->
+
 	<plugin name="cordova-plugin-device" />
 	<plugin name="cordova-plugin-device-orientation" />
 	<plugin name="cordova-plugin-dialogs" />
@@ -106,12 +126,20 @@
 	<plugin name="cordova-plugin-splashscreen" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-statusbar" />
-    <gap:plugin name="cordova-plugin-datepicker" source="npm"/>
-	<!--<gap:plugin name="cordova-plugin-email-composer"/>-->
-	<!--<gap:plugin name="cordova-plugin-badge" />-->
-    
-	<!--<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
-    <gap:plugin name="https://github.com/rromerogar/net.bgta.phonegap.appversion.git" source="git" />-->
+	<plugin name="cordova_app_version_plugin" />	
+	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
+	<plugin name="de.appplant.cordova.plugin.badge" />-->
+	
+	<plugin name="cordova-plugin-calendar" />
+	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
+    <engine name="cordova" version=">=6.4.0"/>
+    <engine name="cordova-ios" version="~4.3.0"/>
+
+    <plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/frederikbosch/phonegap-plugin-push#fix-aps-environment">
+        <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
+        <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
+    </plugin>
+     
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
