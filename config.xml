@@ -140,6 +140,8 @@
         <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
     </plugin>
      
+	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
+  
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
