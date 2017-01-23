@@ -107,7 +107,7 @@
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-statusbar" />
     <gap:plugin name="cordova-plugin-datepicker" source="npm"/>
-	<gap:plugin name="cordova-plugin-email-composer"/>
+	<!--<gap:plugin name="cordova-plugin-email-composer"/>-->
 	<gap:plugin name="cordova-plugin-badge" />
     
 	<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
