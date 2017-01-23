@@ -15,7 +15,8 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-5.2.0" />
+    <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
+    <preference name="phonegap-version" value="cli-6.4.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -96,15 +97,15 @@
     <preference name="android-installLocation" value="auto" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
-	<gap:plugin name="cordova-plugin-device" />
-	<gap:plugin name="cordova-plugin-device-orientation" />
-	<gap:plugin name="cordova-plugin-dialogs" />
-	<gap:plugin name="cordova-plugin-globalization" />
-	<gap:plugin name="cordova-plugin-inappbrowser" />
-	<gap:plugin name="cordova-plugin-network-information" />
-	<gap:plugin name="cordova-plugin-splashscreen" />
-	<gap:plugin name="cordova-plugin-vibration" />
-	<gap:plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-device-orientation" />
+	<plugin name="cordova-plugin-dialogs" />
+	<plugin name="cordova-plugin-globalization" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-network-information" />
+	<plugin name="cordova-plugin-splashscreen" />
+	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-statusbar" />
     <gap:plugin name="cordova-plugin-datepicker" source="npm"/>
 	<gap:plugin name="cordova-plugin-email-composer"/>
 	<gap:plugin name="cordova-plugin-badge" />
