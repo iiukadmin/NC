@@ -110,8 +110,8 @@
 	<!--<gap:plugin name="cordova-plugin-email-composer"/>-->
 	<!--<gap:plugin name="cordova-plugin-badge" />-->
     
-	<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
-    <gap:plugin name="https://github.com/rromerogar/net.bgta.phonegap.appversion.git" source="git" />
+	<!--<gap:plugin name="https://github.com/phonegap-build/PushPlugin.git" source="git"  />
+    <gap:plugin name="https://github.com/rromerogar/net.bgta.phonegap.appversion.git" source="git" />-->
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
