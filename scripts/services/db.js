@@ -925,7 +925,7 @@ AKHB.services.db.prototype.addReminder = function(medications, reminder, callbac
     this.getMaxRowIndex("Reminders", function(index) {
         reminder.notification_id = index;
 
-         AKHB.utils.addLocalNotification(reminder);
+        AKHB.utils.addLocalNotification(reminder);
 
         angular.forEach(schedules, function(item, index, arr) {
             reminder.schedules.add(item);
@@ -945,14 +945,14 @@ AKHB.services.db.prototype.deleteReminder = function(reminder, callback) {
     reminder.status = 1;
 
     if (reminder.notification_id) {
-        cordova.plugins.notification.getAllIds(function(ids) {
-            removeNotificationIds = $.grep(ids, function(idItem) {
-                return (idItem >= reminder.notification_id * 100) && (idItem > reminder.notification_id * 100 + 99)
-            });
-            console.log("removed notification ids ",removeNotificationIds);
-            cordova.plugins.notification.clear(removeNotificationIds);
-        })
-       // cordova.plugins.notification.local.clear(reminder.notification_id, function() {});
+        cordova.plugins.notification.local.getAllIds(function(ids) {
+                removeNotificationIds = $.grep(ids, function(idItem) {
+                    return (idItem >= reminder.notification_id * 100) && (idItem <= reminder.notification_id * 100 + 99)
+                });
+                console.log("removed notification ids ", removeNotificationIds);
+                cordova.plugins.notification.local.cancel(removeNotificationIds);
+            })
+            // cordova.plugins.notification.local.clear(reminder.notification_id, function() {});
         async.waterfall([
                 function(callback) {
                     reminder.schedules.destroyAll(null, function(err) {

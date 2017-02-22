@@ -33,7 +33,6 @@ AKHB.utils.format = function(source, params) {
 AKHB.utils.daysString = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 AKHB.utils.shortDayString = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri.', 'Sat.'];
 AKHB.utils.generateSchedules = function(reminder) {
-
     var arrSchedules = new Array();
     var currentDate = moment().hours(0).minutes(0).seconds(0).toDate();
     if (reminder.type == 1) {
@@ -72,9 +71,13 @@ AKHB.utils.generateSchedules = function(reminder) {
         }
     } else {
 
+        var lastDate = reminder.end_date;
+        if (!reminder.end_date) {
+            reminder.end_date = moment().add('d', 30).toDate();
+        }
         while (currentDate <= reminder.end_date) {
             var diffDay = moment(currentDate).diff(reminder.start_date, 'days');
-            var remindDay = moment(currentDate.format('YYYY-MM-DD ' + reminder.reminder_time));
+            var remindDay = moment(moment(currentDate).format('YYYY-MM-DD ' + reminder.reminder_time));
             var mod = diffDay % (reminder.remind_for + reminder.skip_for);
             if (remindDay.toDate() >= new Date()) {
                 var schedule = new schedules({
@@ -128,30 +131,31 @@ AKHB.utils.addLocalNotification = function(reminder) {
                     sch.at = moment(sch.at).add(1, 'day');
                 }
                 cordova.plugins.notification.local.schedule(sch);
-                console.log("notification added:",sch);
+                console.log("notification added:", sch);
             } else {
                 angular.forEach(reminderDays, function(dayIndex) {
                     sch.id = reminder.notification_id * 100 + dayIndex;
                     var firstDate = moment(reminder.start_date).weekday(dayIndex).format('YYYY-MM-DD');
                     sch.at = moment(firstDate + ' ' + reminder.reminder_time).toDate();
                     cordova.plugins.notification.local.schedule(sch);
-                    console.log("notification added:",sch);
+                    console.log("notification added:", sch);
                 });
             }
 
         } else {
-         var totalDay = reminder.remind_for + reminder.skip_for;
-         debugger
+            var totalDay = reminder.remind_for + reminder.skip_for;
             for (var i = 0; i < totalDay; i++) {
                 sch.id = reminder.notification_id * 100 + i;
                 var targetDate = moment(reminder.start_date).add(i, 'day');
+                var triggerDate = targetDate.format('YYYY-MM-DD');
+                var compaireDate = targetDate.add(1, 'day').toDate();
 
-                if (targetDate > new Date()) {
-                    if (targetDate.diff(moment(), 'days') % totalDay < reminder.remind_for) {
-                        sch.at = targetDate.format('YYYY-MM-DD');
-                        sch.at = moment(sch.at + ' ' + reminder.reminder_time).toDate();
+                if (compaireDate > new Date()) {
+
+                    if (moment(targetDate).diff(moment(), 'days') % totalDay < reminder.remind_for) {
+                        sch.at = moment(triggerDate + ' ' + reminder.reminder_time).toDate();
                         cordova.plugins.notification.local.schedule(sch);
-                        console.log("notification added:",sch);
+                        console.log("notification added:", sch);
                     }
                 }
 
@@ -161,10 +165,10 @@ AKHB.utils.addLocalNotification = function(reminder) {
         cordova.plugins.notification.local.getAllIds(function(ids) {
             console.log("current notifications:", ids);
         });
-//        //console.log("add schedule notification:", sch);
-//        if (schedule.trigger_at >= new Date()) {
-//            cordova.plugins.notification.local.schedule(sch);
-//        }
+        //        //console.log("add schedule notification:", sch);
+        //        if (schedule.trigger_at >= new Date()) {
+        //            cordova.plugins.notification.local.schedule(sch);
+        //        }
 
     } catch (ex) {
         console.log(ex);
