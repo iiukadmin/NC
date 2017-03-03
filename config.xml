@@ -148,7 +148,7 @@
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
 	<plugin name="de.appplant.cordova.plugin.local-notification" />	
 
-<!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git"> -->
+    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 	
 
     <access origin="*" />
