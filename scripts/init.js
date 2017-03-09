@@ -118,52 +118,114 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
+	    try{
+	    var push = PushNotification.init({ 
+		    "android": {
+			    	"senderID": window.AKHB.config.senderID,
+			    	"android.sound": true,
+			    	"android.vibrate": true
+			 },
+			 
+			 "ios": {
+				"alert": true, 
+				"badge": true, 
+				"vibration": true,
+				"sound": true,
+		        "categories": {
+		            "invite": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": false, "destructive": true
+		                },
+		                "maybe": {
+		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": false, "destructive": false
+		                }
+		            },
+		            "authenticate": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
+		                }
+		            },
+					"choice": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Yes", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "window.iiuklogin", "title": "No", "foreground": false, "destructive": false
+		                }
+		            }
+		        }
+			 }, 
+			 
+			 "windows": {}
+			 });
+			} catch(ex) {
+				alert(ex.message);
+			}
+			 
+	
+		push.on('registration', function(data) {
+			console.log(data.registrationId);
+		    sendRegistionId(data.registrationId);
+		});
+		
+		push.on('notification', function(data) {
+			console.log(data.message);
+				
+			/*
+					if (data.additionalData.coldstart == true) {
+					alert('coldstart - true');
+				} else {
+					alert('coldstart - false');				
+				}
+							
+				if (data.additionalData.foreground == true) {
+					alert('forground - true');
+				} else {
+					alert('forground - false');
+				
+				}
+			
+				alert(data.additionalData.notId);
+			*/	
+					if (data.additionalData.type == '2') {
+						alert("There");
 
+						
+						navigator.notification.confirm(
+				        	data.message,
+				        	function(buttonIndex) {
+					       	 notificationFeedback(buttonIndex,data.additionalData.other);
+						   	},
+						   	data.title,
+						   	data.additionalData.buttons
+					   	);
+					} else {
+				        navigator.notification.alert(data.message,null,data.title);
+					}
 
-    if(!window.plugins || !window.plugins.pushNotification) return;
-    try{
-       
-        var pushNotification = window.plugins.pushNotification;
+			push.finish(function() {
+		  	  console.log('accept callback finished');
+				}, function() {
+				console.log('accept callback failed');
+				}, data.additionalData.notId);    
 
-        //regist notification
-        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-            pushNotification.register(
-            successHandler,
-            errorHandler,
-            {
-                "senderID":window.AKHB.config.senderID,
-                "ecb":"onNotificationGCM"
-            });
-        } else if ( device.platform == 'blackberry10'){
-            // pushNotification.register(
-            // successHandler,
-            // errorHandler,
-            // {
-            //     invokeTargetId : "replace_with_invoke_target_id",
-            //     appId: "replace_with_app_id",
-            //     ppgUrl:"replace_with_ppg_url", //remove for BES pushes
-            //     ecb: "pushNotificationHandler",
-            //     simChangeCallback: replace_with_simChange_callback,
-            //     pushTransportReadyCallback: replace_with_pushTransportReady_callback,
-            //     launchApplicationOnPush: true
-            // });
-        } else {
-            pushNotification.register(
-            tokenHandler,
-            errorHandler,
-            {
-                "badge":"true",
-                "sound":"true",
-                "alert":"true",
-                "ecb":"onNotificationAPN"
-            });
-        }
-        
-    }catch(ex){
-        console.log("Notification error:",ex);
-    }
-
-    }, false);
+			
+		});
+		
+		push.on('error', function(data) {
+			console.log(data.message);
+			navigator.notification.alert('Error = '+data.message,null,'Error');
+		});
+	}
+    
+    
+    , false);
     // Added to update iOS bade with unread message count.
     document.addEventListener("pause", function(){ 
 	updateBadge($rootScope.messageCount);
@@ -236,7 +298,7 @@ module.controller('MessageListController',['$scope','$rootScope','$templateCache
             });
         }) 
     }
-
+    
     $scope.isEmpty = function (obj) {
 		for (var i in obj) if (obj.hasOwnProperty(i)) return false;
 		return true;
@@ -1070,6 +1132,30 @@ function updateBadge(badgeCount){
     //cordova.plugins.notification.badge.set(badgeCount); // Android
 }
 
+// Login Action Button
+window.iiuklogin = function (data) {
+	var FARID = 'asdf';
+	alert("HEAR"+FARID);
+	notificationFeedback('1',data.additionalData.other);
+	navigator.app.exitApp(); // android
+	//alert("Other:"+data.additionalData.other);
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
+    
+/*
+    push.clearAllNotifications(function() {
+    console.log('success');
+	}, function() {
+	    console.log('error');
+	});
+*/
+}
+
+
 // iOS
 function onNotificationAPN (event) {
     if ( event.alert )
@@ -1099,58 +1185,4 @@ function onNotificationAPN (event) {
     {
         pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
     }
-}
-
-//Android and Amazon Fire OS 
-function onNotificationGCM(e) {
-   //$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-    switch( e.event )
-    {
-    case 'registered':
-        if ( e.regid.length > 0 )
-        {
-            sendRegistionId(e.regid);
-        }
-    break;
-
-    case 'message':
-        // if this flag is set, this notification happened while we were in the foreground.
-        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-        if ( e.foreground )
-        {
-
-            // on Android soundname is outside the payload.
-            // On Amazon FireOS all custom attributes are contained within payload
-            var soundfile = e.soundname || e.payload.sound;
-            // if the notification contains a soundname, play it.
-            var my_media = new Media("/android_asset/www/"+ soundfile);
-            my_media.play();
-        }
-//        navigator.notification.alert('message = '+e.message+' msgcnt = '+e.msgcnt,null,'New Notification');
-        
-        if (e.payload.type == '2') { 
-			//navigator.notification.confirm(e.message,adminLogin,'IIUK.org',['Cancel','Login']);
-			 navigator.notification.confirm(
-	        	e.message,
-	        	function(buttonIndex) {
-		       	 notificationFeedback(buttonIndex,e.payload.other);
-			   	},
-			   	e.payload.title,
-			   	e.payload.buttons
-			);
-      
-        } else {
-	        navigator.notification.alert(e.message,null,e.payload.title);
-		}
-
-    break;
-
-    case 'error':
-       navigator.notification.alert('GCM error = '+e.msg,null,'Error');
-    break;
-
-    default:
-        navigator.notification.alert('An unknown GCM event has occurred',null,'Error');
-    break;
-  }
 }

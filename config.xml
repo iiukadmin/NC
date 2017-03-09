@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
-        versionCode = "18" 
-        version     = "1.1.0" >
+        versionCode = "15" 
+        version     = "1.0.7" >
 
     <name>IIUK</name>
 
@@ -15,7 +15,8 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-5.2.0" />
+    <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
+    <preference name="phonegap-version" value="cli-6.4.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -97,6 +98,9 @@
 	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
+		
+	<!--
+	Swapped to new style	
 	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.device-orientation" />
 	<gap:plugin name="org.apache.cordova.dialogs" />
@@ -106,11 +110,36 @@
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.statusbar" />
-	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
 	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
-	<gap:plugin name="de.appplant.cordova.plugin.badge" />
-	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
+		<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	-->
+		<!--
+	Don't need this one
+	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>-->
+
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-device-orientation" />
+	<plugin name="cordova-plugin-dialogs" />
+	<plugin name="cordova-plugin-globalization" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-network-information" />
+	<plugin name="cordova-plugin-splashscreen" />
+	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova_app_version_plugin" />	
+	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
+	<plugin name="de.appplant.cordova.plugin.badge" />-->
+	
 	<plugin name="cordova-plugin-calendar" />
+	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
+    <engine name="cordova" version=">=6.4.0"/>
+    <engine name="cordova-ios" version="~4.3.0"/>
+
+    <plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/frederikbosch/phonegap-plugin-push#fix-aps-environment">
+        <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
+        <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
+    </plugin>
+     
 
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
