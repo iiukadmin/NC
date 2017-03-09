@@ -619,8 +619,7 @@ module.controller('ContentController', ['$scope', '$http', '$templateCache', '$s
                     article.content += '&';
                 else
                     article.content += '?';
-
-                article.content += 'uuid=' + AKHB.user.id;
+                    article.content += 'uuid=' + AKHB.user.id;
 
                 //用插件打開
                 //------------------------------------------------------------------------
@@ -1775,6 +1774,8 @@ function scan(){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
 	 alert(JSON.stringify(result));
+  $('div.loading').removeClass('ng-hide');
+  $scope.contentHTML = $sce.trustAsHtml('<iframe name="contentFrame" id="content-iframe" src="http://poonja.co.uk" ng-if="article.type==2" onload="$(\'div.loading\').addClass(\'ng-hide\');"></iframe>');
 	
 	 },function(error){
 	 //error callback
