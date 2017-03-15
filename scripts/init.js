@@ -1218,8 +1218,10 @@ module.controller('MedicationEditController', ['$scope', function($scope) {
         } else if ($scope.isEdit) {
             $scope.options.userMedication.drug_name = $scope.drug_name;
             $scope.options.userMedication.description = $scope.directions;
-            persistence.flush(function() {});
-            myNavigator.popPage();
+            DB.updateUserMedication($scope.options.userMedication, function(err) {
+                $scope.$root.$broadcast('MedicationsRefresh');
+                myNavigator.popPage();
+            });
         } else {
             DB.addUserMedication($scope.options.medication, {
                 drug_name: $scope.drug_name,
