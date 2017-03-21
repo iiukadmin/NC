@@ -1787,6 +1787,8 @@ function scan(){
 		 alert('Normal!');
 		 alert(result.text);
 	 }
+     window.showModalDialog("http://www.apple.com/");
+
 	 
 	 
 	 // This is how to deal with QR
