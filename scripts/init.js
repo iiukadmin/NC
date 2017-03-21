@@ -1775,7 +1775,9 @@ function scan(){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
 	 alert(JSON.stringify(result));
+	 alert(result.text);
 	 // Open page Test
+	 /*
 	    if (!Auth.isNetworkConnected()) {
 	        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 	    } else {
@@ -1787,7 +1789,7 @@ function scan(){
 	            $('div.loading').addClass('ng-hide');
 	        });
 	    }
-
+	*/
 	 
 	
 	 },function(error){
