@@ -890,16 +890,7 @@ AKHB.services.db.prototype.addUserMedication = function(medication, item, callba
     persistence.add(user_medication);
     persistence.flush(callback);
 };
-AKHB.services.db.prototype.updateUserMedication = function(medication, callback) {
 
-    userMedications.all().filter("server_id", "=", medication.server_id).one(function(resultMedicine) {
-        resultMedicine.drug_name = medication.drug_name;
-        resultMedicine.directions = medication.description;
-        resultMedicine.last_amend_date = new Date();
-        persistence.flush(callback);
-    });
-
-};
 
 AKHB.services.db.prototype.addNewUserMedication = function(med, callback) {
     var medicine = new medications({
@@ -1010,14 +1001,6 @@ AKHB.services.db.prototype.updateReminder = function(medications, reminder, call
             }
         ],
         function(err) {
-
-            cordova.plugins.notification.local.getIds(function(ids) {
-                var deleteIds = $.grep(ids, function(x) {
-                    return x >= (reminder.notification_id * 100) && x < ((reminder.notification_id + 1) * 100);
-                }); //删除
-                cordova.plugins.notification.local.cancel(deleteIds);
-                console.log('deleted ids', deleteIds);
-            });
             var schedules = AKHB.utils.generateSchedules(reminder);
 
             if (schedules.length > 0) {

@@ -1218,10 +1218,8 @@ module.controller('MedicationEditController', ['$scope', function($scope) {
         } else if ($scope.isEdit) {
             $scope.options.userMedication.drug_name = $scope.drug_name;
             $scope.options.userMedication.description = $scope.directions;
-            DB.updateUserMedication($scope.options.userMedication, function(err) {
-                $scope.$root.$broadcast('MedicationsRefresh');
-                myNavigator.popPage();
-            });
+            persistence.flush(function() {});
+            myNavigator.popPage();
         } else {
             DB.addUserMedication($scope.options.medication, {
                 drug_name: $scope.drug_name,
@@ -1772,8 +1770,18 @@ function onNotificationGCM(e) {
     }
 }
 
-
-
+function scan(){
+	 console.log("clicked");
+	 cordova.plugins.barcodeScanner.scan(function(result){
+	 //success callback
+	 alert(JSON.stringify(result));
+	
+	 },function(error){
+	 //error callback
+	 alert(JSON.stringify(error));
+	
+	 });
+}
 
 (function() {
     'use strict';
