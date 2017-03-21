@@ -1775,7 +1775,25 @@ function scan(){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
 	 alert(JSON.stringify(result));
-	 alert(result.text);
+	// alert(result.text);
+	// alert(result.format);
+	 
+	 if(result.format === 'QR_CODE') {
+		 alert('QR!');
+		 var obj = jQuery.parseJSON(result.text);
+		 alert( obj.name  );
+		 alert( obj.id  );
+	 } else {
+		 alert('Normal!');
+		 alert(result.text);
+	 }
+	 
+	 
+	 // This is how to deal with QR
+	//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
+	//	 alert( obj.name  );
+	//   alert( obj.id  );
+	 
 	 // Open page Test
 	 /*
 	    if (!Auth.isNetworkConnected()) {
