@@ -1787,7 +1787,7 @@ function scan(){
 		 alert('Normal!');
 		 alert(result.text);
 	 }
-     window.showModalDialog("http://www.apple.com/");
+	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
 
 	 
 	 
