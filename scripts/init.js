@@ -1783,18 +1783,18 @@ function scan(){
 		 var obj = jQuery.parseJSON(result.text);
 		 alert( obj.name  );
 		 alert( obj.id  );
+		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 	 } else {
 		 alert('Normal!');
 		 alert(result.text);
+		 $.fancybox.open({
+		 	padding : 0,
+		 	href:'https://www.google.com/',
+		 	type: 'iframe'
+		});
+	 
 	 }
 //	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
-//	 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
-	 $.fancybox.open({
-	 	padding : 0,
-	 	href:'https://www.iiuk.org/',
-	 	type: 'iframe'
-	});
-	 
 	 
 	 // This is how to deal with QR
 	//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
