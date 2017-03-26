@@ -1787,8 +1787,13 @@ function scan(){
 		 alert('Normal!');
 		 alert(result.text);
 	 }
-	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
-
+//	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
+//	 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+	 $.fancybox.open({
+	 	padding : 0,
+	 	href:'https://www.iiuk.org/',
+	 	type: 'iframe'
+	});
 	 
 	 
 	 // This is how to deal with QR
