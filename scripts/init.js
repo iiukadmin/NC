@@ -1156,7 +1156,62 @@ window.iiuklogin = function (data) {
 }
 
 
+function scan(){
+	 console.log("clicked");
+	 cordova.plugins.barcodeScanner.scan(function(result){
+	 //success callback
+	 alert(JSON.stringify(result));
+	// alert(result.text);
+	// alert(result.format);
+	 
+	 if(result.format === 'QR_CODE') {
+		 alert('QR!');
+		 var obj = jQuery.parseJSON(result.text);
+		 alert( obj.name  );
+		 alert( obj.id  );
+		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+	 } else {
+		 alert('Normal!');
+		 alert(result.text);
+		 $.fancybox.open({
+		 	padding : 0,
+		 	href:'https://www.google.com/',
+		 	type: 'iframe'
+		});
+	 
+	 }
+//	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
+	 
+	 // This is how to deal with QR
+	//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
+	//	 alert( obj.name  );
+	//   alert( obj.id  );
+	 
+	 // Open page Test
+	 /*
+	    if (!Auth.isNetworkConnected()) {
+	        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+	    } else {
+		    href = 'http://www.apple.com/';
+	        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+	        $('div.loading').removeClass('ng-hide');
+	        ref.addEventListener('loadstop', function() {
+	            ref.show();
+	            $('div.loading').addClass('ng-hide');
+	        });
+	    }
+	*/
+	 
+	
+	 },function(error){
+	 //error callback
+	 alert(JSON.stringify(error));
+	
+	 });
+}
+
 // iOS
+// NEED TO REMOVE
 function onNotificationAPN (event) {
     if ( event.alert )
     {
