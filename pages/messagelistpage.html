@@ -4,7 +4,6 @@
                     <ons-toolbar-button ng-click="menuClick()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
                 </div>
                 <div class="center" >{{nav.title}}</div>
-  
             </ons-toolbar>
             <ons-list id="list-message" class="plan-list">
                 <ons-list-item class="plan" ng-repeat="msg in messages" ng-click="openMessageDetail(msg,$event)" ng-show="msg.status<2">
@@ -17,7 +16,8 @@
                                 </div>
                             </ons-col>
                            
-                            <ons-col width="2%" class="plan-center" ng-style="{ backgroundColor:msg.status==0 ? '#3399ff' : '#ccc'}">                           </ons-col>
+                            <ons-col width="2%" class="plan-center" ng-style="{ backgroundColor:msg.status==0 ? '#3399ff' : '#ccc'}">
+                            </ons-col>
                             <ons-col width="68%" class="plan-right list-message" style="position:relative;" >
                                     <strong>{{msg.title}}</strong>
                                     <p ng-bind-html="msg.content | trustHtmlA"></p>
@@ -33,6 +33,5 @@
                         </ons-row>
                 </ons-list-item>
             </ons-list>
-        </ons-page>
-   
- 
+			<div class="article-content" ng-show="isEmpty(messages)">There are currently no messages for you.</div>
+        </ons-page> 
