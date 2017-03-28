@@ -1160,7 +1160,7 @@ function scan(){
 	 console.log("clicked");
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
-	 alert(JSON.stringify(result));
+	// alert(JSON.stringify(result));
 	// alert(result.text);
 	// alert(result.format);
 	 
@@ -1175,10 +1175,8 @@ function scan(){
 //		 alert(result.text);
 		 $.fancybox.open({
 			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
+			 type : 'iframe',
 			 opts : { 
-				 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
-				 	touch : true,
-				 	closeClickOutside : false,
 				 	}
 				 
 			 });
