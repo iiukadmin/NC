@@ -1169,12 +1169,19 @@ function scan(){
 		 var obj = jQuery.parseJSON(result.text);
 		 alert( obj.name  );
 		 alert( obj.id  );
-//		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 	 } else {
 		 alert('Normal!');
 		 alert(result.text);
-		 $.fancybox.open([{src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567' }]);
+		 $.fancybox.open({
+			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
+			 opts : { 
+				 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
+				 	touch : true,
+				 	closeClickOutside : true,
+				 	}
+				 
+			 });
 		 /*
 		 $.fancybox.open({
 		 	padding : 0,
