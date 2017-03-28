@@ -1171,14 +1171,14 @@ function scan(){
 		 alert( obj.id  );
 		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 	 } else {
-		 alert('Normal!');
-		 alert(result.text);
+//		 alert('Normal!');
+//		 alert(result.text);
 		 $.fancybox.open({
 			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 			 opts : { 
 				 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
 				 	touch : true,
-				 	closeClickOutside : true,
+				 	closeClickOutside : false,
 				 	}
 				 
 			 });
