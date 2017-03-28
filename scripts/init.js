@@ -1177,6 +1177,8 @@ function scan(){
 			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 			 type : 'iframe',
 			 opts : { 
+			 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
+			 	afterClose	 : scan(),
 				 	}
 				 
 			 });
