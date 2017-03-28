@@ -1178,7 +1178,7 @@ function scan(){
 			 type : 'iframe',
 			 opts : { 
 			 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
-			 	afterClose	 : scan(),
+//			 	afterClose	 : scan(),
 				 	}
 				 
 			 });
