@@ -1179,7 +1179,7 @@ function scan(){
 			 opts : { 
 			 	closeBtn   : false,
 			 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
-			 	afterClose	 : scan(),
+			// 	afterClose	 : scan(),
 				 	}
 				 
 			 });
