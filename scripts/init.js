@@ -1166,7 +1166,7 @@ function scan_barcode(){
 	 // console.log("clicked");
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
-	// alert(JSON.stringify(result));
+	 alert(JSON.stringify(result));
 	// alert(result.text);
 	// alert(result.format);
 	 
@@ -1176,7 +1176,7 @@ function scan_barcode(){
 		 
 //		 alert( obj.name  );
 //		 alert( obj.id  );
-		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+//		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 	 } else {
 //		 alert('Normal!');
 //		 alert(result.text);
