@@ -1155,21 +1155,28 @@ window.iiuklogin = function (data) {
 */
 }
 
+window.addEventListener('message', function (event) {
+        if (event.data == 'closefancybox') {                
+            $.fancybox.close();
+        }
+    }, false);
 
-function scan(){
-	 console.log("clicked");
+
+function scan_barcode(){
+	 // console.log("clicked");
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
-	// alert(JSON.stringify(result));
+	 alert(JSON.stringify(result));
 	// alert(result.text);
 	// alert(result.format);
 	 
 	 if(result.format === 'QR_CODE') {
 		 alert('QR!');
 		 var obj = jQuery.parseJSON(result.text);
-		 alert( obj.name  );
-		 alert( obj.id  );
-		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+		 
+//		 alert( obj.name  );
+//		 alert( obj.id  );
+//		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
 	 } else {
 //		 alert('Normal!');
 //		 alert(result.text);
@@ -1177,21 +1184,14 @@ function scan(){
 			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 			 type : 'iframe',
 			 opts : { 
-			 	closeBtn   : true,
-			 	closeTpl : '<button data-fancybox-close class="fancybox-close-small"></button>',
-			// 	afterClose	 : scan(),
-				 	}
-				 
+//			 	buttons : false,
+			 	smallBtn : true,
+			 	afterClose : function() {
+			 					alert('asdf2');
+		   					}
+			 		}
 			 });
-		 /*
-		 $.fancybox.open({
-		 	padding : 0,
-		 	href:'https://www.google.com/',
-		 	type: 'iframe'
-		});
-		*/
 	 }
-//	 $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
 	 
 	 // This is how to deal with QR
 	//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
