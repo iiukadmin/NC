@@ -250,8 +250,8 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==4){
-           scan_barcode();
-           // $scope.signOut();
+			scan_barcode();
+   //         $scope.signOut();
         }else{
             myNavigator.pushPage('pages/childmenu.html');
         }
@@ -1164,8 +1164,6 @@ window.addEventListener('message', function (event) {
 
 
 function scan_barcode(){
-	 var url = window.AKHB.config.remoteAddress+'?type=4&version='+AKHB.user.appVersion+'&os='+AKHB.user.os+'&device='+AKHB.user.deviceName+'&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
-	
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
 		 // alert(JSON.stringify(result)); 
@@ -1173,27 +1171,22 @@ function scan_barcode(){
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
-				var obj = jQuery.parseJSON(result.text);		 
+				 var obj = jQuery.parseJSON(result.text);		 
 				// alert( obj.name  );
 				// alert( obj.id  );
+				// $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+				
 				
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
-					 $.fancybox.open({
-					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
-					 type : 'iframe',
-					 opts : { 
-		//			 	buttons : false,
-					 	smallBtn : true,
-					 	iframe : {
-						 	preload : false,
-					 	}
-					 	afterClose : function() {
-					 					scan_barcode();
-				   					}
-					 		}
-					 });
+				    href = 'http://www.apple.com/';
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+			        $('div.loading').removeClass('ng-hide');
+			        ref.addEventListener('loadstop', function() {
+			            ref.show();
+			            $('div.loading').addClass('ng-hide');
+			        });
 			    }
 		
 				
@@ -1209,6 +1202,7 @@ function scan_barcode(){
 						 	preload : false,
 					 	}
 					 	afterClose : function() {
+					 					//alert('asdf2');
 					 					scan_barcode();
 				   					}
 					 		}
@@ -1235,7 +1229,7 @@ function scan_barcode(){
 			    }
 			*/
 		} else {
-			// alert ('box cancelled!');
+			alert ('cancelled!');
 		}
 	
 	 },function(error){
