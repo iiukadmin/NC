@@ -1164,64 +1164,69 @@ window.addEventListener('message', function (event) {
 
 function scan_barcode(){
 	 cordova.plugins.barcodeScanner.scan(function(result){
-	 //success callback
-	 alert(JSON.stringify(result)); 
-	 if(result.format === 'QR_CODE') {
-		 var obj = jQuery.parseJSON(result.text);		 
-		// alert( obj.name  );
-		// alert( obj.id  );
-		// $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+		 //success callback
+		 alert(JSON.stringify(result)); 
+		 
+		 if(result.cancelled != '1') { 
+		 
+			 if(result.format === 'QR_CODE') {
+				 var obj = jQuery.parseJSON(result.text);		 
+				// alert( obj.name  );
+				// alert( obj.id  );
+				// $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+				
+				
+				if (!Auth.isNetworkConnected()) {
+			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+			    } else {
+				    href = 'http://www.apple.com/';
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+			        $('div.loading').removeClass('ng-hide');
+			        ref.addEventListener('loadstop', function() {
+			            ref.show();
+			            $('div.loading').addClass('ng-hide');
+			        });
+			    }
 		
-		
-		if (!Auth.isNetworkConnected()) {
-	        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
-	    } else {
-		    href = 'http://www.apple.com/';
-	        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-	        $('div.loading').removeClass('ng-hide');
-	        ref.addEventListener('loadstop', function() {
-	            ref.show();
-	            $('div.loading').addClass('ng-hide');
-	        });
-	    }
-
-		
-	 } else {
-	 	// alert(result.text);
-		 $.fancybox.open({
-			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
-			 type : 'iframe',
-			 opts : { 
-//			 	buttons : false,
-			 	smallBtn : true,
-			 	afterClose : function() {
-			 					alert('asdf2');
-			 					scan_barcode();
-		   					}
-			 		}
-			 });
-	 }
-	 
-	 // This is how to deal with QR
-	//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
-	//	 alert( obj.name  );
-	//   alert( obj.id  );
-	 
-	 // Open page Test
-	 /*
-	    if (!Auth.isNetworkConnected()) {
-	        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
-	    } else {
-		    href = 'http://www.apple.com/';
-	        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-	        $('div.loading').removeClass('ng-hide');
-	        ref.addEventListener('loadstop', function() {
-	            ref.show();
-	            $('div.loading').addClass('ng-hide');
-	        });
-	    }
-	*/
-	 
+				
+			 } else {
+			 	// alert(result.text);
+				 $.fancybox.open({
+					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
+					 type : 'iframe',
+					 opts : { 
+		//			 	buttons : false,
+					 	smallBtn : true,
+					 	afterClose : function() {
+					 					//alert('asdf2');
+					 					scan_barcode();
+				   					}
+					 		}
+					 });
+			 }
+			 
+			 // This is how to deal with QR
+			//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
+			//	 alert( obj.name  );
+			//   alert( obj.id  );
+			 
+			 // Open page Test
+			 /*
+			    if (!Auth.isNetworkConnected()) {
+			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+			    } else {
+				    href = 'http://www.apple.com/';
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+			        $('div.loading').removeClass('ng-hide');
+			        ref.addEventListener('loadstop', function() {
+			            ref.show();
+			            $('div.loading').addClass('ng-hide');
+			        });
+			    }
+			*/
+		} else {
+			alert ('cancelled!');
+		}
 	
 	 },function(error){
 		 //error callback
@@ -1231,7 +1236,8 @@ function scan_barcode(){
           showFlipCameraButton : true,
           showTorchButton : true,
           resultDisplayDuration: 0, 
-      }
+          disableAnimations : true
+		}
 	 );
 }
 
