@@ -1198,9 +1198,9 @@ function scan_barcode(){
 					 opts : { 
 		//			 	buttons : false,
 					 	smallBtn : true,
-				//	 	iframe : { 
-				//		 	preload : true,
-				//		 	 }
+					 	iframe : { 
+						 	preload : true,
+						 	 },
 					 	afterClose : function() {
 					 					//alert('asdf2');
 					 					scan_barcode();
