@@ -250,7 +250,8 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==4){
-            $scope.signOut();
+			scan_barcode();
+//            $scope.signOut();
         }else{
             myNavigator.pushPage('pages/childmenu.html');
         }
