@@ -1163,23 +1163,31 @@ window.addEventListener('message', function (event) {
 
 
 function scan_barcode(){
-	 // console.log("clicked");
 	 cordova.plugins.barcodeScanner.scan(function(result){
 	 //success callback
-	 alert(JSON.stringify(result));
-	// alert(result.text);
-	// alert(result.format);
-	 
+	 alert(JSON.stringify(result)); 
 	 if(result.format === 'QR_CODE') {
-		 alert('QR!');
-		 var obj = jQuery.parseJSON(result.text);
-		 
-//		 alert( obj.name  );
-//		 alert( obj.id  );
-//		 $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+		 var obj = jQuery.parseJSON(result.text);		 
+		// alert( obj.name  );
+		// alert( obj.id  );
+		// $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
+		
+		
+		if (!Auth.isNetworkConnected()) {
+	        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+	    } else {
+		    href = 'http://www.apple.com/';
+	        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+	        $('div.loading').removeClass('ng-hide');
+	        ref.addEventListener('loadstop', function() {
+	            ref.show();
+	            $('div.loading').addClass('ng-hide');
+	        });
+	    }
+
+		
 	 } else {
-//		 alert('Normal!');
-//		 alert(result.text);
+	 	// alert(result.text);
 		 $.fancybox.open({
 			 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 			 type : 'iframe',
@@ -1188,6 +1196,7 @@ function scan_barcode(){
 			 	smallBtn : true,
 			 	afterClose : function() {
 			 					alert('asdf2');
+			 					scan_barcode();
 		   					}
 			 		}
 			 });
@@ -1215,10 +1224,15 @@ function scan_barcode(){
 	 
 	
 	 },function(error){
-	 //error callback
-	 alert(JSON.stringify(error));
-	
-	 });
+		 //error callback
+		 alert(JSON.stringify(error));
+	 },
+	 {
+          showFlipCameraButton : true,
+          showTorchButton : true,
+          resultDisplayDuration: 0, 
+      }
+	 );
 }
 
 // iOS
