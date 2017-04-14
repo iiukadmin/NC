@@ -1174,24 +1174,13 @@ function scan_barcode(type){
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
-				 var obj = jQuery.parseJSON(result.text);		 				
+				 var obj = jQuery.parseJSON(result.text);
+				 var id = obj.id;		 				
 				
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
-				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567';
-			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-			        $('div.loading').removeClass('ng-hide');
-			        ref.addEventListener('loadstop', function() {
-			            ref.show();
-			            $('div.loading').addClass('ng-hide');
-			        });
-			    }
-		
-				
-			 } else {
-			 	// alert(result.text);
-				 $.fancybox.open({
+				   $.fancybox.open({
 					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 					 type : 'iframe',
 					 opts : { 
@@ -1201,7 +1190,30 @@ function scan_barcode(type){
 						 	preload : true,
 						 	 },
 					 	afterClose : function() {
-					 					//alert('asdf2');
+					 					scan_barcode(type);
+				   					}
+					 		}
+					 });
+			    }
+		
+				
+			 } else {
+			 	// alert(result.text);
+			 	var id = result.text;
+			 //	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
+
+				 $.fancybox.open({
+					 
+
+					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type,
+					 type : 'iframe',
+					 opts : { 
+		//			 	buttons : false,
+					 	smallBtn : true,
+					 	iframe : { 
+						 	preload : true,
+						 	 },
+					 	afterClose : function() {
 					 					scan_barcode(type);
 				   					}
 					 		}
