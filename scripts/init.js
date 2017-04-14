@@ -244,12 +244,14 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
         if(nav.type==2){
-            AKHB.openContentPage(nav,$templateCache);
+	        alert(JSON.stringify(nav)); 
+//            AKHB.openContentPage(nav,$templateCache);
         }else if(nav.type==3){
             app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
         }else if(nav.type==5){
-			scan_barcode();
-//            app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
+            app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
+        }else if(nav.type==6){
+            scan_barcode();
         }else if(nav.type==4){
             $scope.signOut();
         }else{
@@ -527,6 +529,8 @@ module.controller('MenuController',['$scope','$rootScope','$http','$templateCach
                 app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
             }else if(nav.type==5){
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
+            }else if(nav.type==6){
+                scan_barcode();
             }else if(nav.type==4){
                 $scope.signOut();
             }else{
@@ -1166,21 +1170,17 @@ window.addEventListener('message', function (event) {
 function scan_barcode(){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
-		 alert(JSON.stringify(result)); 
+		// alert(JSON.stringify(result)); 
 		 
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
-				 var obj = jQuery.parseJSON(result.text);		 
-				// alert( obj.name  );
-				// alert( obj.id  );
-				// $.fancybox.open([{src: 'https://www.iiuk.org/' }]);
-				
+				 var obj = jQuery.parseJSON(result.text);		 				
 				
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
-				    href = 'http://www.apple.com/';
+				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567';
 			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 			        $('div.loading').removeClass('ng-hide');
 			        ref.addEventListener('loadstop', function() {
@@ -1229,7 +1229,7 @@ function scan_barcode(){
 			    }
 			*/
 		} else {
-			alert ('cancelled!');
+			// alert ('cancelled scanner!');
 		}
 	
 	 },function(error){
@@ -1244,6 +1244,9 @@ function scan_barcode(){
 		}
 	 );
 }
+
+
+
 
 // iOS
 // NEED TO REMOVE
