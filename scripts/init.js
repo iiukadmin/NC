@@ -1162,6 +1162,8 @@ window.iiuklogin = function (data) {
 window.addEventListener('message', function (event) {
         if (event.data == 'closefancybox') {                
             $.fancybox.close();
+            //alert(type);
+            scan_barcode('2');
         }
     }, false);
 
@@ -1170,7 +1172,6 @@ function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
 		// alert(JSON.stringify(result)); 
-		 alert(type);
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
@@ -1190,7 +1191,7 @@ function scan_barcode(type){
 						 	preload : true,
 						 	 },
 					 	afterClose : function() {
-					 					scan_barcode(type);
+					 					//scan_barcode(type);
 				   					}
 					 		}
 					 });
