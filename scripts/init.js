@@ -244,14 +244,13 @@ module.controller('LandingPageController',['$scope','$rootScope','$sce','$templa
      $scope.openPage = function(nav){
         $templateCache.put('navigation',nav);
         if(nav.type==2){
-	        alert(JSON.stringify(nav)); 
-//            AKHB.openContentPage(nav,$templateCache);
+            AKHB.openContentPage(nav,$templateCache);
         }else if(nav.type==3){
             app.slidingMenu.setMainPage('pages/messagelistpage.html', { closeMenu: true })
         }else if(nav.type==5){
             app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
         }else if(nav.type==6){
-            scan_barcode();
+            scan_barcode(nav.content);
         }else if(nav.type==4){
             $scope.signOut();
         }else{
@@ -530,7 +529,7 @@ module.controller('MenuController',['$scope','$rootScope','$http','$templateCach
             }else if(nav.type==5){
                 app.slidingMenu.setMainPage('pages/directoryindex.html', { closeMenu: true })
             }else if(nav.type==6){
-                scan_barcode();
+                scan_barcode(nav.content);
             }else if(nav.type==4){
                 $scope.signOut();
             }else{
@@ -1167,11 +1166,11 @@ window.addEventListener('message', function (event) {
     }, false);
 
 
-function scan_barcode(){
+function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
 		// alert(JSON.stringify(result)); 
-		 
+		 alert(type);
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
@@ -1203,7 +1202,7 @@ function scan_barcode(){
 						 	 },
 					 	afterClose : function() {
 					 					//alert('asdf2');
-					 					scan_barcode();
+					 					scan_barcode(type);
 				   					}
 					 		}
 					 });
