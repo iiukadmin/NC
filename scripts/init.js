@@ -1197,6 +1197,14 @@ function scan_barcode(type){
 			    if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
+				    url = 'http://www.apple.com/';
+				    var ref = window.open(encodeURI(url), '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+					ref.addEventListener('loadstop', function(event) {        
+					    if (event.url.match("mobile/close")) {
+					        ref.close();
+					    }
+					});
+				    /*
 				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
 			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 			      //  $('div.loading').removeClass('ng-hide');
@@ -1209,6 +1217,7 @@ function scan_barcode(type){
 						//	$('div.loading').addClass('ng-hide');
 					//	}
 			        });
+			        */
 			    }
 		
 				
