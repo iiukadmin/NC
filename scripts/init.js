@@ -1200,13 +1200,14 @@ function scan_barcode(type){
 				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
 			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 			        $('div.loading').removeClass('ng-hide');
-			        ref.addEventListener('loadstop', function() {
+			        ref.addEventListener('loadstop', function(event) {
 				        if (event.url.match("mobile/close")) {
 							ref.close();
-						} else {
-				            ref.show();
-							$('div.loading').addClass('ng-hide');
 						}
+						// else {
+				         //   ref.show();
+						//	$('div.loading').addClass('ng-hide');
+					//	}
 			        });
 			    }
 		
