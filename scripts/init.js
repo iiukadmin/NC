@@ -1160,22 +1160,10 @@ window.iiuklogin = function (data) {
 }
 
 window.addEventListener('message', function (event) {
-        if (event.data == 'closefancybox') {                
-            $.fancybox.close();
-        } 
-        
-        else if (event.data == 'closeinappbrowser') {
-	         ref.close();
-        } 
-    }, false);
-
-
-function closeInAppBrowser(event) {
-    if (event.data == 'closeinappbrowser') {
-        ref.close();
-    }
-}
-
+    if (event.data == 'closefancybox') {                
+        $.fancybox.close();
+    } 
+}, false);
 
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
@@ -1213,10 +1201,13 @@ function scan_barcode(type){
 			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 			        $('div.loading').removeClass('ng-hide');
 			        ref.addEventListener('loadstop', function() {
-			            ref.show();
-			            $('div.loading').addClass('ng-hide');
+				        if (event.url.match("mobile/close")) {
+							ref.close();
+						} else {
+				            ref.show();
+							$('div.loading').addClass('ng-hide');
+						}
 			        });
-					ref.addEventListener('loaderror', closeInAppBrowser);
 			    }
 		
 				
