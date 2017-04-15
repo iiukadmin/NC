@@ -1173,9 +1173,8 @@ function scan_barcode(type){
 		 
 			 if(result.format === 'QR_CODE') {
 				 var obj = jQuery.parseJSON(result.text);
-				 var id = obj.id;		 				
-				
-				/*
+				 var id = obj.id;	
+				 	 				
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
@@ -1193,32 +1192,7 @@ function scan_barcode(type){
 					 		}
 					 });
 			    }
-			    */
-			    if (!Auth.isNetworkConnected()) {
-			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
-			    } else {
-				    url = 'http://www.apple.com/';
-				    var ref = window.open(encodeURI(url), '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-					ref.addEventListener('loadstop', function(event) {        
-					    if (event.url.match("mobile/close")) {
-					        ref.close();
-					    }
-					});
-				    /*
-				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
-			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-			      //  $('div.loading').removeClass('ng-hide');
-			        ref.addEventListener('loadstop', function(event) {
-				        if (event.url.match("mobile/close")) {
-							ref.close();
-						}
-						// else {
-				         //   ref.show();
-						//	$('div.loading').addClass('ng-hide');
-					//	}
-			        });
-			        */
-			    }
+			//	    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
 		
 				
 			 } else {
