@@ -1162,11 +1162,16 @@ window.iiuklogin = function (data) {
 window.addEventListener('message', function (event) {
         if (event.data == 'closefancybox') {                
             $.fancybox.close();
-            //alert(type);
-            scan_barcode('2');
+        } elseif (event.data == 'closeinappbrowser') {
+	         ref.close();
         }
     }, false);
 
+function closeInAppBrowser(event) {
+    if (event.data == 'closeinappbrowser') {
+        ref.close();
+    }
+}
 
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
@@ -1178,6 +1183,7 @@ function scan_barcode(type){
 				 var obj = jQuery.parseJSON(result.text);
 				 var id = obj.id;		 				
 				
+				/*
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
@@ -1185,16 +1191,28 @@ function scan_barcode(type){
 					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 					 type : 'iframe',
 					 opts : { 
-		//			 	buttons : false,
 					 	smallBtn : true,
 					 	iframe : { 
 						 	preload : true,
 						 	 },
 					 	afterClose : function() {
-					 					//scan_barcode(type);
+					 					scan_barcode(type);
 				   					}
 					 		}
 					 });
+			    }
+			    */
+			    if (!Auth.isNetworkConnected()) {
+			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+			    } else {
+				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+			        $('div.loading').removeClass('ng-hide');
+			        ref.addEventListener('loadstop', function() {
+			            ref.show();
+			            $('div.loading').addClass('ng-hide');
+			        });
+					ref.addEventListener('loaderror', closeInAppBrowser);
 			    }
 		
 				
