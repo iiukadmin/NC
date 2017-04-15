@@ -1199,7 +1199,7 @@ function scan_barcode(type){
 			    } else {
 				    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
 			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-			        $('div.loading').removeClass('ng-hide');
+			      //  $('div.loading').removeClass('ng-hide');
 			        ref.addEventListener('loadstop', function(event) {
 				        if (event.url.match("mobile/close")) {
 							ref.close();
