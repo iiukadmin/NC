@@ -16,7 +16,7 @@
     </author>
 
     <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
-    <preference name="phonegap-version" value="cli-6.4.0" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
