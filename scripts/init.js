@@ -1168,7 +1168,7 @@ window.addEventListener('message', function (event) {
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
-		// alert(JSON.stringify(result)); 
+		 alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
 		 
 			 if(result.format === 'QR_CODE') {
@@ -1178,6 +1178,7 @@ function scan_barcode(type){
 				if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
+				    alert('Here!');
 				   $.fancybox.open({
 					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
 					 type : 'iframe',
@@ -1201,13 +1202,11 @@ function scan_barcode(type){
 			 //	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
 
 				 $.fancybox.open({
-					 
-
 					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type,
 					 type : 'iframe',
 					 opts : { 
 		//			 	buttons : false,
-					 	smallBtn : true,
+					 	smallBtn : false,
 					 	iframe : { 
 						 	preload : true,
 						 	 },
