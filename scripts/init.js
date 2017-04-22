@@ -1168,40 +1168,20 @@ window.addEventListener('message', function (event) {
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
-		 alert(JSON.stringify(result)); 
+		 // alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
-		 
-			 if(result.format === 'QR_CODE') {
+			 if(result.format === 'QR_CODE') {				 
 				 var obj = jQuery.parseJSON(result.text);
 				 var id = obj.id;	
-				 	 				
-				if (!Auth.isNetworkConnected()) {
+			 } else {
+			 	var id = result.text;
+			 }
+			 
+			 if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
-				    alert('Here!');
+				//	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
 				   $.fancybox.open({
-					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id=1234567',
-					 type : 'iframe',
-					 opts : { 
-					 	smallBtn : true,
-					 	iframe : { 
-						 	preload : true,
-						 	 },
-					 	afterClose : function() {
-					 					scan_barcode(type);
-				   					}
-					 		}
-					 });
-			    }
-			//	    href = 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type;
-		
-				
-			 } else {
-			 	// alert(result.text);
-			 	var id = result.text;
-			 //	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
-
-				 $.fancybox.open({
 					 src: 'http://stage.iiuk.homeip.net/Pages/App/scan_result.php?id='+id+'&type='+type,
 					 type : 'iframe',
 					 opts : { 
@@ -1215,7 +1195,10 @@ function scan_barcode(type){
 				   					}
 					 		}
 					 });
-			 }
+
+			    }
+
+			 
 			 
 			 // This is how to deal with QR
 			//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
