@@ -129,8 +129,6 @@
     <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
 	<plugin name="de.appplant.cordova.plugin.local-notification" />	
-    <plugin name="phonegap-plugin-barcodescanner" source="git" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git#v6.0.2" /> 
-
 	<plugin name="cordova-plugin-cszbar" source="git" spec="https://github.com/tjwoon/csZBar" />
 
 
