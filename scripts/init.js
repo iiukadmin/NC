@@ -1165,10 +1165,75 @@ window.addEventListener('message', function (event) {
     } 
 }, false);
 
-
-
 function scan_barcode(type){
-	cloudSky.zBar.scan({ drawSight: true }, function(result){ alert('success'); }, function(result){ alert('fail'); });
+	 cordova.plugins.barcodeScanner.scan(function(result){
+		 //success callback
+		 // alert(JSON.stringify(result)); 
+		 if(result.cancelled != '1') { 
+			 if(result.format === 'QR_CODE') {				 
+				 var obj = jQuery.parseJSON(result.text);
+				 var id = obj.id;	
+			 } else {
+			 	var id = result.text;
+			 }
+			 
+			 if (!Auth.isNetworkConnected()) {
+			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+			    } else {
+				//	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
+				   $.fancybox.open({
+					 src: 'http://www.iiuk.org/Pages_Admin/Registration/scan_result.php?id='+id+'&type='+type,
+					 type : 'iframe',
+					 opts : { 
+		//			 	buttons : false,
+					 	smallBtn : false,
+					 	iframe : { 
+						 	preload : true,
+						 	 },
+					 	afterClose : function() {
+					 					scan_barcode(type);
+				   					}
+					 		}
+					 });
+
+			    }
+
+			 
+			 
+			 // This is how to deal with QR
+			//	 var obj = jQuery.parseJSON( '{ "name": "John", "id": "4567890" }' );
+			//	 alert( obj.name  );
+			//   alert( obj.id  );
+			 
+			 // Open page Test
+			 /*
+			    if (!Auth.isNetworkConnected()) {
+			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
+			    } else {
+				    href = 'http://www.apple.com/';
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+			        $('div.loading').removeClass('ng-hide');
+			        ref.addEventListener('loadstop', function() {
+			            ref.show();
+			            $('div.loading').addClass('ng-hide');
+			        });
+			    }
+			*/
+		} else {
+			// alert ('cancelled scanner!');
+		}
+	
+	 },function(error){
+		 //error callback
+		 alert(JSON.stringify(error));
+	 },
+	 {
+          showFlipCameraButton : true,
+          showTorchButton : true,
+          resultDisplayDuration: 0, 
+          disableAnimations : true
+		}
+	 );
 }
 
 

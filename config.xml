@@ -16,7 +16,7 @@
     </author>
 
     <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
-    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="phonegap-version" value="cli-6.4.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -129,8 +129,8 @@
     <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
 	<plugin name="de.appplant.cordova.plugin.local-notification" />	
-	<plugin name="cordova-plugin-cszbar" source="git" spec="https://github.com/tjwoon/csZBar" />
-
+    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
+	
 
 	<allow-navigation href="http://*/*" />
 	<allow-navigation href="https://*/*" />
