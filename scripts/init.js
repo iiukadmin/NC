@@ -484,6 +484,17 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 		                AKHB.user.os = 'ios';
 		                AKHB.user.deviceName = 'browser test';
 		            }else{
+			                
+    var test = cordova.plugins.version.getAppVersion();
+    var test2 = window.cordova.plugins.version.getAppVersion();
+    cordova.getAppVersion.getVersionNumber(function (version) {
+		alert(version);
+	});
+    alert(test);
+    alert(test2);
+    alert('asdf'+AKHB.user.appVersion);
+
+			            
 		                AKHB.user.deviceid = device.uuid;
 		                AKHB.user.os = device.version;
 		                AKHB.user.deviceName = device.model;
@@ -1122,12 +1133,6 @@ function sendRegistionId(id){
     var url = window.AKHB.config.remoteAddress+'?type=4&version='+AKHB.user.appVersion+'&os='+AKHB.user.os+'&device='+AKHB.user.deviceName+'&deviceid='+AKHB.user.deviceid+'&notificationid=' + id;
     $.get(url,function(data){
     })
-    
-    var test = cordova.plugins.version.getAppVersion();
-    var test2 = window.cordova.plugins.version.getAppVersion();
-    alert(test);
-    alert(test2);
-    alert('asdf'+AKHB.user.appVersion);
 }
 
 // notificationFeedback Service
