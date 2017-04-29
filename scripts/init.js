@@ -484,13 +484,6 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 		                AKHB.user.os = 'ios';
 		                AKHB.user.deviceName = 'browser test';
 		            }else{
-	var test = cordova.plugins.version.getAppVersion();
-    var test2 = window.cordova.plugins.version.getAppVersion();
-    alert(test);
-    alert(test2);
-    alert('asdf'+AKHB.user.appVersion);
-
-			            
 		                AKHB.user.deviceid = device.uuid;
 		                AKHB.user.os = device.version;
 		                AKHB.user.deviceName = device.model;
@@ -1245,6 +1238,24 @@ function scan_barcode(type){
 	 );
 }
 
+
+$(document).ready(function() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+});
+
+function onDeviceReady() {  
+    $('#version').click (function() {
+        cordova.getAppVersion.getVersionNumber().then(function (version) {
+            alert('verion(jQuery based)' + version);
+        });
+    });
+
+    $('#version1').click (function() {
+        cordova.getAppVersion.getVersionNumber(function (version) {
+            alert("version - " + version);
+        });
+    });
+}
 
 
 
