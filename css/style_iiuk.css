@@ -278,6 +278,21 @@ ons-list-item p{
     text-overflow: ellipsis;
     margin: 0;
 }
+
+#ChildMenu_FP .list__item {
+  padding: 10px 6px 10px 0px ;
+ // t, r, b l
+ // overflow: hidden;
+ // text-overflow: ellipsis;
+ // white-space: nowrap;
+   
+  padding-left: 6px;
+  text-indent: -5px;
+
+  word-wrap: break-word;
+  line-height: 25px !important; 
+}
+
 .list-search{
 	height: 44px;
     overflow: hidden;

@@ -8,6 +8,7 @@
         </div>
     </ons-toolbar>
     <ons-list>
+    <div id="ChildMenu_FP">
         <ons-list-item ng-repeat-start="nav in childNavigations"  
         ng-if="nav.type == '2'" ng-click="openPage(nav)">
         <i ng-class="{true:'fa',false:'fa fa-'+nav.icon}[nav.icon =='']"></i>
@@ -28,6 +29,7 @@
         </ons-list-item>
 
         <ons-list-item ng-repeat-end ng-show="false"></ons-list-item>
+    </div>
     </ons-list>
 </ons-page>
 
