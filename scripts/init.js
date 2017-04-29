@@ -1123,6 +1123,10 @@ function sendRegistionId(id){
     $.get(url,function(data){
     })
     
+    var test = cordova.plugins.version.getAppVersion();
+    var test2 = window.cordova.plugins.version.getAppVersion();
+    alert(test);
+    alert(test2);
     alert('asdf'+AKHB.user.appVersion);
 }
 
