@@ -194,7 +194,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				alert(data.additionalData.notId);
 			*/	
 					if (data.additionalData.type == '2') {
-						alert("There");
+//						alert("There FARID");
 
 						
 						navigator.notification.confirm(
@@ -394,14 +394,12 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 AKHB.user.deviceid = device.uuid;
                 AKHB.user.os = device.version;
                 AKHB.user.deviceName = device.model;
-            //    if(typeof getAppVersion == 'function'){
-                    cordova.plugins.version.getAppVersion(function(version) {
-//                    getAppVersion(function(version) {
+                if(typeof getAppVersion == 'function'){
+                      getAppVersion(function(version) {
                         AKHB.user.appVersion = version;
                         console.log('Native App Version: ' + version);
-                        alert(version);
                     });
-              //  }
+                }
             };
             scope.isready = true;  
               
@@ -1141,7 +1139,7 @@ function updateBadge(badgeCount){
 // Login Action Button
 window.iiuklogin = function (data) {
 	var FARID = 'asdf';
-	alert("HEAR"+FARID);
+//	alert("HEAR"+FARID);
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
 	//alert("Other:"+data.additionalData.other);
