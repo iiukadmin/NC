@@ -9,7 +9,7 @@ var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
 window.DB = null;
 
-AKHB.user = { id:null, authcode:null,appVersion:'1.1.1'};
+AKHB.user = { id:null, authcode:null,appVersion:'1.1.3'};
 AKHB.xhr = [];
 $.ajaxSetup({
     beforeSend :function(xhr){
