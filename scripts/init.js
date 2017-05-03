@@ -9,7 +9,7 @@ var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
 window.DB = null;
 
-AKHB.user = { id:null, authcode:null,appVersion:'1.2.0'};
+AKHB.user = { id:null, authcode:null,appVersion:'1.1.1'};
 AKHB.xhr = [];
 $.ajaxSetup({
     beforeSend :function(xhr){
@@ -1170,7 +1170,13 @@ function scan_barcode(type){
 		 //success callback
 		 // alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
-			 if(result.format === 'QR_CODE') {				 
+			 if(result.format === 'QR_CODE') {	
+				 if (result.text.search("://")>0) {
+					href = result.text;
+			        window.open(href, '_system','');
+			        return;
+				 } 			 				 
+			 
 				 var obj = jQuery.parseJSON(result.text);
 				 var id = obj.id;	
 			 } else {
