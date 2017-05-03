@@ -1184,7 +1184,7 @@ function scan_barcode(type){
 				// src: 'http://www.iiuk.org/Pages_Admin/Registration/scan_result.php?id='+id+'&type='+type,
 
 				   $.fancybox.open({
-					 src: window.AKHB.config.remoteAddress+'?value=barcode&id='+id+'&barcode_type='+type,
+					 src: window.AKHB.config.remoteAddress+'?value=barcode&id='+id+'&barcode_type='+type+'&uuid='+AKHB.user.id,
 					 type : 'iframe',
 					 opts : { 
 		//			 	buttons : false,
