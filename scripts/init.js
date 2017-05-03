@@ -9,7 +9,7 @@ var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
 window.DB = null;
 
-AKHB.user = { id:null, authcode:null,appVersion:'1.9'};
+AKHB.user = { id:null, authcode:null,appVersion:'1.2.0'};
 AKHB.xhr = [];
 $.ajaxSetup({
     beforeSend :function(xhr){
@@ -1181,8 +1181,10 @@ function scan_barcode(type){
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
 				//	var url = window.AKHB.config.remoteAddress+'?type=5&uuid='+AKHB.user.id+'&other='+passedData+'&buttonIndex='+buttonIndex;
+				// src: 'http://www.iiuk.org/Pages_Admin/Registration/scan_result.php?id='+id+'&type='+type,
+
 				   $.fancybox.open({
-					 src: 'http://www.iiuk.org/Pages_Admin/Registration/scan_result.php?id='+id+'&type='+type,
+					 src: window.AKHB.config.remoteAddress+'?value=barcode&id='+id+'&barcode_type='+type,
 					 type : 'iframe',
 					 opts : { 
 		//			 	buttons : false,
