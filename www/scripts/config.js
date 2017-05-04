@@ -9,7 +9,7 @@ window.AKHB ={
 		// Application: iiuk / akhb
 		remoteAddress : 'https://www.iiuk.org/Pages/App/webservice2.php',
 		debug:true,
-		version:'1.1.4',
+		version:'1.1.5',
 		timeout:60*1000*30,
 		taskTimeout:1000*5,
 		messageSyncTimeout:1000*30,

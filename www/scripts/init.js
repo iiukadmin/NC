@@ -565,8 +565,9 @@ module.controller('ChildMenuController',['$scope','$http','$templateCache','$sce
             app.slidingMenu.setSwipeable(true); 
             if(nav.type==2){
                 AKHB.openContentPage(nav,$templateCache);
-            }else{
-                
+            }else if(nav.type==6){
+				scan_barcode(nav.content);
+        	}else{
                 myNavigator.pushPage('pages/childmenu.html');
             }
         }

@@ -10,14 +10,14 @@
     <ons-list>
     <div id="ChildMenu_FP">
         <ons-list-item ng-repeat-start="nav in childNavigations"  
-        ng-if="nav.type == '2'" ng-click="openPage(nav)">
+        ng-if="nav.type != '1'" ng-click="openPage(nav)">
         <i ng-class="{true:'fa',false:'fa fa-'+nav.icon}[nav.icon =='']"></i>
         {{nav.title}}
         </ons-list-item>
 
         <ons-list-header  ng-if="nav.type == 1">{{nav.title}}</ons-list-header>
 
-        <ons-list-item ng-if="childNav.type == 2" 
+        <ons-list-item ng-if="childNav.type == 2"
         ng-repeat-start="childNav in nav.children" ng-click="openPage(childNav)">
          <i ng-class="{true:'fa',false:'fa fa-'+childNav.icon}[childNav.icon =='']"></i>
          {{childNav.title}}
