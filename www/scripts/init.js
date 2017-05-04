@@ -9,7 +9,7 @@ var Auth = new AKHB.services.authentication(AKHB.config);
 var DBSync = null;
 window.DB = null;
 
-AKHB.user = { id:null, authcode:null,appVersion:'1.1.3'};
+AKHB.user = { id:null, authcode:null,appVersion:null};
 AKHB.xhr = [];
 $.ajaxSetup({
     beforeSend :function(xhr){
@@ -394,11 +394,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 AKHB.user.deviceid = device.uuid;
                 AKHB.user.os = device.version;
                 AKHB.user.deviceName = device.model;
-                if(typeof getAppVersion == 'function'){
-                      getAppVersion(function(version) {
-                        AKHB.user.appVersion = version;
-                        console.log('Native App Version: ' + version);
-                    });
+                AKHB.user.appVersion = window.AKHB.config.version;
                 }
             };
             scope.isready = true;  
@@ -485,11 +481,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 		                AKHB.user.deviceid = device.uuid;
 		                AKHB.user.os = device.version;
 		                AKHB.user.deviceName = device.model;
-		                if(typeof getAppVersion == 'function'){
-		                    getAppVersion(function(version) {
-		                        AKHB.user.appVersion = version;
-		                    });
-		                }
+		                AKHB.user.appVersion = window.AKHB.config.version;
 		            };
                     DBSync.runInBackGround(function(err){
                         //$rootScope.$emit("BUSY");
@@ -1243,27 +1235,6 @@ function scan_barcode(type){
 		}
 	 );
 }
-
-
-$(document).ready(function() {
-    document.addEventListener("deviceready", onDeviceReady, false);
-});
-
-function onDeviceReady() {  
-    $('#version').click (function() {
-        cordova.getAppVersion.getVersionNumber().then(function (version) {
-            alert('verion(jQuery based)' + version);
-        });
-    });
-
-    $('#version1').click (function() {
-        cordova.getAppVersion.getVersionNumber(function (version) {
-            alert("version - " + version);
-        });
-    });
-}
-
-
 
 // iOS
 // NEED TO REMOVE
