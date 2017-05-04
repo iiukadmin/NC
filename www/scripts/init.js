@@ -394,8 +394,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
                 AKHB.user.deviceid = device.uuid;
                 AKHB.user.os = device.version;
                 AKHB.user.deviceName = device.model;
-                AKHB.user.appVersion = window.AKHB.config.version;
-                }
+				AKHB.user.appVersion = window.AKHB.config.version;
             };
             scope.isready = true;  
               
@@ -481,7 +480,7 @@ module.controller('LoginController',['$scope','$http','$templateCache','$rootSco
 		                AKHB.user.deviceid = device.uuid;
 		                AKHB.user.os = device.version;
 		                AKHB.user.deviceName = device.model;
-		                AKHB.user.appVersion = window.AKHB.config.version;
+						AKHB.user.appVersion = window.AKHB.config.version;
 		            };
                     DBSync.runInBackGround(function(err){
                         //$rootScope.$emit("BUSY");
@@ -1235,6 +1234,7 @@ function scan_barcode(type){
 		}
 	 );
 }
+
 
 // iOS
 // NEED TO REMOVE
