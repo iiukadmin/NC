@@ -1196,7 +1196,7 @@ function scan_barcode(type){
 			 } else {
 			 	var id = result.text;
 			 }
-			 if (typeof id == 'undefined')) {
+			 if (typeof id == 'undefined') {
 				AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
   				return; 			 				 
 			 }
