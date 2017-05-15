@@ -1160,41 +1160,29 @@ window.addEventListener('message', function (event) {
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
-		 //alert(JSON.stringify(result)); 
+		 // alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
 			 if(result.format === 'QR_CODE') {	
 				if (type==0) { 
 					if (result.text.search("://")>0) {
 						 href = result.text;
-						 window.open(href, '_system','');
-						 return;
-						/* 
-						 if (!Auth.isNetworkConnected()) {
-						 	AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
-						 } else {
-						 	href = result.text;;
-						 	ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
-						 	$('div.loading').removeClass('ng-hide');
-						 	ref.addEventListener('loadstop', function() {
-						 	ref.show();
-						 	$('div.loading').addClass('ng-hide');
-						 	});
-						}	
-						*/	 
+						 window.open(href, '_blank','location=no,hidden=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
+						 return;						 
 					}
 				}
-				var obj = jQuery.parseJSON(result.text);
-				if(typeof obj =='object') {
-					var id = obj.id;	
-				} else {
+				try {
+					var obj = jQuery.parseJSON(result.text);
+					if(typeof obj == 'object') {
+						var id = obj.id;						
+					} else {
+						var id = result.text;
+					}
+				} catch (e) {
 					var id = result.text;
 				}
+				
 			 } else {
 			 	var id = result.text;
-			 }
-			 if(typeof id == 'undefined') {
-				AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
-  				return; 			 				 
 			 }
 			 
 			 if (!Auth.isNetworkConnected()) {
