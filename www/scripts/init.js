@@ -1165,10 +1165,10 @@ function scan_barcode(type){
 			 if(result.format === 'QR_CODE') {	
 				if (type==0) { 
 					if (result.text.search("://")>0) {
-						// href = result.text;
-						// window.open(href, '_system','');
-						// return;
-						 
+						 href = result.text;
+						 window.open(href, '_system','');
+						 return;
+						/* 
 						 if (!Auth.isNetworkConnected()) {
 						 	AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 						 } else {
@@ -1178,14 +1178,10 @@ function scan_barcode(type){
 						 	ref.addEventListener('loadstop', function() {
 						 	ref.show();
 						 	$('div.loading').addClass('ng-hide');
-						 });
-			    }
-
-						 
-						 
+						 	});
+						}	
+						*/	 
 					}
-					AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
-  					return; 			 				 
 				}
 				var obj = jQuery.parseJSON(result.text);
 				if(typeof obj =='object') {
@@ -1196,10 +1192,12 @@ function scan_barcode(type){
 			 } else {
 			 	var id = result.text;
 			 }
-			 if (typeof id == 'undefined') {
+			 /*
+			 if(typeof id == 'undefined') {
 				AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
   				return; 			 				 
 			 }
+			 */
 			 
 			 if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
