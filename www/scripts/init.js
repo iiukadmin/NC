@@ -1163,18 +1163,21 @@ function scan_barcode(type){
 		 //alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
 			 if(result.format === 'QR_CODE') {	
-				 if (result.text.search("://")>0) {
-					href = result.text;
-			        window.open(href, '_system','');
-			        return;
-				 } 			 				 
-			 
-				 var obj = jQuery.parseJSON(result.text);
-				 if(typeof obj =='object') {
-					 var id = obj.id;	
-				 } else {
-				 	var id = result.text;
-				 }
+				if (type==0) { 
+					if (result.text.search("://")>0) {
+						 href = result.text;
+						 window.open(href, '_system','');
+						 return;
+					}
+					AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
+  					return; 			 				 
+				}
+				var obj = jQuery.parseJSON(result.text);
+				if(typeof obj =='object') {
+					var id = obj.id;	
+				} else {
+					var id = result.text;
+				}
 			 } else {
 			 	var id = result.text;
 			 }
