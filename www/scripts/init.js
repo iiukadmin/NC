@@ -1160,7 +1160,7 @@ window.addEventListener('message', function (event) {
 function scan_barcode(type){
 	 cordova.plugins.barcodeScanner.scan(function(result){
 		 //success callback
-		 alert(JSON.stringify(result)); 
+alert(JSON.stringify(result)); 
 		 if(result.cancelled != '1') { 
 			 if(result.format === 'QR_CODE') {	
 				 if (result.text.search("://")>0) {
@@ -1170,7 +1170,9 @@ function scan_barcode(type){
 				 } 			 				 
 			 
 				 var obj = jQuery.parseJSON(result.text);
+alert(result.text);				 
 				 var id = obj.id;	
+alert(id);				 
 			 } else {
 			 	var id = result.text;
 			 }
