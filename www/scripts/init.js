@@ -1192,12 +1192,10 @@ function scan_barcode(type){
 			 } else {
 			 	var id = result.text;
 			 }
-			 /*
 			 if(typeof id == 'undefined') {
 				AKHB.notification.alert('Incorrect QR Code', null, 'Barcode', 'OK');
   				return; 			 				 
 			 }
-			 */
 			 
 			 if (!Auth.isNetworkConnected()) {
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
