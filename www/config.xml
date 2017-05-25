@@ -24,8 +24,6 @@
     <gap:splash src="splash_iiuk.png" />
 
     <gap:splash src="icons_iiuk/Default.png"         gap:platform="ios" width="320" height="480" />
-    <gap:splash src="icons_iiuk/Default@2x.png"      gap:platform="ios" width="640" height="960" />
-    <gap:splash src="icons_iiuk/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
 
     <icon src="icons_iiuk/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons_iiuk/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
@@ -35,16 +33,6 @@
     <icon src="icons_iiuk/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <icon src="icons_iiuk/icon.png" />
-    <!-- iPhone 6 / 6+ -->
-    <icon src="icons_iiuk/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
-
-    <!-- iPhone / iPod Touch  -->
-    <icon src="icons_iiuk/icon-60.png" gap:platform="ios" width="60" height="60" />
-    <icon src="icons_iiuk/icon-60@2x.png" gap:platform="ios" width="120" height="120" />
-
-    <!-- iPad -->
-    <icon src="icons_iiuk/icon-76.png" gap:platform="ios" width="76" height="76" />
-    <icon src="icons_iiuk/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
 
     <!-- Settings Icon -->
     <icon src="icons_iiuk/icon-small.png" gap:platform="ios" width="29" height="29" />
@@ -54,14 +42,6 @@
     <!-- Spotlight Icon -->
     <icon src="icons_iiuk/icon-40.png" gap:platform="ios" width="40" height="40" />
     <icon src="icons_iiuk/icon-40@2x.png" gap:platform="ios" width="80" height="80" />
-
-    <!-- iPhone / iPod Touch -->
-    <icon src="icons_iiuk/icon-57.png" gap:platform="ios" width="57" height="57" />
-    <icon src="icons_iiuk/icon@2x.png" gap:platform="ios" width="114" height="114" />
-
-    <!-- iPad -->
-    <icon src="icons_iiuk/icon-72.png" gap:platform="ios" width="72" height="72" />
-    <icon src="icons_iiuk/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
     <!-- iPhone Spotlight and Settings Icon -->    
     <icon src="icons_iiuk/icon-small.png" gap:platform="ios" width="29" height="29" />
