@@ -1,80 +1,130 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
-    <link rel="stylesheet" href="lib/onsen/css/onsenui.css"/>
-    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css"/>
-	<link rel="stylesheet" href="scripts/libs/jquery.fancybox.min.css" />
-    <script src="cordova.js"></script>
-    <script src="lib/onsen/js/angular/angular.min.js"></script>
-    <script src="lib/onsen/js/angular/angular-touch.js"></script>
-<!--    <script src="scripts/libs/jquery-1.11.2.min.js"></script> -->
-    <script src="scripts/libs/jquery-3.2.0.min.js"></script>
-	<script src="scripts/libs/jquery.fancybox.min.js"></script>
-    <script src="scripts/libs/moment.min.js"></script>
-    <script src="scripts/libs/jquery.event.swipe.js"></script>
-    <!-- <script src="scripts/libs/iscroll/iscroll.js"></script> -->
-    <script src="scripts/libs/iscroll/iscroll-probe.js"></script>
-<!--     // <script src="scripts/libs/angular-plugins/ng-iscroll.min.js"></script> -->
-    <script src="lib/onsen/js/onsenui_all.js"></script>
-    <script src="scripts/libs/async.js"></script>
-    <script src="scripts/libs/persistencejs/persistence.js"></script>
-    <!-- <script src="scripts/libs/persistencejs/persistence.store.websql.js"></script> -->
-    <script src="scripts/libs/persistencejs/persistence.store.sql.js"></script>
-    <!-- <script src="scripts/libs/persistencejs/persistence.store.memory.js"></script> -->
-    <script src="scripts/libs/persistencejs/persistence.store.cordovasql.js"></script>
-    <script src="scripts/config.js"></script>
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/models.js"></script>
-    <script src="scripts/services/db.js"></script>
-    <script src="scripts/services/db.sync.js"></script>
-    <script src="scripts/services/authentication.js"></script>
-    <script src="scripts/init.js"></script>
-    <link rel="stylesheet" href="components/loader.css" />
-	<script type="text/javascript">
-        document.write( '<style>#footer{visibility:hidden}@media(min-height:' + ($( window ).height() - 10) + 'px){#footer{visibility:visible}}</style>' );
-        $(document).ready(function(){
-      	  $('ons-sliding-menu').attr('main-page','pages/login_'+window.AKHB.config.application+'.html')	        
-        });
-    document.write('<link rel="stylesheet" href="css/style_'+window.AKHB.config.application+'.css" />');
-    </script>
-    <!--<link rel="stylesheet" href="css/style.css" />-->
-    <style>
-	    .fancybox-slide--iframe .fancybox-content {
-			width  : 100%;
-			height : 100%;
-			max-width  : 100%;
-			max-height : 100%;
-			margin: 0;
-		}
-	</style>
-</head>
-    <body ng-controller="AppController" ng-init="busy">
-        <div id="home">
-            <div id="app-status-div">
-                <ul id="app-status-ul">
-                </ul>
-            </div>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>Hello World</title>
+    </head>
+    <body style="background-color: black;">
+	    <div style="position: absolute; top: 0; left: 0; right: 50%; bottom: 50%;" onclick="onTakePicture();"></div>
+		<div style="position: absolute; top: 0; left: 50%; right: 0; bottom: 50%;" onclick="onTakePicture();"></div>
+		<div style="position: absolute; top: 50%; left: 0; right: 50%; bottom: 0;" onclick="onChangeDevicePositionFront();"></div>
+		<div style="position: absolute; top: 50%; left: 50%; right: 0; bottom: 0;" onclick="onChangeDevicePositionBack();"></div>
+	    
+		<!--
+		 <div class="app">
+		    <div>
+			    <div style="float: left; width: 50%; height: 400;" ><h2 onclick="onChangeDevicePosition();">Swap Camera<BR></BR></h2></div>
+				<div style="float: right; width: 50%; height: 400;"><h2>Take Camera<BR></BR></h2></div>
+		    </div>
+		    <h2>Swap Camera</h2>
+            <input type="radio" name="deviceposition" id="deviceposition_back" value="Back" onclick="onChangeDevicePosition();"/>
+            <label for="deviceposition_back">Back</label>
+            <br/>
+            <input type="radio" name="deviceposition" id="deviceposition_front" value="Front" onclick="onChangeDevicePosition();"/>
+            <label for="deviceposition_front">Front</label>
+
+
+            <h2> Flash Mode </h2>
+            <input type="radio" name="flashmode" id="flashmode_off" value="Off" onclick="onChangeFlashMode();"/>
+            <label for="flashmode_off">Off</label>
+            <br/>
+            <input type="radio" name="flashmode" id="flashmode_on" value="On" onclick="onChangeFlashMode();"/>
+            <label for="flashmode_on">On</label>
+            <br/>
+            <input type="radio" name="flashmode" id="flashmode_auto" value="Auto" onclick="onChangeFlashMode();"/>
+            <label for="flashmode_auto">Auto</label>
+            <br/>
+            <input type="button" value="Take a picture" onclick="onTakePicture();" />
+			-->
+
+
         </div>
-        <div class="loading" ng-show="busy"> 
-            <p><i class="fa fa-spin fa-spinner fa-lg"></i><br />
-                <span ng-show="!waitNetwork">loading ...</span>
-                <span ng-show="waitNetwork">waiting for network connection...</span>
-            </p>
-        </div>
-        <ons-navigator hide-toolbar="true" var="myNavigator"  > 
-            <ons-page ng-controller="SlidingMenuController" >
-                <ons-sliding-menu var="app.slidingMenu" 
-                    hide-toolbar="true" 
-                    menu-page="pages/menu.html"  
-                    main-page="pages/login_iiuk.html" 
-                    side="left" 
-                    type="overlay" 
-                    swipeable="false"
-                    max-slide-distance="200px">
-                </ons-sliding-menu> 
-            </ons-page>
-        </ons-navigator>
+
+    <!— camera preview canvas —>
+        <div style="width:50%;" hidden="true"><canvas id="camera" hidden="true" width="10" height="20" style="border:2px"></canvas></div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+
+        <script>
+            document.addEventListener("deviceready", function() {
+                                          canvasMain = document.getElementById("camera");
+                                          window.plugin.CanvasCamera.initialize(canvasMain);
+                                          // define options
+                                          var opt = {
+                                              quality: 75,
+                                              destinationType: window.plugin.CanvasCamera.DestinationType.IMAGE_URI,
+                                              encodingType: window.plugin.CanvasCamera.EncodingType.JPEG,
+                                              saveToPhotoAlbum:true,
+                                              correctOrientation:true,
+                                              width:64,
+                                              height:48
+                                          };
+                                          window.plugin.CanvasCamera.start(opt);
+                                      });
+
+
+			function onChangeDevicePositionFront() {
+			    var newDevicePosition;
+				newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
+			    window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);	
+			}
+
+			function onChangeDevicePositionBack() {
+			    var newDevicePosition;
+				newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+			    window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);	
+			}
+
+
+            function onChangeDevicePosition() {               
+	            var newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+                if (document.getElementById("deviceposition_back").checked)
+                {
+                    newDevicePosition = window.plugin.CanvasCamera.CameraPosition.BACK;
+                }
+                else if (document.getElementById("deviceposition_front").checked)
+                {
+                    newDevicePosition = window.plugin.CanvasCamera.CameraPosition.FRONT;
+                }
+                //
+                window.plugin.CanvasCamera.setCameraPosition(newDevicePosition);
+            }
+
+            function onChangeFlashMode() {
+
+                var newFlashMode = window.plugin.CanvasCamera.FlashMode.OFF;
+                if (document.getElementById("flashmode_off").checked)
+                {
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.OFF;
+                }
+                else if (document.getElementById("flashmode_on").checked)
+                {
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.ON;
+                }
+                else if (document.getElementById("flashmode_auto").checked)
+                {
+                    newFlashMode = window.plugin.CanvasCamera.FlashMode.AUTO;
+                }
+
+                window.plugin.CanvasCamera.setFlashMode(newFlashMode);
+            }
+
+            function onTakePicture() {
+                window.plugin.CanvasCamera.takePicture(onTakeSuccess);
+            }
+
+            function onTakeSuccess(data) {
+	           // alert(json_encode(data));
+            }
+        </script>
     </body>
 </html>
