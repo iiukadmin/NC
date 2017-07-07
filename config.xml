@@ -14,7 +14,8 @@
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-file-transfer" />
 <!--	<gap:plugin name="cordova-plugin-preview-camera" source="npm" /> -->
-<gap:plugin name="com.keith.cordova.plugin.canvascamera" />
+<!-- <gap:plugin name="com.keith.cordova.plugin.canvascamera" /> -->
+    <plugin name="cordova.plugin.canvascamera" source="git" spec="https://github.com/donaldp24/CanvasCameraPlugin.git" /> 
 
 
     <content src="index.html" />
