@@ -1092,7 +1092,8 @@ module.filter('trustHtmlA', function ($sce) {
 module.filter('formatTime', function ($sce) {
     return function (input) {
         if(input)
-            return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
+//            return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
+            return $sce.trustAsHtml(moment(input).format('DD/MM/YYYY h:mm A'));
         return "";
     }
 });
