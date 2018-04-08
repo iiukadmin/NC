@@ -229,14 +229,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     
     // Added to update badge count with unread message count.
     document.addEventListener("pause", function(){ 
-		// updateBadge($rootScope.messageCount);
-		updateBadge(5);
-	  //  cordova.plugins.notification.badge.set(20);
-	      cordova.plugins.notification.badge.set($rootScope.messageCount);
+		// cordova.plugins.notification.badge.set($rootScope.messageCount);
 	      updateBadge($rootScope.messageCount);
-	    //alert($rootScope.messageCount);
-
-    },false);
+	  },false);
 }]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
