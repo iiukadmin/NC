@@ -10,6 +10,11 @@
     <ons-list>
         <ons-list-header ng-show="directory.description">{{directory.title}}</ons-list-header>
         <ons-list-item ng-show="directory.description" class="item-description" ng-bind-html="directory.description | trustHtml">
+
+        <ons-list-item>
+            <a href="maps://?q=51.350551,-0.269530">Maps</a>
+        </ons-list-item>
+
         </ons-list-item>
         <ons-list-header ng-show="directory.email">Email</ons-list-header>
         <ons-list-item ng-show="directory.email">
