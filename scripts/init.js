@@ -118,8 +118,10 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
         });
     }
     document.addEventListener('deviceready', function(){
-	    cordova.plugins.notification.badge.set(10);
-	    alert('hello');
+	  
+//	    cordova.plugins.notification.badge.set(10);
+//	    alert('hello');
+	  
 	    try{
 	    var push = PushNotification.init({ 
 		    "android": {
@@ -230,7 +232,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     , false);
     // Added to update iOS badge with unread message count.
     document.addEventListener("pause", function(){ 
-	updateBadge($rootScope.messageCount);
+		// updateBadge($rootScope.messageCount);
+	    cordova.plugins.notification.badge.set(20);
+
     },false);
 }]);
 
