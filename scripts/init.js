@@ -891,8 +891,19 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
         if(!$scope.directory.content){
             $scope.isSync = true;
         }
+        
         $scope.openIndividual = function(individual){
-            $rootScope.openIndividual(individual,true);
+			$rootScope.openIndividual(individual,true);
+        };
+        
+        $scope.openMap = function(location){
+	   		var location = location.location;
+	   		// window.open('maps://?q=51.350551,-0.269530','_system');		
+	   		if (device.platform=='iOS') {
+		   		window.open('maps://?q='+location,'_system');
+		   	} else {
+				window.open('geo:'+location,'_system');
+	   		}	
         };
 }]);
 module.controller('DirectoryIndividualController',['$scope','$rootScope','$http','$templateCache','$sce',
@@ -1019,16 +1030,20 @@ $(document).on('click','a',function(e){
 		        }    
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
-                navigator.notification.confirm(
-                    "",
-                    function(buttonIndex) {
-                        if(buttonIndex == 1){
-                           window.open( $href, '_system', 'location=yes');
-                        }
-                    },
-                    $(this).text(),
-                    ["Call","Cancel"]
-                );
+	            if (device.platform!='iOS') {
+	                navigator.notification.confirm(
+	                    "",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+	                           window.open( $href, '_system', 'location=yes');
+	                        }
+	                    },
+	                    $(this).text(),
+	                    ["Call","Cancel"]
+	                );
+				} else {
+					 window.open( $href, '_system', 'location=yes');
+				}
                
             }else if($href.toLowerCase().indexOf('mailto') == 0){
                 window.plugin.email.open({
