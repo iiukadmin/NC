@@ -1123,9 +1123,10 @@ function notificationFeedback(buttonIndex,passedData) {
 
 // added badge update function
 function updateBadge(badgeCount){
-    var pushNotification = window.plugins.pushNotification;
-    pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
+ //   var pushNotification = window.plugins.pushNotification;
+ //   pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
     //cordova.plugins.notification.badge.set(badgeCount); // Android
+    cordova.plugins.notification.badge.set(10);
 }
 
 // Login Action Button
