@@ -233,6 +233,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		updateBadge(5);
 	  //  cordova.plugins.notification.badge.set(20);
 	      cordova.plugins.notification.badge.set($rootScope.messageCount);
+	      updateBadge($rootScope.messageCount);
 	    //alert($rootScope.messageCount);
 
     },false);
