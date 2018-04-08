@@ -226,12 +226,14 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     
     
     , false);
-    // Added to update iOS badge with unread message count.
+    
+    // Added to update badge count with unread message count.
     document.addEventListener("pause", function(){ 
 		// updateBadge($rootScope.messageCount);
 		updateBadge(5);
 	  //  cordova.plugins.notification.badge.set(20);
-	    alert($rootScope.messageCount);
+	      cordova.plugins.notification.badge.set($rootScope.messageCount);
+	    //alert($rootScope.messageCount);
 
     },false);
 }]);
@@ -1092,7 +1094,6 @@ module.filter('trustHtmlA', function ($sce) {
 module.filter('formatTime', function ($sce) {
     return function (input) {
         if(input)
-//            return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
             return $sce.trustAsHtml(moment(input).format('DD/MM/YYYY h:mm A'));
         return "";
     }
