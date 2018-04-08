@@ -119,7 +119,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     }
     document.addEventListener('deviceready', function(){
 	    cordova.plugins.notification.badge.set(10);
-	    
+	    alert('hello');
 	    try{
 	    var push = PushNotification.init({ 
 		    "android": {
