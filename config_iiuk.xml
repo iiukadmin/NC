@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
-        versionCode = "190" 
-        version     = "1.1.6" >
+        versionCode = "14" 
+        version     = "1.0.6" >
 
     <name>IIUK</name>
 
@@ -15,13 +15,16 @@
         Ismaili Council for the UK
     </author>
 
-    <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
-    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="phonegap-version" value="cli-5.2.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
     <gap:splash src="splash_iiuk.png" />
+
+    <gap:splash src="icons_iiuk/Default.png"         gap:platform="ios" width="320" height="480" />
+    <gap:splash src="icons_iiuk/Default@2x.png"      gap:platform="ios" width="640" height="960" />
+    <gap:splash src="icons_iiuk/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
 
     <icon src="icons_iiuk/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons_iiuk/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
@@ -31,20 +34,6 @@
     <icon src="icons_iiuk/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <icon src="icons_iiuk/icon.png" />
-
-	<!-- General iPhone -->
-	<platform name="ios">
-	    <splash src="icons_iiuk/ios/Default.png" width="320" height="480" />
-	    <splash src="icons_iiuk/ios/Default@2x~iphone.png" width="640" height="960" />
-	    <splash src="icons_iiuk/ios/Default-Portrait~ipad.png" width="768" height="1024" />
-	    <splash src="icons_iiuk/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
-	    <splash src="icons_iiuk/ios/Default-Landscape~ipad.png" width="1024" height="768"/>
-	    <splash src="icons_iiuk/ios/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
-		<splash src="icons_iiuk/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
-	    <splash src="icons_iiuk/ios/Default-667h.png" width="750" height="1334"/>
-	    <splash src="icons_iiuk/ios/Default-736h.png" width="1242" height="2208"/>
-	</platform>
-	  
     <!-- iPhone 6 / 6+ -->
     <icon src="icons_iiuk/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
 
@@ -108,54 +97,22 @@
 	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
-		
-	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-device-orientation" />
-	<plugin name="cordova-plugin-dialogs" />
-	<plugin name="cordova-plugin-globalization" />
-	<plugin name="cordova-plugin-inappbrowser" />
-	<plugin name="cordova-plugin-network-information" />
-	<plugin name="cordova-plugin-splashscreen" />
-	<plugin name="cordova-plugin-vibration" />
-	<plugin name="cordova-plugin-statusbar" />
-	<plugin name="cordova_app_version_plugin" />	
-	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
-	<plugin name="de.appplant.cordova.plugin.badge" />-->
-
-    <plugin name="cordova-plugin-datepicker"/>
-    <plugin name="cordova-plugin-email-composer"/>
-    <plugin name="cordova-plugin-badge"/>
-	
+	<gap:plugin name="org.apache.cordova.device" />
+	<gap:plugin name="org.apache.cordova.device-orientation" />
+	<gap:plugin name="org.apache.cordova.dialogs" />
+	<gap:plugin name="org.apache.cordova.globalization" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" />
+	<gap:plugin name="org.apache.cordova.network-information" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	<gap:plugin name="org.apache.cordova.statusbar" />
+	<gap:plugin name="de.appplant.cordova.plugin.email-composer"/>
+	<gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
+	<gap:plugin name="de.appplant.cordova.plugin.badge" />
+	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" />
 	<plugin name="cordova-plugin-calendar" />
-	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
-    <engine name="cordova" version=">=6.4.0"/>
-    <engine name="cordova-ios" version="~4.3.0"/>
 
-    <plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/frederikbosch/phonegap-plugin-push#fix-aps-environment">
-        <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
-        <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
-    </plugin>
-     
-    <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
-	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
-	<plugin name="de.appplant.cordova.plugin.local-notification" />	
-    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
-	
-	
-	<gap:config-file platform="ios" parent="NSCameraUsageDescription" overwrite="true">
-	   <string>Camera access is required for barcode scanning functionality.</string>
-	</gap:config-file>
-
-	<gap:config-file platform="ios" parent="NSCalendarsUsageDescription" overwrite="true">
-	   <string>Calendar access required to be able to add events to your calendar.</string>
-	</gap:config-file>
-
-	<allow-navigation href="http://*/*" />
-	<allow-navigation href="https://*/*" />
-	<allow-navigation href="data:*" />
-	
-	<access origin="*" />
-
+    <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
