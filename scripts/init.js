@@ -117,11 +117,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
             app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');    
         });
     }
-    document.addEventListener('deviceready', function(){
-	  
-//	    cordova.plugins.notification.badge.set(10);
-//	    alert('hello');
-	  
+    document.addEventListener('deviceready', function(){	  
 	    try{
 	    var push = PushNotification.init({ 
 		    "android": {
@@ -233,7 +229,9 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     // Added to update iOS badge with unread message count.
     document.addEventListener("pause", function(){ 
 		// updateBadge($rootScope.messageCount);
-	    cordova.plugins.notification.badge.set(20);
+		updateBadge(5);
+	  //  cordova.plugins.notification.badge.set(20);
+	    alert($rootScope.messageCount);
 
     },false);
 }]);
@@ -1132,7 +1130,7 @@ function updateBadge(badgeCount){
  //   var pushNotification = window.plugins.pushNotification;
  //   pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
     //cordova.plugins.notification.badge.set(badgeCount); // Android
-    cordova.plugins.notification.badge.set(10);
+    cordova.plugins.notification.badge.set(badgeCount);
 }
 
 // Login Action Button
