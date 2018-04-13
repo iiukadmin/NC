@@ -176,6 +176,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
+			alert("HERE");
 				
 			/*
 					if (data.additionalData.coldstart == true) {
