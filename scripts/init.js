@@ -193,7 +193,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				alert(data.additionalData.notId);
 			*/	
 					if (data.additionalData.type == '2') {
-						alert("Here FARID 2");
+//						alert("Here FARID 2");
 
 						
 						navigator.notification.confirm(
@@ -205,7 +205,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 						   	data.additionalData.buttons
 					   	);
 					} else {
-  						alert("Here FARID not 2");
+//  						alert("Here FARID not 2");
 				        navigator.notification.alert(data.message,null,data.title);
 					}
 
