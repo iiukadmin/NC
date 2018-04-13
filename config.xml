@@ -132,7 +132,7 @@
     <engine name="cordova-ios" version="~4.3.0"/>
 
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/frederikbosch/phonegap-plugin-push#fix-aps-environment"> -->
-    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0">
+    <plugin name="phonegap-plugin-push" source="npm" spec="1.9.0">
         <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
         <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
     </plugin>
