@@ -172,11 +172,12 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('registration', function(data) {
 			console.log(data.registrationId);
 		    sendRegistionId(data.registrationId);
+		    alert("Farid: Two");
 		});
 		
 		push.on('notification', function(data) {
 			console.log(data.message);
-			alert("HERE");
+			alert("Farid: HERE");
 				
 			/*
 					if (data.additionalData.coldstart == true) {
