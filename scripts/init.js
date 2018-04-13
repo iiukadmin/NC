@@ -176,7 +176,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);				
-			/*
+			
 					if (data.additionalData.coldstart == true) {
 					alert('coldstart - true');
 				} else {
@@ -191,7 +191,10 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				}
 			
 				alert(data.additionalData.notId);
-			*/	
+			
+			
+			
+			
 					if (data.additionalData.type == '2') {
 //						alert("Here FARID 2");
 
