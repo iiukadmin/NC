@@ -177,7 +177,8 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		push.on('notification', function(data) {
 			console.log(data.message);				
 			
-					if (data.additionalData.coldstart == true) {
+				/*
+				if (data.additionalData.coldstart == true) {
 					alert('coldstart - true');
 				} else {
 					alert('coldstart - false');				
@@ -191,8 +192,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				}
 			
 				alert(data.additionalData.notId);
-			
-			
+			*/
 			
 			
 					if (data.additionalData.type == '2') {
@@ -1147,11 +1147,8 @@ function updateBadge(badgeCount){
 
 // Login Action Button
 window.iiuklogin = function (data) {
-	var FARID = 'asdf';
-//	alert("HEAR"+FARID);
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
-	//alert("Other:"+data.additionalData.other);
 	
 	push.finish(function() {
         console.log('accept callback finished');
