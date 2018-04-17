@@ -148,7 +148,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 		            "register": {
@@ -156,7 +156,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "window.iiuklogin", "title": "Confirm", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 					"choice": {
