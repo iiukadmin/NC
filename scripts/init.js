@@ -134,37 +134,37 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		        "categories": {
 		            "invite": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Accept", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": false, "destructive": true
+		                    "callback": "window.reject", "title": "Reject", "foreground": false, "destructive": true
 		                },
 		                "maybe": {
-		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": false, "destructive": false
+		                    "callback": "window.other", "title": "Maybe", "foreground": false, "destructive": false
 		                }
 		            },
 		            "authenticate": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 		            "register": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Confirm", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Confirm", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 					"choice": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Yes", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Yes", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "No", "foreground": false, "destructive": false
+		                    "callback": "window.reject", "title": "No", "foreground": false, "destructive": false
 		                }
 		            }
 		        }
@@ -1160,7 +1160,7 @@ function updateBadge(badgeCount){
 }
 
 // Action Buttons
-window.iiuklogin = function (data) {
+window.accept = function (data) {
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
 	
@@ -1177,6 +1177,28 @@ window.iiuklogin = function (data) {
 	    console.log('error');
 	});
 */
+}
+
+window.reject = function (data) {
+	notificationFeedback('2',data.additionalData.other);
+	navigator.app.exitApp(); // android
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
+}
+
+window.other = function (data) {
+	notificationFeedback('3',data.additionalData.other);
+	navigator.app.exitApp(); // android
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
 }
 
 window.addEventListener('message', function (event) {
