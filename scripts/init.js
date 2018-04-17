@@ -145,7 +145,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		            },
 		            "authenticate": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
+		                    "callback": "accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
 		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
@@ -228,6 +228,21 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 
 			
 		});
+		
+		//  Action Button
+		push.on('accept', function(data) {
+			console.log(data.message);
+			notificationFeedback(buttonIndex,data.additionalData.other);
+			
+			push.finish(function() {
+		        console.log('accept callback finished');
+		    }, function() {
+		        console.log('accept callback failed');
+		    }, data.additionalData.notId);    
+		});
+			
+			
+			
 		
 		push.on('error', function(data) {
 			console.log(data.message);
