@@ -148,7 +148,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 		            "register": {
@@ -232,7 +232,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		//  Action Button
 		push.on('accept', function(data) {
 			console.log(data.message);
-			notificationFeedback(buttonIndex,data.additionalData.other);
+			notificationFeedback('1',data.additionalData.other);
 			
 			push.finish(function() {
 		        console.log('accept callback finished');
@@ -240,7 +240,18 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		        console.log('accept callback failed');
 		    }, data.additionalData.notId);    
 		});
-			
+		
+		push.on('reject', (data) => {
+		    // do something with the notification data
+			notificationFeedback('1',data.additionalData.other);
+
+		    push.finish(() => {
+		        console.log('accept callback finished');
+		    }, () => {
+		        console.log('accept callback failed');
+		    }, data.additionalData.notId);
+		};
+	
 			
 			
 		
@@ -248,7 +259,12 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			console.log(data.message);
 			navigator.notification.alert('Error = '+data.message,null,'Error');
 		});
+		
+		
+
+		
 	}
+    
     
     
     , false);
