@@ -1159,8 +1159,8 @@ function updateBadge(badgeCount){
     cordova.plugins.notification.badge.set(badgeCount);
 }
 
-// Login Action Button
-window.iiuklogin = function (buttonIndex, data) {
+// Action Buttons
+window.iiuklogin = function (data) {
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
 	
