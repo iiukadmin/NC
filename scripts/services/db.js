@@ -206,7 +206,6 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			    title:_committe.title,
 			    description :_committe.description,
 			    email :_committe.email,
-			    location :_committe.location,
 			    status :_committe.status,
 			    is_show : 1,
 			    last_modified:moment(_committe.last_modified).toDate(),
@@ -240,7 +239,6 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 					dbCommitte.category = _committe.category;
 					dbCommitte.description = _committe.description;
 					dbCommitte.email = _committe.email;
-					dbCommitte.location = _committe.location;
 					dbCommitte.last_changed = moment(_committe.last_changed);
 				}
 			}
@@ -725,7 +723,6 @@ AKHB.services.db.prototype.setDirectory = function(model,id,callback){
 			    title:model.title,
 			    description:model.description,
 			    email:model.email,
-			    location:model.location,
 			    members:model.members,
 			    status :model.status,
 			    last_modified:model.last_modified,
@@ -741,7 +738,6 @@ AKHB.services.db.prototype.setDirectory = function(model,id,callback){
 			    localModel.title = model.title;
 			    localModel.description = model.description;
 			    localModel.email = model.email;
-			    localModel.location = model.location;
 			    localModel.members = model.members;
 			    localModel.status = model.status;
 			    localModel.last_modified = model.last_modified;
