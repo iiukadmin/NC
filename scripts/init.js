@@ -151,6 +151,14 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
+		            "register": {
+		                "yes": {
+		                    "callback": "window.iiuklogin", "title": "Confirm", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
+		                }
+		            },
 					"choice": {
 		                "yes": {
 		                    "callback": "window.iiuklogin", "title": "Yes", "foreground": false, "destructive": false
