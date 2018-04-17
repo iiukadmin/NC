@@ -241,7 +241,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    }, data.additionalData.notId);    
 		});
 		
-		push.on('reject', (data) => {
+		push.on('reject', function(data) {
 		    // do something with the notification data
 			notificationFeedback('1',data.additionalData.other);
 
@@ -250,7 +250,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		    }, () => {
 		        console.log('accept callback failed');
 		    }, data.additionalData.notId);
-		};
+		});
 	
 			
 			
