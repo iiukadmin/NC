@@ -15,12 +15,13 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-6.5.0" />
+<!--    <preference name="phonegap-version" value="cli-6.5.0" /> -->
+    <preference name="phonegap-version" value="cli-7.0.1" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
-    <gap:splash src="splash_iiuk.png" />
+<!--    <gap:splash src="splash_iiuk.png" /> -->
 
     <icon src="icons_iiuk/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons_iiuk/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
@@ -33,6 +34,8 @@
 
 	<!-- General iPhone -->
 	<platform name="ios">
+		<splash src="icons_iiuk/Default@2x~universal~anyany.png" />
+		<!--
 	    <splash src="icons_iiuk/ios/Default.png" width="320" height="480" />
 	    <splash src="icons_iiuk/ios/Default@2x~iphone.png" width="640" height="960" />
 	    <splash src="icons_iiuk/ios/Default-Portrait~ipad.png" width="768" height="1024" />
@@ -42,6 +45,8 @@
 		<splash src="icons_iiuk/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
 	    <splash src="icons_iiuk/ios/Default-667h.png" width="750" height="1334"/>
 	    <splash src="icons_iiuk/ios/Default-736h.png" width="1242" height="2208"/>
+	    -->
+	    
 	</platform>
 	    
     <!-- iPhone 6 / 6+ -->
@@ -132,7 +137,8 @@
 	<plugin name="cordova-plugin-calendar" />
 	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
     <engine name="cordova" version=">=6.4.0"/>
-    <engine name="cordova-ios" version="~4.3.0"/>
+	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
+    <engine name="ios" spec="latest"/>
 
     <plugin name="phonegap-plugin-push" source="npm" spec="https://github.com/frederikbosch/phonegap-plugin-push#fix-aps-environment">
         <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
