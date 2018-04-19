@@ -125,11 +125,11 @@
 	<plugin name="cordova-plugin-calendar" />
 
 	<!-- Test if you need this -->
-	<plugin name="cordova-plugin-camera" spec="">
+	<plugin name="cordova-plugin-camera">
 	      <variable name="CAMERA_USAGE_DESCRIPTION" value="Used to attach photos to my project" />
 	</plugin>
 	
-	<plugin name="cordova-plugin-ios-camera-permissions" spec="1.0.3" >
+	<plugin name="cordova-plugin-ios-camera-permissions" >
 	     <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
 	</plugin>
 
