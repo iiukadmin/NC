@@ -117,7 +117,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
             app.slidingMenu.setMainPage('pages/login_'+window.AKHB.config.application+'.html');    
         });
     }
-    document.addEventListener('deviceready', function(){
+    document.addEventListener('deviceready', function(){	  
 	    try{
 	    var push = PushNotification.init({ 
 		    "android": {
@@ -134,29 +134,37 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		        "categories": {
 		            "invite": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Accept", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Accept", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "Reject", "foreground": false, "destructive": true
+		                    "callback": "window.reject", "title": "Reject", "foreground": false, "destructive": true
 		                },
 		                "maybe": {
-		                    "callback": "window.iiuklogin", "title": "Maybe", "foreground": false, "destructive": false
+		                    "callback": "window.other", "title": "Maybe", "foreground": false, "destructive": false
 		                }
 		            },
 		            "authenticate": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Login", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
+		                }
+		            },
+		            "register": {
+		                "yes": {
+		                    "callback": "window.accept", "title": "Confirm", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 					"choice": {
 		                "yes": {
-		                    "callback": "window.iiuklogin", "title": "Yes", "foreground": false, "destructive": false
+		                    "callback": "window.accept", "title": "Yes", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.iiuklogin", "title": "No", "foreground": false, "destructive": false
+		                    "callback": "window.reject", "title": "No", "foreground": false, "destructive": false
 		                }
 		            }
 		        }
@@ -175,10 +183,10 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		});
 		
 		push.on('notification', function(data) {
-			console.log(data.message);
-				
-			/*
-					if (data.additionalData.coldstart == true) {
+			console.log(data.message);				
+			
+				/*
+				if (data.additionalData.coldstart == true) {
 					alert('coldstart - true');
 				} else {
 					alert('coldstart - false');				
@@ -192,9 +200,11 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				}
 			
 				alert(data.additionalData.notId);
-			*/	
+			*/
+			
+			
 					if (data.additionalData.type == '2') {
-//						alert("There FARID");
+//						alert("Here FARID 2");
 
 						
 						navigator.notification.confirm(
@@ -206,6 +216,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 						   	data.additionalData.buttons
 					   	);
 					} else {
+//  						alert("Here FARID not 2");
 				        navigator.notification.alert(data.message,null,data.title);
 					}
 
@@ -217,19 +228,26 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 
 			
 		});
+						
 		
 		push.on('error', function(data) {
 			console.log(data.message);
 			navigator.notification.alert('Error = '+data.message,null,'Error');
 		});
+		
+		
+
+		
 	}
     
     
+    
     , false);
-    // Added to update iOS bade with unread message count.
+    
+    // Added to update badge count with unread message count.
     document.addEventListener("pause", function(){ 
-	updateBadge($rootScope.messageCount);
-    },false);
+	      updateBadge($rootScope.messageCount);
+	  },false);
 }]);
 
 module.controller('SlidingMenuController',['$scope',function($scope){
@@ -890,8 +908,19 @@ module.controller('DirectoryDetailController',['$scope','$rootScope','$http','$t
         if(!$scope.directory.content){
             $scope.isSync = true;
         }
+        
         $scope.openIndividual = function(individual){
-            $rootScope.openIndividual(individual,true);
+			$rootScope.openIndividual(individual,true);
+        };
+        
+        $scope.openMap = function(location){
+	   		var location = location.location;
+	   		// window.open('maps://?q=51.350551,-0.269530','_system');		
+	   		if (device.platform=='iOS') {
+		   		window.open('maps://?q='+location,'_system');
+		   	} else {
+				window.open('geo:'+location,'_system');
+	   		}	
         };
 }]);
 module.controller('DirectoryIndividualController',['$scope','$rootScope','$http','$templateCache','$sce',
@@ -1018,16 +1047,20 @@ $(document).on('click','a',function(e){
 		        }    
                 
             }else if($href.toLowerCase().indexOf('tel') == 0){
-                navigator.notification.confirm(
-                    "",
-                    function(buttonIndex) {
-                        if(buttonIndex == 1){
-                           window.open( $href, '_system', 'location=yes');
-                        }
-                    },
-                    $(this).text(),
-                    ["Call","Cancel"]
-                );
+	            if (device.platform!='iOS') {
+	                navigator.notification.confirm(
+	                    "",
+	                    function(buttonIndex) {
+	                        if(buttonIndex == 1){
+	                           window.open( $href, '_system', 'location=yes');
+	                        }
+	                    },
+	                    $(this).text(),
+	                    ["Call","Cancel"]
+	                );
+				} else {
+					 window.open( $href, '_system', 'location=yes');
+				}
                
             }else if($href.toLowerCase().indexOf('mailto') == 0){
                 window.plugin.email.open({
@@ -1088,7 +1121,7 @@ module.filter('trustHtmlA', function ($sce) {
 module.filter('formatTime', function ($sce) {
     return function (input) {
         if(input)
-            return $sce.trustAsHtml(moment(input).format('YYYY/MM/DD h:mm A'));
+            return $sce.trustAsHtml(moment(input).format('DD/MM/YYYY h:mm A'));
         return "";
     }
 });
@@ -1123,18 +1156,13 @@ function notificationFeedback(buttonIndex,passedData) {
 
 // added badge update function
 function updateBadge(badgeCount){
-    var pushNotification = window.plugins.pushNotification;
-    pushNotification.setApplicationIconBadgeNumber(successHandler, successHandler, badgeCount); 
-    //cordova.plugins.notification.badge.set(badgeCount); // Android
+    cordova.plugins.notification.badge.set(badgeCount);
 }
 
-// Login Action Button
-window.iiuklogin = function (data) {
-	var FARID = 'asdf';
-//	alert("HEAR"+FARID);
+// Action Buttons
+window.accept = function (data) {
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
-	//alert("Other:"+data.additionalData.other);
 	
 	push.finish(function() {
         console.log('accept callback finished');
@@ -1149,6 +1177,28 @@ window.iiuklogin = function (data) {
 	    console.log('error');
 	});
 */
+}
+
+window.reject = function (data) {
+	notificationFeedback('2',data.additionalData.other);
+	navigator.app.exitApp(); // android
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
+}
+
+window.other = function (data) {
+	notificationFeedback('3',data.additionalData.other);
+	navigator.app.exitApp(); // android
+	
+	push.finish(function() {
+        console.log('accept callback finished');
+    }, function() {
+        console.log('accept callback failed');
+    }, data.additionalData.notId);    
 }
 
 window.addEventListener('message', function (event) {

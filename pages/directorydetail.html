@@ -11,6 +11,11 @@
         <ons-list-header ng-show="directory.description">{{directory.title}}</ons-list-header>
         <ons-list-item ng-show="directory.description" class="item-description" ng-bind-html="directory.description | trustHtml">
         </ons-list-item>
+
+
+        <ons-list-header ng-show="directory.location">Location</ons-list-header>        
+        <ons-list-item ng-show="directory.location" class="item-name" ng-click="openMap(directory)">View Map Location</ons-list-item>
+        
         <ons-list-header ng-show="directory.email">Email</ons-list-header>
         <ons-list-item ng-show="directory.email">
             <a href="mailto:{{directory.email}}">{{directory.email}}</a>
