@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
         versionCode = "191" 
-        version     = "1.1.9" >
+        version     = "1.1.10" >
 
     <name>IIUK</name>
 
@@ -123,6 +123,16 @@
     <plugin name="cordova-plugin-badge"/>
 	
 	<plugin name="cordova-plugin-calendar" />
+
+	<!-- Test if you need this -->
+	<plugin name="cordova-plugin-camera" spec="">
+	      <variable name="CAMERA_USAGE_DESCRIPTION" value="Used to attach photos to my project" />
+	</plugin>
+	
+	<plugin name="cordova-plugin-ios-camera-permissions" spec="1.0.3" >
+	     <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
+	</plugin>
+
 	<!--<plugin name="phonegap-plugin-push" spec="1.5.3" source="npm">-->	    
     <engine name="cordova" version=">=6.4.0"/>
 	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
@@ -138,14 +148,7 @@
 	<plugin name="de.appplant.cordova.plugin.local-notification" />	
     <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 	
-	<platform name="ios">
-     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist" mode="merge">
-          <string>Calendar access required to be able to add events to your calendar.</string>
-     </edit-config>
-     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-          <string>Camera access is required for barcode scanning functionality.</string>
-     </edit-config>
-	</platform>
+
 
 	<allow-navigation href="http://*/*" />
 	<allow-navigation href="https://*/*" />
@@ -167,4 +170,16 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    
+	<platform name="ios">
+     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist" mode="merge">
+          <string>Calendar access required to be able to add events to your calendar.</string>
+     </edit-config>
+
+	<!-- Test if you need this -->
+     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="overwrite">
+          <string>Camera access is required for barcode scanning functionality.</string>
+     </edit-config>
+	</platform>
+    
 </widget>
