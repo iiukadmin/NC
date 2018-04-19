@@ -16,7 +16,7 @@
     </author>
 
 <!--    <preference name="phonegap-version" value="cli-6.5.0" /> -->
-    <preference name="phonegap-version" value="cli-7.1.0" />
+    <preference name="phonegap-version" value="cli-8.0.0" />
 
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -138,14 +138,14 @@
 	<plugin name="de.appplant.cordova.plugin.local-notification" />	
     <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 	
-	
-	<gap:config-file platform="ios" parent="NSCameraUsageDescription" overwrite="true">
-	   <string>Camera access is required for barcode scanning functionality.</string>
-	</gap:config-file>
-
-	<gap:config-file platform="ios" parent="NSCalendarsUsageDescription" overwrite="true">
-	   <string>Calendar access required to be able to add events to your calendar.</string>
-	</gap:config-file>
+	<platform name="ios">
+     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist" mode="merge">
+          <string>Calendar access required to be able to add events to your calendar.</string>
+     </edit-config>
+     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+          <string>Camera access is required for barcode scanning functionality.</string>
+     </edit-config>
+	</platform>
 
 	<allow-navigation href="http://*/*" />
 	<allow-navigation href="https://*/*" />
