@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
         versionCode = "191" 
-        version     = "1.1.11" >
+        version     = "1.1.12" >
 
     <name>IIUK</name>
 
@@ -123,7 +123,7 @@
     <plugin name="cordova-plugin-badge"/>
 	
 	<plugin name="cordova-plugin-calendar" >
-		 <variable name="NSCalendarsUsageDescription" value="Calendar access required to be able to add events to your calendar." />
+		 <variable name="CALENDAR_USAGE_DESCRIPTION" value="Calendar access required to be able to add events to your calendar." />
 	</plugin>
 
 
