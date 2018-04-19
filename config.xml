@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
         versionCode = "191" 
-        version     = "1.1.10" >
+        version     = "1.1.11" >
 
     <name>IIUK</name>
 
@@ -122,11 +122,14 @@
     <plugin name="cordova-plugin-email-composer"/>
     <plugin name="cordova-plugin-badge"/>
 	
-	<plugin name="cordova-plugin-calendar" />
+	<plugin name="cordova-plugin-calendar" >
+		 <variable name="NSCalendarsUsageDescription" value="Calendar access required to be able to add events to your calendar." />
+	</plugin>
+
 
 	<!-- Test if you need this -->
 	<plugin name="cordova-plugin-camera">
-	      <variable name="CAMERA_USAGE_DESCRIPTION" value="Used to attach photos to my project" />
+	      <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
 	</plugin>
 	
 	<plugin name="cordova-plugin-ios-camera-permissions" >
@@ -172,12 +175,13 @@
     </platform>
     
 	<platform name="ios">
-     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist" mode="merge">
+     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist">
           <string>Calendar access required to be able to add events to your calendar.</string>
      </edit-config>
 
 	<!-- Test if you need this -->
-     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="overwrite">
+    <!-- <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="overwrite"> -->
+   	 <edit-config target="NSCameraUsageDescription" file="*-Info.plist">
           <string>Camera access is required for barcode scanning functionality.</string>
      </edit-config>
 	</platform>
