@@ -120,7 +120,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){	  
 	    try{
 	    var push = PushNotification.init({ 
-//alert("FARID2: NOTIFCATION");
+
 		    "android": {
 			    	"senderID": window.AKHB.config.senderID,
 			    	"android.sound": true,
@@ -185,7 +185,6 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('notification', function(data) {
 			console.log(data.message);				
-alert("FARID: NOTIFCATION");
 				/*
 				if (data.additionalData.coldstart == true) {
 					alert('coldstart - true');
