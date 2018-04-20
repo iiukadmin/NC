@@ -120,7 +120,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
     document.addEventListener('deviceready', function(){	  
 	    try{
 	    var push = PushNotification.init({ 
-alert("FARID2: NOTIFCATION");
+//alert("FARID2: NOTIFCATION");
 		    "android": {
 			    	"senderID": window.AKHB.config.senderID,
 			    	"android.sound": true,
