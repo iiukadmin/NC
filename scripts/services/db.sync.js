@@ -94,7 +94,9 @@ AKHB.services.db.DBSync =  (function(){
 		}
 
 		this.syncMessage = function(callback,tx){
-			try{
+			alert('syncMessages');
+		/*
+				try{
 				async.waterfall([
 						function(callback){
 							dbServices.getTableLastUpdateTime('messages',function(err,result){
@@ -170,6 +172,7 @@ AKHB.services.db.DBSync =  (function(){
 				callback(null);
 				console.log(ex);
 			}
+		*/
 		}
 		this.syncNavigation = function(callback,tx){
 
