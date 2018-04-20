@@ -78,7 +78,6 @@
 	<!-- ios 11 Icon -->
 	<icon src="icons_iiuk/icon-512-2x.png" width="1024" height="1024" />
 
-
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network" />
