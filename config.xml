@@ -77,7 +77,6 @@
 
 	<!-- ios 11 Icon -->
 	<icon src="icons_iiuk/Icon-512-2x.png" width="1024" height="1024" />
-
   
     <content src="index.html" />
     <preference name="permissions" value="none" />
@@ -107,6 +106,28 @@
 	<preference name="android-build-tool" value="gradle" />
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
+
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-device-orientation" />
+	<plugin name="cordova-plugin-dialogs" />
+	<plugin name="cordova-plugin-globalization" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-network-information" />
+	<plugin name="cordova-plugin-splashscreen" /> 
+	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova-plugin--disable-ios11-statusbar" spec="https://github.com/jcesarmobile/cordova-plugin-disable-ios11-statusbar" />
+	<plugin name="cordova_app_version_plugin" />	
+	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
+	<plugin name="de.appplant.cordova.plugin.badge" />-->
+
+    <plugin name="cordova-plugin-datepicker"/>
+    <plugin name="cordova-plugin-email-composer"/>
+    <plugin name="cordova-plugin-badge"/>
+	
+	<plugin name="cordova-plugin-calendar" >
+		 <variable name="CALENDAR_USAGE_DESCRIPTION" value="Calendar access required to be able to add events to your calendar." />
+	</plugin>
  	
     <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" />
 	  
