@@ -148,7 +148,7 @@
 		<plugin name="de.appplant.cordova.plugin.local-notification" />	 -->
     <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 				
-    <plugin name="phonegap-plugin-push" /> 
+    <plugin name="phonegap-plugin-push" spec="2.1.0" /> 
      
      <platform name="android">
 	  <resource-file src="google-services.json" target="app/google-services.json" />
