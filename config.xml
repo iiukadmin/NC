@@ -142,10 +142,10 @@
 	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
     <engine name="ios" spec="latest"/>
 
-<!--    <plugin name="phonegap-plugin-push" source="npm" spec="1.9.0"> -->
-<!--      <param name="SENDER_ID" value="31742222780"/> --> <!-- pgb -->
-<!--      <variable name="SENDER_ID" value="31742222780"/> --> <!-- cordova -->
-<!--   </plugin> -->
+    <plugin name="phonegap-plugin-push" source="npm" spec="1.9.0"> -->
+      <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
+      <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
+   </plugin>
      
     <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
