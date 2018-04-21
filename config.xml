@@ -175,5 +175,16 @@
         <allow-intent href="itms-apps:*" />
     </platform>
 
+	<platform name="ios">
+     <edit-config target="NSCalendarsUsageDescription" file="*-Info.plist">
+          <string>Calendar access required to be able to add events to your calendar.</string>
+     </edit-config>
+
+	<!-- Test if you need this -->
+    <!-- <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="overwrite"> -->
+   	 <edit-config target="NSCameraUsageDescription" file="*-Info.plist">
+          <string>Camera access is required for barcode scanning functionality.</string>
+     </edit-config>
+	</platform>
 
 </widget>
