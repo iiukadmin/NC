@@ -21,9 +21,6 @@
 	<platform name="ios"/>
 				
     <plugin name="phonegap-plugin-push" /> 
-    <!--  <param name="SENDER_ID" value="31742222780"/> --> <!-- pgb -->
-    <!--  <variable name="SENDER_ID" value="31742222780"/> --> <!-- cordova -->
-	</plugin> 
      
      <platform name="android">
 	  <resource-file src="google-services.json" target="app/google-services.json" />
