@@ -104,6 +104,8 @@
 	
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
 
+	<plugin name="cordova-plugin-device" />
+
 				
     <plugin name="phonegap-plugin-push" /> 
      
