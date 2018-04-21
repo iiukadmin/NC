@@ -15,15 +15,15 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name='pgb-builder-version' value='2' />
 	<preference name="android-targetSdkVersion" value="26"/>
 	<preference name="android-build-tool" value="gradle" />
 	
 	<platform name="android"/>
 	<platform name="ios"/>
  	
-	  <plugin name="phonegap-plugin-push" source="npm" spec="7.0.1" />
-	  <preference name='pgb-builder-version' value='2' />
+	  <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" />
 	  
      <platform name="android">
 	  <resource-file src="google-services.json" target="app/google-services.json" />
