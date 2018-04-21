@@ -105,6 +105,12 @@
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
 
 	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-device-orientation" />
+	<plugin name="cordova-plugin-dialogs" />
+	<plugin name="cordova-plugin-globalization" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-network-information" />
+<!--	<plugin name="cordova-plugin-splashscreen" /> -->
 
 				
     <plugin name="phonegap-plugin-push" /> 
