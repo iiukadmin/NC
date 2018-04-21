@@ -16,6 +16,7 @@
     </author>
 
     <preference name="phonegap-version" value="cli-8.0.0" />
+	<preference name="android-targetSdkVersion" value="23"/>
 
 	<platform name="android"/>
 	<platform name="ios"/>
