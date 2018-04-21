@@ -18,8 +18,8 @@
 <!--    <preference name="phonegap-version" value="cli-6.5.0" /> -->
     <preference name="phonegap-version" value="cli-8.0.0" />
 
-    <gap:platform name="ios" />
-    <gap:platform name="android" />
+	<platform name="android"/>
+	<platform name="ios"/>
 
 <!--    <gap:splash src="splash_iiuk.png" /> -->
 
