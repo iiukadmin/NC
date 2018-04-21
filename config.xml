@@ -15,7 +15,7 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
 	<preference name="android-targetSdkVersion" value="26"/>
 	<preference name="android-build-tool" value="gradle" />
 	
