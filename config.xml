@@ -16,14 +16,18 @@
     </author>
 
     <preference name="phonegap-version" value="cli-7.0.1" />
-    <preference name='pgb-builder-version' value='2' />
+<!--    <preference name='pgb-builder-version' value='2' /> -->
 	<preference name="android-targetSdkVersion" value="26"/>
 	<preference name="android-build-tool" value="gradle" />
 	
 	<platform name="android"/>
 	<platform name="ios"/>
  	
-	  <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" />
+<!--	  <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> -->
+<plugin name="phonegap-plugin-push" spec="~1.10.5">
+     <param name="SENDER_ID" value="123456789" />
+</plugin>
+
 	  
      <platform name="android">
 	  <resource-file src="google-services.json" target="google-services.json" />
