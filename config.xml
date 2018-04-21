@@ -62,7 +62,7 @@
     <icon src="icons_iiuk/icon@2x.png" gap:platform="ios" width="114" height="114" />
 
     <!-- iPad -->
-    <icon src="icons_iiuk/icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons_iiuk/Icon-72.png" gap:platform="ios" width="72" height="72" />
     <icon src="icons_iiuk/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
     <!-- iPhone Spotlight and Settings Icon -->    
@@ -188,5 +188,4 @@
           <string>Camera access is required for barcode scanning functionality.</string>
      </edit-config>
 	</platform>
-    
 </widget>
