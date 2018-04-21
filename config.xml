@@ -118,6 +118,14 @@
 	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
 	<plugin name="de.appplant.cordova.plugin.badge" />-->
 
+    <plugin name="cordova-plugin-datepicker"/>
+    <plugin name="cordova-plugin-email-composer"/>
+    <plugin name="cordova-plugin-badge"/>
+	
+	<plugin name="cordova-plugin-calendar" >
+		 <variable name="CALENDAR_USAGE_DESCRIPTION" value="Calendar access required to be able to add events to your calendar." />
+	</plugin>
+
 				
     <plugin name="phonegap-plugin-push" /> 
      
