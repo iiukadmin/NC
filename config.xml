@@ -94,8 +94,8 @@
 <!--    <preference name="ios-statusbarstyle" value="lightcontent" />  -->
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
-<!--    <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" /> -->
+    <preference name="ShowSplashScreenSpinner" value="false"/>
+    <!--    <preference name="AutoHideSplashScreen" value="false" /> -->
     <preference name="disable-cursor" value="false" />
     <preference name="KeepRunning" value="true"/>
     <preference name="android-minSdkVersion" value="16" />
@@ -148,9 +148,7 @@
 		<plugin name="de.appplant.cordova.plugin.local-notification" />	 -->
     <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 				
-   <plugin name="phonegap-plugin-push" spec="2.0.0" /> 
-
-
+    <plugin name="phonegap-plugin-push" /> 
      
      <platform name="android">
 	  <resource-file src="google-services.json" target="app/google-services.json" />
