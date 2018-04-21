@@ -138,14 +138,18 @@
 	     <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
 	</plugin>
 
-    <engine name="cordova" version=">=6.4.0"/>
+    <!-- <engine name="cordova" version=">=6.4.0"/> -->
 	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
     <engine name="ios" spec="latest"/>
 
-    <plugin name="phonegap-plugin-push" source="npm" spec="1.9.0"> -->
-      <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
-      <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
+    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0"> -->
+    <!--  <param name="SENDER_ID" value="31742222780"/> --> <!-- pgb -->
+    <!--  <variable name="SENDER_ID" value="31742222780"/> --> <!-- cordova -->
    </plugin>
+     
+     <platform name="android">
+	  <resource-file src="google-services.json" target="app/google-services.json" />
+	</platform>
      
     <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
 	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
