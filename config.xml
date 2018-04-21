@@ -80,7 +80,30 @@
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
     
-    
+    <!--    <preference name="StatusBarOverlaysWebView" value="true" /> -->
+<preference name="StatusBarOverlaysWebView" value="true"/>
+<preference name="StatusBarStyle" value="lightcontent" />
+
+	<preference name="DisallowOverscroll" value="true" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="Fullscreen" value="false" /> 
+    <preference name="WebViewBounce" value="false" /> 	
+    <preference name="prerendered-icon" value="false" /> 	
+    <preference name="stay-in-webview" value="false" />
+<!--    <preference name="ios-statusbarstyle" value="lightcontent" />  -->
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+<!--    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="auto-hide-splash-screen" value="true" /> -->
+    <preference name="disable-cursor" value="false" />
+    <preference name="KeepRunning" value="true"/>
+    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-installLocation" value="auto" />
+	<preference name="android-build-tool" value="gradle" />
+	
+	<!--<gap:plugin name="org.apache.cordova.media" />  -->
+
 				
     <plugin name="phonegap-plugin-push" /> 
      
