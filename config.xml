@@ -22,10 +22,7 @@
 	<platform name="android"/>
 	<platform name="ios"/>
  	
-	  <plugin name="phonegap-plugin-push" source="npm" spec="1.9.2">
-        <param name="SENDER_ID" value="31742222780"/> <!-- pgb -->
-        <variable name="SENDER_ID" value="31742222780"/> <!-- cordova -->
-    </plugin>
+	  <plugin name="phonegap-plugin-push" source="npm" spec="2.1.0" />
      
      
      <platform name="android">
