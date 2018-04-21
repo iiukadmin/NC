@@ -23,7 +23,7 @@
 	<platform name="ios"/>
  	
 	  <plugin name="phonegap-plugin-push" source="npm" spec="7.0.1" />
-	  <preference name='pgb-builder-version' value='1' />
+	  <preference name='pgb-builder-version' value='2' />
 	  
      <platform name="android">
 	  <resource-file src="google-services.json" target="app/google-services.json" />
