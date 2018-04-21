@@ -141,6 +141,12 @@
 	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
     <engine name="ios" spec="latest"/>
 
+    <!--	<gap:plugin name="https://github.com/katzer/cordova-plugin-local-notifications.git" source="git"/>
+	<gap:plugin name="de.appplant.cordova.plugin.local-notification" /> -->
+<!--
+	now causing push notifications to fail see https://github.com/phonegap/phonegap-plugin-push/issues/1959
+		<plugin name="de.appplant.cordova.plugin.local-notification" />	 -->
+    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
 				
     <plugin name="phonegap-plugin-push" /> 
      
