@@ -26,7 +26,8 @@
 	  <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" />
 	  
      <platform name="android">
-	  <resource-file src="google-services.json" target="app/google-services.json" />
+	  <resource-file src="google-services.json" target="google-services.json" />
+<!--	  <resource-file src="google-services.json" target="app/google-services.json" />-->
 	</platform>
      
 </widget>
