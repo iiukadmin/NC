@@ -78,6 +78,35 @@
 	<!-- ios 11 Icon -->
 	<icon src="icons_iiuk/Icon-512-2x.png" width="1024" height="1024" />
 
+  
+    <content src="index.html" />
+    <preference name="permissions" value="none" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+    
+    <!--    <preference name="StatusBarOverlaysWebView" value="true" /> -->
+<preference name="StatusBarOverlaysWebView" value="true"/>
+<preference name="StatusBarStyle" value="lightcontent" />
+
+	<preference name="DisallowOverscroll" value="true" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="Fullscreen" value="false" /> 
+    <preference name="WebViewBounce" value="false" /> 	
+    <preference name="prerendered-icon" value="false" /> 	
+    <preference name="stay-in-webview" value="false" />
+<!--    <preference name="ios-statusbarstyle" value="lightcontent" />  -->
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false"/>
+    <!--    <preference name="AutoHideSplashScreen" value="false" /> -->
+    <preference name="disable-cursor" value="false" />
+    <preference name="KeepRunning" value="true"/>
+    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-installLocation" value="auto" />
+	<preference name="android-build-tool" value="gradle" />
+	
+	<!--<gap:plugin name="org.apache.cordova.media" />  -->
  	
     <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" />
 	  
