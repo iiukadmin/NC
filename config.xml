@@ -108,39 +108,36 @@
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
 		
 	<plugin name="cordova-plugin-device" />
-<!--	<plugin name="cordova-plugin-device-orientation" />
+	<plugin name="cordova-plugin-device-orientation" />
 	<plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-globalization" />
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-network-information" />
--->
 	<!--	<plugin name="cordova-plugin-splashscreen" /> -->
-<!--	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin--disable-ios11-statusbar" spec="https://github.com/jcesarmobile/cordova-plugin-disable-ios11-statusbar" />
 	<plugin name="cordova_app_version_plugin" />	
--->
 	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
 	<plugin name="de.appplant.cordova.plugin.badge" />-->
 
-<!--    <plugin name="cordova-plugin-datepicker"/>
+    <plugin name="cordova-plugin-datepicker"/>
     <plugin name="cordova-plugin-email-composer"/>
     <plugin name="cordova-plugin-badge"/>
 	
 	<plugin name="cordova-plugin-calendar" >
 		 <variable name="CALENDAR_USAGE_DESCRIPTION" value="Calendar access required to be able to add events to your calendar." />
 	</plugin>
--->
 
-	<!-- Test if you need this -->
-<!-- 	<plugin name="cordova-plugin-camera">
+	<!-- Test if you need this 
+	<plugin name="cordova-plugin-camera">
 	      <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
 	</plugin>
 	
 	<plugin name="cordova-plugin-ios-camera-permissions" >
 	     <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera access is required for barcode scanning functionality." />
 	</plugin>
--->
+	-->
 
     <!-- <engine name="cordova" version=">=6.4.0"/> -->
 	<!-- <engine name="cordova-ios" version="~4.3.0"/> -->
@@ -160,7 +157,7 @@
 <!--
 	now causing push notifications to fail see https://github.com/phonegap/phonegap-plugin-push/issues/1959
 		<plugin name="de.appplant.cordova.plugin.local-notification" />	 -->
-<!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" />  -->
+<!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> -->
 
 	<allow-navigation href="http://*/*" />
 	<allow-navigation href="https://*/*" />
