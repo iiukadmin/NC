@@ -81,11 +81,9 @@ AKHB.services.db.DBSync =  (function(){
 					],function(err,result){
 						if(err){
 							console.log(err,result);
-								alert("Sync articles FAIL.");
 						}else{
 							function syncSuccess(){
 								console.log("Sync articles success.");
-								alert("Sync articles success.");
 								if(callback && typeof callback == 'function') callback(null,result);
 							}
 							syncSuccess();
@@ -95,6 +93,84 @@ AKHB.services.db.DBSync =  (function(){
 				});
 		}
 
+		this.syncMessage = function(callback,tx){
+			try{
+				async.waterfall([
+						function(callback){
+							dbServices.getTableLastUpdateTime('messages',function(err,result){
+								var requestData = Request('messages',AKHB.user,getLastModified(result));
+								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
+								callback(null,url);
+							});
+						},
+						function(url,callback){
+							jQuery.ajax({
+			                    url: url,
+			                    type: "get",
+			                    dataType: "json",
+			                    success: function(msg) {
+			                        callback(null,msg);
+			                    },
+			                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+			                    	console.log(errorThrown);
+			                        callback(true,null);
+			                    },
+			                    complete: function(XMLHttpRequest, textStatus) {
+			                    }
+			                });
+						},
+						function(result,callback){
+							if(result.response == 1){    
+								var lastModified;
+								async.each(result.content,function(_message,callback){
+									_message.read = 0;
+									try{
+										dbServices.setMessage(true,_message,callback);
+									}catch(err){
+										callback(err);
+									}
+								},function(err){
+									callback(null,result.content.length,result.last_content_synced);
+								});
+							}else{
+								callback(null,0,result.last_content_synced);
+							}
+						},function(affectCount,lastModified,callback){
+							dbServices.setTableLastUpdateTime(true,'messages',lastModified,function(err,result){
+								console.log('updated messages last_content_synced');
+								callback(false,result,affectCount);
+							})
+						}
+					],function(err,result){
+						if(err){
+							console.log(err,result);
+							callback(null);
+						}else{
+							function syncSuccess(){
+								console.log("Sync messages success.");
+								dbServices.getLatestActiveMessage(function(err,messsage){
+									console.log("getLatestActiveMessage",messsage);
+									if(messsage){
+										AKHB.notification.alert(messsage.content,function(){
+											messsage.read = 1;
+											persistence.flush(null,function() {
+												if(callback && typeof callback == 'function') callback(null,result);
+											});
+										},messsage.title);
+									}else{
+										if(callback && typeof callback == 'function') callback(null,result);
+									}
+									
+								});
+							}
+							syncSuccess();
+						}
+				});
+			}catch(ex){
+				callback(null);
+				console.log(ex);
+			}
+		}
 		this.syncNavigation = function(callback,tx){
 
 				async.waterfall([
@@ -328,89 +404,6 @@ AKHB.services.db.DBSync =  (function(){
 				callback(e);
 			}
 		};
-		
-		this.syncMessage = function(callback,tx){
-			alert('syncMessages');
-		/*
-				try{
-				async.waterfall([
-						function(callback){
-							dbServices.getTableLastUpdateTime('messages',function(err,result){
-								var requestData = Request('messages',AKHB.user,getLastModified(result));
-								var url = remoteAddress+'?'+ decodeURIComponent($.param(requestData));
-								callback(null,url);
-							});
-						},
-						function(url,callback){
-							jQuery.ajax({
-			                    url: url,
-			                    type: "get",
-			                    dataType: "json",
-			                    success: function(msg) {
-			                        callback(null,msg);
-			                    },
-			                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-			                    	console.log(errorThrown);
-			                        callback(true,null);
-			                    },
-			                    complete: function(XMLHttpRequest, textStatus) {
-			                    }
-			                });
-						},
-						function(result,callback){
-							if(result.response == 1){    
-								var lastModified;
-								async.each(result.content,function(_message,callback){
-									_message.read = 0;
-									try{
-										dbServices.setMessage(true,_message,callback);
-									}catch(err){
-										callback(err);
-									}
-								},function(err){
-									callback(null,result.content.length,result.last_content_synced);
-								});
-							}else{
-								callback(null,0,result.last_content_synced);
-							}
-						},function(affectCount,lastModified,callback){
-							dbServices.setTableLastUpdateTime(true,'messages',lastModified,function(err,result){
-								console.log('updated messages last_content_synced');
-								callback(false,result,affectCount);
-							})
-						}
-					],function(err,result){
-						if(err){
-							console.log(err,result);
-							callback(null);
-						}else{
-							function syncSuccess(){
-								console.log("Sync messages success.");
-								dbServices.getLatestActiveMessage(function(err,messsage){
-									console.log("getLatestActiveMessage",messsage);
-									if(messsage){
-										AKHB.notification.alert(messsage.content,function(){
-											messsage.read = 1;
-											persistence.flush(null,function() {
-												if(callback && typeof callback == 'function') callback(null,result);
-											});
-										},messsage.title);
-									}else{
-										if(callback && typeof callback == 'function') callback(null,result);
-									}
-									
-								});
-							}
-							syncSuccess();
-						}
-				});
-			}catch(ex){
-				callback(null);
-				console.log(ex);
-			}
-		*/
-		}
-
 		this.runMessageSync = function(callback,noSleep){
 			var self = this;
 			async.series([
