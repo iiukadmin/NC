@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:31742222780:android:bb0f0e8f318e5cfb",
+        "mobilesdk_app_id": "1:31742222780:android:c6a4d6472c7dae99",
         "android_client_info": {
-          "package_name": "com.iiuk.org"
+          "package_name": "com.iiuk.myiiuk"
         }
       },
       "oauth_client": [
