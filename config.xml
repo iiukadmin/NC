@@ -22,8 +22,6 @@
 		
 	<platform name="android"/>
 	<platform name="ios"/>
-
-<!--    <icon src="icons_iiuk/icon.png" /> Not sure about if this is needed for notifications-->
     
 	<!-- General iPhone Splash Screen -->
 	<platform name="ios">

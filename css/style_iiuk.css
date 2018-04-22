@@ -1,14 +1,14 @@
 
 
 .navigation-bar{
-    background-color: #193D88;
+    background-color: #00a396;
 }
 
 .theme-blue .navigation-bar,.theme-blue .page__background{
-	background: #193D88;
+	background: #00a396;
 }
 .theme-blue .navigation-bar{
-	border-bottom:1px solid #086FB6;
+	border-bottom:1px solid #00ab9d;
 }
 .navigation-bar__left,.navigation-bar__right,.navigation-bar__center,.navigation-bar__title,.toolbar-button, .toolbar-button--outline, .toolbar-button--quiet{
 	color:#fff;
@@ -129,7 +129,7 @@ iframe,.article-iframe{
 	padding: 0;
 }
 #home_page_icons ons-list-item{
-	background: #086FB6;
+	background: #00a396;
 	border-radius: 5px;
 	color: #fff;
 	text-align: left;
@@ -198,7 +198,7 @@ ons-list-item.swipe{
 	width:100px !important;
 	height:100%;
 	float: right;
-	color:#fff;display:-webkit-box;-webkit-box-pack:center; background:#394295; text-align: center;-webkit-box-pack: center; text-align: center; -webkit-box-flex: 0; -webkit-box-align: center; -webkit-box-direction: inherit;
+	color:#fff;display:-webkit-box;-webkit-box-pack:center; background:#00a396; text-align: center;-webkit-box-pack: center; text-align: center; -webkit-box-flex: 0; -webkit-box-align: center; -webkit-box-direction: inherit;
 }
 span.Editeve{
 	padding:2px;
@@ -211,7 +211,7 @@ span.Editeve{
 	/*top: 5px;*/
 	bottom: 20px;
 	background: #fff;
-	color: #394295;
+	color: #00a396;
 }
 
 .list-message>p{
