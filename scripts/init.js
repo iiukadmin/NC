@@ -133,41 +133,42 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 				"vibration": true,
 				"sound": true,
 		        "categories": {
-		            "invite": {
-		                "yes": {
-		                    "callback": "window.accept", "title": "Accept", "foreground": false, "destructive": false
-		                },
-		                "no": {
-		                    "callback": "window.reject", "title": "Reject", "foreground": false, "destructive": true
-		                },
-		                "maybe": {
-		                    "callback": "window.other", "title": "Maybe", "foreground": false, "destructive": false
-		                }
-		            },
 		            "authenticate": {
 		                "yes": {
 		                    "callback": "accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
 		            "register": {
 		                "yes": {
-		                    "callback": "window.accept", "title": "Confirm", "foreground": false, "destructive": false
+		                    "callback": "accept", "title": "Confirm", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
+		                    "callback": "reject", "title": "Cancel", "foreground": false, "destructive": false
 		                }
 		            },
-					"choice": {
+					"two": {
 		                "yes": {
-		                    "callback": "window.accept", "title": "Yes", "foreground": false, "destructive": false
+		                    "callback": "accept", "title": "Yes", "foreground": false, "destructive": false
 		                },
 		                "no": {
-		                    "callback": "window.reject", "title": "No", "foreground": false, "destructive": false
+		                    "callback": "reject", "title": "No", "foreground": false, "destructive": true
 		                }
-		            }
+		            },
+		            "three": {
+		                "yes": {
+		                    "callback": "accept", "title": "Accept", "foreground": false, "destructive": false
+		                },
+		                "no": {
+		                    "callback": "reject", "title": "Reject", "foreground": false, "destructive": false
+		                },
+		                "maybe": {
+		                    "callback": "other", "title": "Maybe", "foreground": false, "destructive": false
+		                }
+		            },
+
 		        }
 			 }, 
 			 
@@ -235,6 +236,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			navigator.notification.alert('Error = '+data.message,null,'Error');
 		});
 		
+		
 		push.on('accept', function(data) {
 				notificationFeedback('1',data.additionalData.other);
 				navigator.app.exitApp(); // android close app
@@ -247,12 +249,29 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 			    
 		});
 	
-		
-		push.on('error', function(data) {
-			console.log(data.message);
-			navigator.notification.alert('Error = '+data.message,null,'Error');
+				
+		push.on('reject', function(data) {
+			notificationFeedback('2',data.additionalData.other);
+			navigator.app.exitApp(); // android
+			
+			push.finish(function() {
+		        console.log('accept callback finished');
+		    }, function() {
+		        console.log('accept callback failed');
+		    }, data.additionalData.notId);    
 		});
 		
+		push.on('other', function(data) {
+			notificationFeedback('3',data.additionalData.other);
+			navigator.app.exitApp(); // android
+			
+			push.finish(function() {
+		        console.log('accept callback finished');
+		    }, function() {
+		        console.log('accept callback failed');
+		    }, data.additionalData.notId);    
+		});
+
 
 		
 	}
@@ -1177,6 +1196,7 @@ function updateBadge(badgeCount){
 }
 
 // Action Buttons
+// Can remove moving forward, left in for memory only!
 window.accept = function (data) {
 	notificationFeedback('1',data.additionalData.other);
 	navigator.app.exitApp(); // android
