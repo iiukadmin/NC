@@ -228,13 +228,31 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 
 			
 		});
-						
+	
 		
 		push.on('error', function(data) {
 			console.log(data.message);
 			navigator.notification.alert('Error = '+data.message,null,'Error');
 		});
 		
+		push.on('accept', function(data) {
+				notificationFeedback('1',data.additionalData.other);
+				alert('Hello Farid');
+				// navigator.app.exitApp(); // android
+				
+				push.finish(function() {
+			        console.log('accept callback finished');
+			    }, function() {
+			        console.log('accept callback failed');
+			    }, data.additionalData.notId);    
+			    
+		});
+	
+		
+		push.on('error', function(data) {
+			console.log(data.message);
+			navigator.notification.alert('Error = '+data.message,null,'Error');
+		});
 		
 
 		
@@ -1294,37 +1312,4 @@ function scan_barcode(type){
           disableAnimations : true
 		}
 	 );
-}
-
-
-// iOS
-// NEED TO REMOVE
-function onNotificationAPN (event) {
-    if ( event.alert )
-    {
-		if (event.type == '2') { 
-			navigator.notification.confirm(
-	        	event.alert,
-	        	function(buttonIndex) {
-		       	 notificationFeedback(buttonIndex,event.other);
-			   	},
-			   	event.title,
-			   	event.buttons
-			);
-
-		} else {
-	        navigator.notification.alert(event.alert,null,event.title);
-		}
-    }
-
-    if ( event.sound )
-    {
-        var snd = new Media(event.sound);
-        snd.play();
-    }
-
-    if ( event.badge )
-    {
-        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-    }
 }
