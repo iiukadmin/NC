@@ -147,7 +147,7 @@
 
 
 <!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> -->
-		<!--		<plugin name="phonegap-plugin-barcodescanner" /> -->
+	 <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="7.0.2" /> 
 				 	
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Workign with cli 7.0.1-->
     <plugin name="phonegap-plugin-push" source="npm" spec="2.1.3">
