@@ -145,7 +145,9 @@
 <!--
 	now causing push notifications to fail see https://github.com/phonegap/phonegap-plugin-push/issues/1959
 		<plugin name="de.appplant.cordova.plugin.local-notification" />	 -->
-    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> 
+
+
+<!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> -->
 				
 				 	
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Workign with cli 7.0.1-->
