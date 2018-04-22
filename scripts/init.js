@@ -146,7 +146,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		            },
 		            "authenticate": {
 		                "yes": {
-		                    "callback": "window.accept", "title": "Login", "foreground": false, "destructive": false
+		                    "callback": "accept", "title": "Login", "foreground": false, "destructive": false
 		                },
 		                "no": {
 		                    "callback": "window.reject", "title": "Cancel", "foreground": false, "destructive": false
@@ -237,8 +237,7 @@ module.controller('AppController',['$scope','$rootScope','$templateCache',functi
 		
 		push.on('accept', function(data) {
 				notificationFeedback('1',data.additionalData.other);
-				alert('Hello Farid');
-				// navigator.app.exitApp(); // android
+				navigator.app.exitApp(); // android close app
 				
 				push.finish(function() {
 			        console.log('accept callback finished');
