@@ -15,9 +15,7 @@
         Ismaili Council for the UK
     </author>
 
-<!--    <preference name="phonegap-version" value="cli-7.0.1" /> --> <!-- Might need at least 7.1.0 for iphone, tested with 8.0.0 and working but breaks android) -->
-
-    <preference name="phonegap-version" value="cli-8.0.0" /> <!-- 7.0.1 works Might need at least 7.1.0 for iphone, tested with 8.0.0 and working but breaks android) -->
+    <preference name="phonegap-version" value="cli-8.0.0" />
     <preference name='pgb-builder-version' value='2' />
 	<preference name="android-targetSdkVersion" value="26"/>
 	<preference name="android-build-tool" value="gradle" />
@@ -25,61 +23,65 @@
 	<platform name="android"/>
 	<platform name="ios"/>
 
-    <icon src="icons_iiuk/mipmap-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons_iiuk/mipmap-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons_iiuk/mipmap-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="icons_iiuk/mipmap-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="icons_iiuk/mipmap-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
-    <icon src="icons_iiuk/mipmap-xxxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxxhdpi" />
-
-    <icon src="icons_iiuk/icon.png" />
-
-	<!-- General iPhone -->
+<!--    <icon src="icons_iiuk/icon.png" /> Not sure about if this is needed for notifications-->
+    
+	<!-- General iPhone Splash Screen -->
 	<platform name="ios">
 		<splash src="icons_iiuk/Default@2x~universal~anyany.png" />	    
 	</platform>
-	    
-    <!-- iPhone 6 / 6+ -->
-    <icon src="icons_iiuk/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
-
-    <!-- iPhone / iPod Touch  -->
-    <icon src="icons_iiuk/icon-60.png" gap:platform="ios" width="60" height="60" />
-    <icon src="icons_iiuk/icon-60@2x.png" gap:platform="ios" width="120" height="120" />
-
-    <!-- iPad -->
-    <icon src="icons_iiuk/icon-76.png" gap:platform="ios" width="76" height="76" />
-    <icon src="icons_iiuk/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
-
-    <!-- Settings Icon -->
-    <icon src="icons_iiuk/icon-small.png" gap:platform="ios" width="29" height="29" />
-    <icon src="icons_iiuk/icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons_iiuk/icon-small@3x.png" gap:platform="ios" width="87" height="87" />
-
-    <!-- Spotlight Icon -->
-    <icon src="icons_iiuk/icon-40.png" gap:platform="ios" width="40" height="40" />
-    <icon src="icons_iiuk/icon-40@2x.png" gap:platform="ios" width="80" height="80" />
-
-    <!-- iPhone / iPod Touch -->
-    <icon src="icons_iiuk/icon-57.png" gap:platform="ios" width="57" height="57" />
-    <icon src="icons_iiuk/icon@2x.png" gap:platform="ios" width="114" height="114" />
-
-    <!-- iPad -->
-    <icon src="icons_iiuk/Icon-72.png" gap:platform="ios" width="72" height="72" />
-    <icon src="icons_iiuk/Icon-72@2x.png" gap:platform="ios" width="144" height="144" />
-
-    <!-- iPhone Spotlight and Settings Icon -->    
-    <icon src="icons_iiuk/Icon-small.png" gap:platform="ios" width="29" height="29" />
-    <icon src="icons_iiuk/Icon-small@2x.png" gap:platform="ios" width="58" height="58" />
-    <icon src="icons_iiuk/Icon-40@3x.png" gap:platform="ios" width="120" height="120" />
-
-    <!-- iPad Spotlight and Settings Icon -->
-    <icon src="icons_iiuk/Icon-Small-50.png" gap:platform="ios" width="50" height="50" />
-    <icon src="icons_iiuk/Icon-Small-50@2x.png" gap:platform="ios" width="100" height="100" />
-    <icon src="icons_iiuk/Icon-83.5@2x.png" gap:platform="ios" width="167" height="167" />
-
-	<!-- ios 11 Icon -->
+	  
+	<!-- iOS 11 Icon for Store -->
 	<icon src="icons_iiuk/Icon-512-2x.png" width="1024" height="1024" />
-  
+    	  
+	<platform name="android">
+		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
+		<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
+		<icon density="hdpi" src="res/icons/android/drawable-hdpi-icon.png" />
+		<icon density="xhdpi" src="res/icons/android/drawable-xhdpi-icon.png" />
+		<icon density="xxhdpi" src="res/icons/android/drawable-xxhdpi-icon.png" />
+		<icon density="xxxhdpi" src="res/icons/android/drawable-xxxhdpi-icon.png" />
+		<splash density="land-ldpi" src="res/screens/android/drawable-land-ldpi-screen.png" />
+		<splash density="land-mdpi" src="res/screens/android/drawable-land-mdpi-screen.png" />
+		<splash density="land-hdpi" src="res/screens/android/drawable-land-hdpi-screen.png" />
+		<splash density="land-xhdpi" src="res/screens/android/drawable-land-xhdpi-screen.png" />
+		<splash density="land-xxhdpi" src="res/screens/android/drawable-land-xxhdpi-screen.png" />
+		<splash density="land-xxxhdpi" src="res/screens/android/drawable-land-xxxhdpi-screen.png" />
+		<splash density="port-ldpi" src="res/screens/android/drawable-port-ldpi-screen.png" />
+		<splash density="port-mdpi" src="res/screens/android/drawable-port-mdpi-screen.png" />
+		<splash density="port-hdpi" src="res/screens/android/drawable-port-hdpi-screen.png" />
+		<splash density="port-xhdpi" src="res/screens/android/drawable-port-xhdpi-screen.png" />
+		<splash density="port-xxhdpi" src="res/screens/android/drawable-port-xxhdpi-screen.png" />
+		<splash density="port-xxxhdpi" src="res/screens/android/drawable-port-xxxhdpi-screen.png" />
+	</platform>
+	<platform name="ios">
+		<icon height="57" platform="ios" src="res/icons/ios/icon.png" width="57" />
+		<icon height="114" platform="ios" src="res/icons/ios/icon@2x.png" width="114" />
+		<icon height="40" platform="ios" src="res/icons/ios/icon-40.png" width="40" />
+		<icon height="80" platform="ios" src="res/icons/ios/icon-40@2x.png" width="80" />
+		<icon height="50" platform="ios" src="res/icons/ios/icon-50.png" width="50" />
+		<icon height="100" platform="ios" src="res/icons/ios/icon-50@2x.png" width="100" />
+		<icon height="60" platform="ios" src="res/icons/ios/icon-60.png" width="60" />
+		<icon height="120" platform="ios" src="res/icons/ios/icon-60@2x.png" width="120" />
+		<icon height="180" platform="ios" src="res/icons/ios/icon-60@3x.png" width="180" />
+		<icon height="72" platform="ios" src="res/icons/ios/icon-72.png" width="72" />
+		<icon height="144" platform="ios" src="res/icons/ios/icon-72@2x.png" width="144" />
+		<icon height="76" platform="ios" src="res/icons/ios/icon-76.png" width="76" />
+		<icon height="152" platform="ios" src="res/icons/ios/icon-76@2x.png" width="152" />
+		<icon height="29" platform="ios" src="res/icons/ios/icon-small.png" width="29" />
+		<icon height="58" platform="ios" src="res/icons/ios/icon-small@2x.png" width="58" />
+		<icon height="87" platform="ios" src="res/icons/ios/icon-small@3x.png" width="87" />
+		<splash height="1136" platform="ios" src="res/screens/ios/Default-568h@2x~iphone.png" width="640" />
+		<splash height="1334" platform="ios" src="res/screens/ios/Default-667h.png" width="750" />
+		<splash height="2208" platform="ios" src="res/screens/ios/Default-736h.png" width="1242" />
+		<splash height="1242" platform="ios" src="res/screens/ios/Default-Landscape-736h.png" width="2208" />
+		<splash height="1536" platform="ios" src="res/screens/ios/Default-Landscape@2x~ipad.png" width="2048" />
+		<splash height="768" platform="ios" src="res/screens/ios/Default-Landscape~ipad.png" width="1024" />
+		<splash height="2048" platform="ios" src="res/screens/ios/Default-Portrait@2x~ipad.png" width="1536" />
+		<splash height="1024" platform="ios" src="res/screens/ios/Default-Portrait~ipad.png" width="768" />
+		<splash height="960" platform="ios" src="res/screens/ios/Default@2x~iphone.png" width="640" />
+		<splash height="480" platform="ios" src="res/screens/ios/Default~iphone.png" width="320" />
+	</platform>
+    
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network" />
