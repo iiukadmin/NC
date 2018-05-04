@@ -91,7 +91,7 @@
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
     
-<preference name="StatusBarOverlaysWebView" value="false"/>
+<preference name="StatusBarOverlaysWebView" value="true"/>
 <preference name="StatusBarStyle" value="lightcontent" />
 
 	<preference name="DisallowOverscroll" value="true" />
