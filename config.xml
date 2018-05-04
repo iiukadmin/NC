@@ -123,7 +123,7 @@
 	<plugin name="cordova-plugin-splashscreen" /> 
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-statusbar" />
-<!--	<plugin name="cordova-plugin--disable-ios11-statusbar" spec="https://github.com/jcesarmobile/cordova-plugin-disable-ios11-statusbar" /> -->
+
 	<plugin name="cordova_app_version_plugin" />	
 	<!--<plugin name="net.bgta.phonegap.plugin.appversion" spec="1.1.1" source="pgb" />
 	<plugin name="de.appplant.cordova.plugin.badge" />-->
