@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuk.myiiuk"
-        versionCode = "191" 
-        version     = "1.1.16" >
+        versionCode = "192" 
+        version     = "1.1.17" >
 
     <name>IIUK</name>
 
