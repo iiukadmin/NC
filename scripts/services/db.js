@@ -206,7 +206,7 @@ AKHB.services.db.prototype.setCommitte = function(tx,_committe,remoteAddress,cal
 			    title:_committe.title,
 			    description :_committe.description,
 			    email :_committe.email,
-			    location :_committe.location,
+			 //   location :_committe.location,
 			    status :_committe.status,
 			    is_show : 1,
 			    last_modified:moment(_committe.last_modified).toDate(),

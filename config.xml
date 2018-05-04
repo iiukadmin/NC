@@ -23,6 +23,9 @@
 	<platform name="android"/>
 	<platform name="ios"/>
     
+    <!-- Default Icon --> 
+    <icon src="icons_iiuk/icon.png" />
+
 	<!-- General iPhone Splash Screen -->
 	<platform name="ios">
 		<splash src="icons_iiuk/Default@2x~universal~anyany.png" />	    
