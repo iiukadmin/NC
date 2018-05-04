@@ -39,7 +39,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 	            if(!Auth.isNetworkConnected()){
 		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				}else{	
-					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom, disallowoverscroll=yes');
+					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top, disallowoverscroll=yes');
 	                $('div.loading').removeClass('ng-hide');
 					ref.addEventListener('loadstop', function(){
 						ref.show();
@@ -1049,7 +1049,7 @@ $(document).on('click','a',function(e){
 		        	if(!Auth.isNetworkConnected()){
 		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				 	}else{	
-						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 		                $('div.loading').removeClass('ng-hide');
 						ref.addEventListener('loadstop', function(){
 							ref.show();
@@ -1073,7 +1073,7 @@ $(document).on('click','a',function(e){
 		        	if(!Auth.isNetworkConnected()){
 		         	    AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				 	}else{	
-						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+						ref = window.open($href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 		                $('div.loading').removeClass('ng-hide');
 						ref.addEventListener('loadstop', function(){
 							ref.show();
@@ -1253,7 +1253,7 @@ function scan_barcode(type){
 				if (type==0) { 
 					if (result.text.search("://")>0) {
 						 href = result.text;
-						 window.open(href, '_blank','location=no,hidden=no,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+						 window.open(href, '_blank','location=no,hidden=no,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 						 return;						 
 					}
 				}
@@ -1308,7 +1308,7 @@ function scan_barcode(type){
 			        AKHB.notification.alert('Sorry, a network connection is required, please try later.', null, 'Internet Connection', 'Try Later');
 			    } else {
 				    href = 'http://www.apple.com/';
-			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+			        ref = window.open(href, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=top');
 			        $('div.loading').removeClass('ng-hide');
 			        ref.addEventListener('loadstop', function() {
 			            ref.show();
