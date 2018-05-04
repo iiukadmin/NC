@@ -39,7 +39,7 @@ AKHB.openContentPage =  function(navigation,$templateCache){
 	            if(!Auth.isNetworkConnected()){
 		             AKHB.notification.alert('Sorry, a network connection is required, please try later.',null,'Internet Connection','Try Later');
 				}else{	
-					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom');
+					ref = window.open(article.content, '_blank', 'location=no,hidden=yes,toolbar=yes,enableViewportScale=yes,toolbarposition=bottom, disallowoverscroll=yes');
 	                $('div.loading').removeClass('ng-hide');
 					ref.addEventListener('loadstop', function(){
 						ref.show();
