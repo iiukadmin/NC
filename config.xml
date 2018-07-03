@@ -1,28 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.canvascamerademo" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>CanvasCameraDemo</name>
-    <description>
-        A sample Apache Cordova application that uses the canvas camera plugin.
-    </description>
-    <author email="contact@virtuoworks.com" href="http://www.virtuoworks.com">
-      VirtuoWorks Team
-    </author>
+<widget id="com.cordovaplugincamerapreview.sampleapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>cordova-plugin-camera-sample-app</name>
+    <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
+    
+        <preference name="phonegap-version" value="cli-6.5.0" />
+
+    
+    <plugin name="cordova-plugin-file" />
+    <plugin name="cordova-plugin-camera" />
+    <plugin name="cordova-plugin-media-capture" />
+    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-dialogs" />
+    <plugin name="cordova-plugin-file-transfer" />
+<!--	<gap:plugin name="cordova-plugin-preview-camera" source="npm" /> -->
+<!-- <gap:plugin name="com.keith.cordova.plugin.canvascamera" /> -->
+    <plugin name="cordova-plugin-camera" source="git" spec="https://github.com/apache/cordova-plugin-camera.git" /> 
+
+
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <platform name="android">
-        <allow-intent href="market:*" />
-    </platform>
-    <platform name="ios">
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
-    </platform>
-    <plugin name="cordova-plugin-whitelist" spec="1" />
-    <plugin name="com.virtuoworks.cordova-plugin-canvascamera" spec="https://github.com/VirtuoWorks/CanvasCameraPlugin.git" />
-    <engine name="android" spec="~7.0.0" />
 </widget>
