@@ -11,9 +11,14 @@ var app = {
     cordova.plugins.camerapreview.stopCamera();
   },
 
+//  takePicture: function(){
+//    cordova.plugins.camerapreview.takePicture({maxWidth: window.device.width, maxHeight: window.device.height});
+//  },
+
   takePicture: function(){
-    cordova.plugins.camerapreview.takePicture({maxWidth: window.device.width, maxHeight: window.device.height});
+  	alert('asdfasdf');
   },
+
 
   switchCamera: function(){
     cordova.plugins.camerapreview.switchCamera();
@@ -37,7 +42,10 @@ var app = {
     document.getElementById('startCameraAnotherPosButton').addEventListener('click', this.startCameraAnotherPos, false);
 
     document.getElementById('stopCameraButton').addEventListener('click', this.stopCamera, false);
+//    document.getElementById('takePictureButton').addEventListener('click', this.takePicture, false);
+
     document.getElementById('takePictureButton').addEventListener('click', this.takePicture, false);
+
     document.getElementById('switchCameraButton').addEventListener('click', this.switchCamera, false);
     document.getElementById('showButton').addEventListener('click', this.show, false);
     document.getElementById('hideButton').addEventListener('click', this.hide, false);
