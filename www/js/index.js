@@ -17,7 +17,10 @@ var app = {
 //      alert('Taken');
 
 
-		$.get("http://poonja.co.uk?image="+imgData, function(data, status){
+		$.post("http://poonja.co.uk/index.php",
+			{
+				image: 'data:image/jpeg;base64,' + imgData
+			},function(data, status){
             alert("Data: " + data + "\nStatus: " + status);
         });
 
