@@ -14,14 +14,11 @@ var app = {
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
       document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData;
-//      alert('Taken');
-
-
 		$.post("http://poonja.co.uk/index.php",
 			{
 				image: 'data:image/jpeg;base64,' + imgData
 			},function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
+            //alert("Data: " + data + "\nStatus: " + status);
         });
 
     });
