@@ -14,7 +14,14 @@ var app = {
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
       document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData;
-      alert('Taken');
+//      alert('Taken');
+        if (window.jQuery) {  
+        // jQuery is loaded  
+        alert("Yeah jQuery working!");
+		} else {
+        // jQuery is not loaded
+        alert("Doesn't Work");
+		}
     });
   },
 
