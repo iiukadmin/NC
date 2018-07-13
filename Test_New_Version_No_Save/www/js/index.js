@@ -14,9 +14,6 @@ var app = {
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
       document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData;
-     // var xhr = new XMLHttpRequest();
-	 // xhr.open('GET', "http://poonja.co.uk?hello=1235", true);
-	 // alert('asdf');
     });
   },
 

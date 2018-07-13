@@ -1,14 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
-
 <widget id="com.cordovaplugincamerapreview.sampleapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-
     <name>cordova-plugin-camera-sample-app</name>
     <description>A sample Cordova application for cordova-plugin-camera-preview.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
     
+        <preference name="phonegap-version" value="cli-6.5.0" />
+
+    
+    <plugin name="cordova-plugin-file" />
+    <plugin name="cordova-plugin-camera" />
+    <plugin name="cordova-plugin-media-capture" />
+    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-dialogs" />
+    <plugin name="cordova-plugin-file-transfer" />
+<!--	<gap:plugin name="cordova-plugin-preview-camera" source="npm" /> -->
+<!-- <gap:plugin name="com.keith.cordova.plugin.canvascamera" /> -->
+    <plugin name="cordova.plugin.canvascamera" source="git" spec="https://github.com/donaldp24/CanvasCameraPlugin.git" /> 
+
+
     <content src="index.html" />
     <access origin="*" />
-
-    <plugin name="cordova-plugin-camera-preview" spec="https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git" />
-
 </widget>
