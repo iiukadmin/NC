@@ -15,13 +15,12 @@ var app = {
     CameraPreview.takePicture(function(imgData){
       document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData;
 //      alert('Taken');
-        if (window.jQuery) {  
-        // jQuery is loaded  
-        alert("Yeah jQuery working!");
-		} else {
-        // jQuery is not loaded
-        alert("Doesn't Work");
-		}
+
+
+		$.get("http://poonja.co.uk?heloo=12345", function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+
     });
   },
 
