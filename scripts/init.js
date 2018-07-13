@@ -1062,12 +1062,12 @@ $(document).on('click','a',function(e){
 		            navigator.notification.confirm(
 	                    "Would you like to open this link in your browser?",
 	                    function(buttonIndex) {
-	                        if(buttonIndex == 1){
+	                        if(buttonIndex == 2){
 		                        window.open($href, '_system');
 	                        }
 	                    },
 	                    'External Link',
-	                    ["Open","Cancel"]
+	                    ["Cancel","Open"]
 	                );
 		        }else if($target.toLowerCase().indexOf('_self') == 0){
 		        	if(!Auth.isNetworkConnected()){
