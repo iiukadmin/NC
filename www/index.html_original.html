@@ -15,24 +15,49 @@
 
       <div class="block">
         <p style="margin-top:0px"><button id="startCameraBelowButton">Start Camera Behind HTML</button></p>
-      </div>
 
+        <p style="margin-bottom:0px">
+          Color Effect:
+          <select id="selectColorEffect">
+            <option selected value="none">none</option>
+            <option value="aqua">aqua</option>
+            <option value="blackboard">blackboard</option>
+            <option value="mono">mono</option>
+            <option value="negative">negative</option>
+            <option value="posterize">posterize</option>
+            <option value="sepia">sepia</option>
+            <option value="solarize">solarize</option>
+            <option value="whiteboard">whiteboard</option>
+          </select>
+        </p>
+
+        <p style="margin-bottom:0px;">
+          Flash Mode:
+          <select id="selectFlashMode">
+            <option selected value="off">off</option>
+            <option value="on">on</option>
+            <option value="auto">auto</option>
+            <option value="torch">torch</option>
+          </select>
+        </p>
+
+        <div id="androidOnly">
+          <p style="margin-bottom:0px;">
+            Zoom:
+            <span id="zoomValue"style="margin: 0 5px;">1</span>
+            <input type="range" id="zoomSlider" min="1" max="5" value="1" />
+          </p>
+        </div>
+      </div>
       <div class="block">
         <button id="takePictureButton">Take Picture</button>
         <button id="switchCameraButton">Switch Camera</button>
+        <button id="changePreviewSize">Change Preview Size</button>
       </div>
-
       <div class="block">
         <button id="hideButton">Hide</button>
         <button id="showButton">Show</button>
       </div>
-
-
-		<div id="hideButton" style="position: absolute; top: 80%; left: 0; right: 50%; bottom: 0; border: dashed;"></div><!-- bottom left -->
-		<div id="showButton" style="position: absolute; top: 80%; left: 50%; right: 0; bottom: 0; border: dashed;"></div><!-- bottom right -->
-
-
-
       <div class="block">
         <button id="showSupportedPictureSizes">Supported Picture Sizes</button>
       </div>
