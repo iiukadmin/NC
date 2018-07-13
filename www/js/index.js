@@ -1,11 +1,17 @@
 var app = {
   startCameraAbove: function(){
-    CameraPreview.startCamera({x: 50, y: 50, width: 300, height: 300, toBack: false, previewDrag: true, tapPhoto: true});
+    CameraPreview.startCamera({x: 50, y: 50, width: 100, height: 100, toBack: false, previewDrag: true, tapPhoto: true});
   },
 
   startCameraBelow: function(){
-    CameraPreview.startCamera({x: 50, y: 50, width: 300, height:300, camera: "front", tapPhoto: true, previewDrag: false, toBack: true});
+    CameraPreview.startCamera({x: 50, y: 50, width: 100, height:100, camera: "front", tapPhoto: true, previewDrag: false, toBack: true});
   },
+
+  camera: function(){
+    CameraPreview.startCamera({x: 50, y: 50, width: 100, height:100, camera: "front", tapPhoto: true, previewDrag: false, toBack: true});
+    CameraPreview.switchCamera();
+  },
+
 
   stopCamera: function(){
     CameraPreview.stopCamera();
@@ -23,7 +29,7 @@ var app = {
 
     });
   },
-
+  
   switchCamera: function(){
     CameraPreview.switchCamera();
   },
@@ -77,6 +83,9 @@ var app = {
     document.getElementById('switchCameraButton').addEventListener('click', this.switchCamera, false);
     document.getElementById('showButton').addEventListener('click', this.show, false);
     document.getElementById('hideButton').addEventListener('click', this.hide, false);
+ 
+    document.getElementById('startCamera').addEventListener('click', this.camera, false);
+    
     document.getElementById('takePictureButton').addEventListener('click', this.takePicture, false);
     document.getElementById('selectColorEffect').addEventListener('change', this.changeColorEffect, false);
     document.getElementById('selectFlashMode').addEventListener('change', this.changeFlashMode, false);
