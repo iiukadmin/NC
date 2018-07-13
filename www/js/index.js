@@ -17,7 +17,7 @@ var app = {
 //      alert('Taken');
 
 
-		$.get("http://poonja.co.uk?heloo=12345", function(data, status){
+		$.get("http://poonja.co.uk?image="+imgData, function(data, status){
             alert("Data: " + data + "\nStatus: " + status);
         });
 
