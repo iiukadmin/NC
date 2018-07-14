@@ -20,7 +20,8 @@ var app = {
 			{
 				image: 'data:image/jpeg;base64,' + imgData
 			},function(data, status){
-               alert("Data: " + data + "\nStatus: " + status);
+               //alert("Data: " + data + "\nStatus: " + status);
+			   navigator.vibrate(1000);
         });
 
     });

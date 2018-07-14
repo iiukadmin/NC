@@ -11,6 +11,8 @@
 
 	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-camera-preview" />
+    <plugin name="cordova-plugin-vibration" />
+    
 
 
 	<preference name="StatusBarOverlaysWebView" value="false"/>
