@@ -9,7 +9,13 @@
     <content src="index.html" />
     <access origin="*" />
 
+	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-camera-preview" />
+
+
+	<preference name="StatusBarOverlaysWebView" value="false"/>
+	<preference name="StatusBarBackgroundColor" value="#000000"/>
+	<preference name="StatusBarStyle" value="lightcontent" />
 
 <config-file overwrite="true" parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist"> <string>Allow the app to use your camera</string> </config-file>
 <platform name="ios">
