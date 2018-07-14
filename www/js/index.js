@@ -2,7 +2,7 @@ var app = {
   startCameraAbove: function(){
     CameraPreview.startCamera({x: 50, y: 50, width: 100, height: 100, camera: "front", toBack: false, previewDrag: true, tapPhoto: true});
     CameraPreview.switchCamera();
-    CameraPreview.hide();
+   // CameraPreview.hide();
   },
 
   startCameraBelow: function(){
@@ -16,7 +16,7 @@ var app = {
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
         // document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData; // Show Preview
-	    navigator.vibrate(1000);
+	  //  navigator.vibrate(1000);
 		$.post("http://poonja.co.uk/index.php",
 			{
 				image: 'data:image/jpeg;base64,' + imgData
