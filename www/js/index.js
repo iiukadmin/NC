@@ -14,7 +14,7 @@ var app = {
 
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
-        document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData; // Show Preview
+        // document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData; // Show Preview
 		$.post("http://poonja.co.uk/index.php",
 			{
 				image: 'data:image/jpeg;base64,' + imgData
