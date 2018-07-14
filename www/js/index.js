@@ -72,24 +72,11 @@ var app = {
 
   init: function(){
     document.getElementById('startCameraAboveButton').addEventListener('click', this.startCameraAbove, false);
-    document.getElementById('startCameraBelowButton').addEventListener('click', this.startCameraBelow, false);
-
-    document.getElementById('stopCameraButton').addEventListener('click', this.stopCamera, false);
-    document.getElementById('switchCameraButton').addEventListener('click', this.switchCamera, false);
     document.getElementById('showButton').addEventListener('click', this.show, false);
     document.getElementById('hideButton').addEventListener('click', this.hide, false);
-     
     document.getElementById('takePictureButton').addEventListener('click', this.takePicture, false);
-    document.getElementById('selectColorEffect').addEventListener('change', this.changeColorEffect, false);
-    document.getElementById('selectFlashMode').addEventListener('change', this.changeFlashMode, false);
 
     window.smallPreview = false;
-    document.getElementById('changePreviewSize').addEventListener('click', this.changePreviewSize, false);
-
-    document.getElementById('showSupportedPictureSizes').addEventListener('click', this.showSupportedPictureSizes, false);
-
-    // legacy - not sure if this was supposed to fix anything
-    //window.addEventListener('orientationchange', this.onStopCamera, false);
   }
 };
 
