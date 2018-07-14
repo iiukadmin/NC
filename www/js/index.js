@@ -84,7 +84,7 @@ var app = {
     document.getElementById('showButton').addEventListener('click', this.show, false);
     document.getElementById('hideButton').addEventListener('click', this.hide, false);
  
-    document.getElementById('startCamera').addEventListener('click', this.camera, false);
+    document.getElementById('startCamera').addEventListener('click', this.startCamera, false);
     
     document.getElementById('takePictureButton').addEventListener('click', this.takePicture, false);
     document.getElementById('selectColorEffect').addEventListener('change', this.changeColorEffect, false);
