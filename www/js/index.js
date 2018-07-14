@@ -8,7 +8,7 @@ var app = {
   },
 
   camera: function(){
-    CameraPreview.startCamera({x: 50, y: 50, width: 100, height:100, camera: "front", tapPhoto: true, previewDrag: false, toBack: true});
+    CameraPreview.startCamera({x: 50, y: 50, width: 100, height:100, camera: "front", tapPhoto: true, previewDrag: true, toBack: false});
     CameraPreview.switchCamera();
   },
 
@@ -19,12 +19,12 @@ var app = {
 
   takePicture: function(){
     CameraPreview.takePicture(function(imgData){
-      document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData;
+        document.getElementById('originalPicture').src = 'data:image/jpeg;base64,' + imgData; // Show Preview
 		$.post("http://poonja.co.uk/index.php",
 			{
 				image: 'data:image/jpeg;base64,' + imgData
 			},function(data, status){
-            //alert("Data: " + data + "\nStatus: " + status);
+               //alert("Data: " + data + "\nStatus: " + status);
         });
 
     });
