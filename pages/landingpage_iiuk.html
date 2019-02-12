@@ -12,17 +12,17 @@
         <div class ="landingPage_logo">
             <img src="icons_iiuk/icon.png" />
         </div>
-        
-        <div class="landingP_title">{{title}}</div>
+
+        <div class="landingP_title">{{title}} Zain</div>
         <div class="landingContent" ng-bind-html="article">
         </div>
 
         <ul id="home_page_icons">
             <ons-list-item ng-repeat-start="navigation in navigations"  ng-repeat-end ng-show="navigation.home_page==1"
             class="list__item__line-height"  ng-model="navigation" ng-click="openPage(navigation)">
-            
+
             <p><i ng-class="{true:'fa',false:'fa fa-'+navigation.icon+' fa-fw'}[navigation.icon =='']"></i>{{navigation.title}}</p>
-            </ons-list-item> 
+            </ons-list-item>
         </ul>
     </div>
 </ons-page>
