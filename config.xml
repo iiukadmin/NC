@@ -157,9 +157,11 @@
 <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/slickalpha/phonegap-plugin-barcodescanner.git" source="git" /> <!-- hacked version to fix build -->
 	
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Working with cli 7.0.1-->
-    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.1">
-	        <variable name="FCM_VERSION" value="11.0.1" /> <!-- Added to try to resolve -->
+
+<!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.1"> 
+	        <variable name="FCM_VERSION" value="11.0.1" /> 
     </plugin>
+    -->
 	  
     <platform name="android">
 <!--	  <resource-file src="google-services.json" target="google-services.json" /> -->
