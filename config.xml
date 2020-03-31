@@ -15,7 +15,7 @@
         Ismaili Council for the UK
     </author>
 
-    <preference name="phonegap-version" value="cli-8.0.0" />
+    <preference name="phonegap-version" value="cli-7.0.1" />
     <preference name='pgb-builder-version' value='2' />
 	<preference name="android-targetSdkVersion" value="26"/>
 	<preference name="android-build-tool" value="gradle" />
@@ -154,7 +154,7 @@
 <!--    <plugin name="phonegap-plugin-barcodescanner" source="npm" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" /> -->
 <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/slickalpha/phonegap-plugin-barcodescanner.git" source="git" /> <!-- hacked version to fix build -->
 	
-<!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Workign with cli 7.0.1-->
+<!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Working with cli 7.0.1-->
     <plugin name="phonegap-plugin-push" source="npm" spec="2.2.1">
 	        <variable name="FCM_VERSION" value="11.0.1" /> <!-- Added to try to resolve -->
     </plugin>
@@ -197,7 +197,7 @@
      </edit-config>
 	</platform>
 
-    <engine name="android" spec="7.0.1" />
+    <engine name="android" spec="~7.0.0" />
     <engine name="ios" spec="~4.5.4" />
 <!--    <engine name="ios" spec="latest"/> -->
      
