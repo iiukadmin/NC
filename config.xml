@@ -158,10 +158,9 @@
 	
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Working with cli 7.0.1-->
 
-<!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.1"> 
+    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.3"> 
 	        <variable name="FCM_VERSION" value="11.0.1" /> 
     </plugin>
-    -->
 	  
     <platform name="android">
 <!--	  <resource-file src="google-services.json" target="google-services.json" /> -->
