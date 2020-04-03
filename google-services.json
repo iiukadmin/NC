@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "31742222780",
-    "firebase_url": "https://myiiuk-1172.firebaseio.com",
-    "project_id": "myiiuk-1172",
-    "storage_bucket": "myiiuk-1172.appspot.com"
+    "project_number": "284337909832",
+    "firebase_url": "https://iiuae-70994.firebaseio.com",
+    "project_id": "iiuae-70994",
+    "storage_bucket": "iiuae-70994.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:31742222780:android:c6a4d6472c7dae99",
+        "mobilesdk_app_id": "1:284337909832:android:2e3572ded5f57d16bb687d",
         "android_client_info": {
-          "package_name": "com.iiuk.myiiuk"
+          "package_name": "com.iiuae.myiiuae"
         }
       },
       "oauth_client": [
         {
-          "client_id": "31742222780-i3j8h1bl8n1ka52c7o5d07l04bls0ist.apps.googleusercontent.com",
+          "client_id": "284337909832-d09uetoqo6qmi33uqd0d4vm8jv1s6ibn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQHkSo6NcA9uCGJu4eE5c5H2q_tA5Ed1g"
+          "current_key": "AIzaSyD8x24cqSjW0UVMIMtjhv9cTABlScDl6FA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284337909832-d09uetoqo6qmi33uqd0d4vm8jv1s6ibn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
