@@ -114,7 +114,7 @@
 	<!--<gap:plugin name="org.apache.cordova.media" />  -->
 
 	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-device-orientation" />
+<!--	<plugin name="cordova-plugin-device-orientation" /> -->
 	<plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-globalization" />
 	<plugin name="cordova-plugin-inappbrowser" />
@@ -155,7 +155,7 @@
 <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/slickalpha/phonegap-plugin-barcodescanner.git" source="git" /> <!-- hacked version to fix build -->
 	
 <!--    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" /> Workign with cli 7.0.1-->
-    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.1">
+    <plugin name="phonegap-plugin-push" source="npm" spec="2.2.3">
 	        <variable name="FCM_VERSION" value="11.0.1" /> <!-- Added to try to resolve -->
     </plugin>
 	  
