@@ -14,6 +14,6 @@ window.AKHB ={
 		taskTimeout:1000*5,
 		messageSyncTimeout:1000*30,
 		senderID:'284337909832',
-		application:'iiuae'
+		application:'iiuk'
 	}
 };
