@@ -3,16 +3,16 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.iiuae.myiiuae"
         versionCode = "193" 
-        version     = "1.1.18" >
+        version     = "1.1.19" >
 
     <name>IIUAE</name>
 
     <description>
-        Developed by Islamic Publications Ltd
+        Developed by Islamic Publications Limited
     </description>
 
     <author href="http://the.ismaili" email="editor@the.ismaili">
-        Islamic Publications Ltd
+        Islamic Publications Limited
     </author>
 
     <preference name="phonegap-version" value="cli-9.0.0" />
