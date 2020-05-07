@@ -47,6 +47,8 @@ iframe,.article-iframe{
 	 -webkit-box-pack: center;
 	 -webkit-box-align: center;
 	 border: 0;
+	 overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .loading{
 	top:0;
